@@ -1,0 +1,82 @@
+import React, { useEffect } from "react";
+
+// import NoteContext from "./NoteContext"
+import { createContext, useState } from "react";
+
+// creating context object and exporting it.
+export const CartContext = createContext();
+
+function CartState(props) {
+  const [cart, setCart] = useState({});
+  const [Total, setTotal] = useState(0);
+  const saveCart = (myCart) => {
+    localStorage.setItem("cart", JSON.stringify(myCart)); //as we can't store object's in localStorage so let's convert it in JSON string
+    let subTotal = 0;
+    let keys = Object.keys(myCart); // returns an array of keys.
+
+    for (let i = 0; i < keys.length; i++) {
+      subTotal += myCart[keys[i]].price * myCart[keys[i]].qty;
+
+      setTotal(subTotal);
+    }
+  };
+
+  useEffect(() => {
+    try {
+      if (localStorage.getItem("cart")) {
+        setCart(JSON.parse(localStorage.getItem("cart")));
+        saveCart(JSON.parse(localStorage.getItem("cart"))) // We have to call saveCart in useEffect because If we don't call it here
+        // the Total cost will show zero in cart after reloading the page to avoid that I am calling it in useEffect.
+      }
+    } catch (error) {
+      localStorage.clear();
+    }
+  }, []);
+
+  // add to cart
+  const addToCart = (foodId, qty, price, name, size, type) => {
+    const newCart = JSON.parse(JSON.stringify(cart));
+    if (foodId in cart) {
+      newCart[foodId].qty = cart[foodId].qty + qty;
+    } else {
+      newCart[foodId] = { qty: 1, price, name, size, type };
+    }
+    setCart(newCart);
+    saveCart(newCart);
+  };
+
+  // delete items from cart
+  const removeFromCart = (foodId, qty, price, name, size, type) => {
+    const newCart = JSON.parse(JSON.stringify(cart)); // You need to parse the cart otherwise state change will not re-render the navbar or any component using cart as a state. if you write only" const newCart=cart" then you will notice while removing items from cart when it reaches to 1 it will not remove further it will just throw an error.
+    
+    if (foodId in cart) {
+      newCart[foodId].qty = cart[foodId].qty - qty;
+      
+    }
+ 
+    if (newCart[foodId]["qty"] <= 0) {
+      delete newCart[foodId];
+    
+    }
+
+    setCart(newCart);
+    saveCart(newCart);
+  };
+
+  // clear cart
+  const clearCart = () => {
+    setCart({});
+    saveCart({});
+  };
+
+  return (
+    <CartContext.Provider
+      value={{ cart, Total, addToCart, removeFromCart, clearCart }}
+    >
+      {/* Provider will give access to all the above states and functions to the components which are in props.children */}
+      {props.children}
+    </CartContext.Provider>
+  );
+}
+
+export default CartState;
