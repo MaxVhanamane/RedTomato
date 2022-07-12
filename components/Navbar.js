@@ -81,7 +81,7 @@ export default function Navbar() {
                     <FiMinusSquare
                       className="text-xl"
                       onClick={() => {
-                        removeFromCart(key, 1);
+                        removeFromCart(key,1,cart[key].price,cart[key].name,cart[key].size,cart[key].type);
                       }}
                     />
 
@@ -99,8 +99,8 @@ export default function Navbar() {
             );
           })}
         </ol>
-        {Object.keys(cart).length>0 && <div>Total : {Total}</div>}
-        <div className="flex text-center">
+        {Object.keys(cart).length>0 && <div className="font-bold text-lg">Total : {Total}</div>}
+        <div className="flex text-center mt-4">
          <Link href="/checkout"><button className="bg-gray-300 mr-2 hover:bg-gray-400 text-gray-800 font-bold  px-1 rounded inline-flex items-center">
             <span className="fill-current w-2  mr-2">
               <GiShoppingBag className=" flex justify-center items-center text-center" />{" "}

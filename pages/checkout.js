@@ -3,17 +3,15 @@ import Link from "next/link";
 import { AiFillCloseCircle } from "react-icons/ai";
 import { FiPlusSquare } from "react-icons/fi";
 import { FiMinusSquare } from "react-icons/fi";
-import { GiShoppingBag } from "react-icons/gi";
-import { MdDelete } from "react-icons/md";
 import { CartContext } from "./../context/CartState";
 export default function Checkout() {
   const { cart,Total, clearCart, removeFromCart, addToCart } =
   useContext(CartContext);
   return (
     <div className="flex container pt-20 ">
-     <div className="w-1/2 ml-20  ">
+     <div className="w-1/2 ml-20   ">
      <h2 className="font-bold ml-4">Contact Information</h2>
-     <div className="mt-2">
+     <div className=" mt-6 ">
 
     
     <label htmlFor="name" className="ml-4 mt-6">Name</label>
@@ -88,7 +86,7 @@ export default function Checkout() {
                     <FiMinusSquare
                       className="text-xl"
                       onClick={() => {
-                        removeFromCart(key, 1);
+                        removeFromCart(key, 1,cart[key].price,cart[key].name,cart[key].size,cart[key].type);
                       }}
                     />
 
@@ -97,7 +95,7 @@ export default function Checkout() {
                     <FiPlusSquare
                       className="text-xl"
                       onClick={() => {
-                        addToCart(key, 1);
+                        addToCart(key, 1,cart[key].price,cart[key].name,cart[key].size,cart[key].type);
                       }}
                     />
                   </div>

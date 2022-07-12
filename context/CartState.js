@@ -34,28 +34,28 @@ function CartState(props) {
   }, []);
 
   // add to cart
-  const addToCart = (foodId, qty, price, name, size, type) => {
+  const addToCart = (foodID, qty, price, name, size, type) => {
     const newCart = JSON.parse(JSON.stringify(cart));
-    if (foodId in cart) {
-      newCart[foodId].qty = cart[foodId].qty + qty;
+    if (name in cart) {
+      newCart[name].qty = cart[name].qty + qty;
     } else {
-      newCart[foodId] = { qty: 1, price, name, size, type };
+      newCart[name] = { qty: 1, price, name, size, type };
     }
     setCart(newCart);
     saveCart(newCart);
   };
 
   // delete items from cart
-  const removeFromCart = (foodId, qty, price, name, size, type) => {
+  const removeFromCart = (foodID, qty, price, name, size, type) => {
     const newCart = JSON.parse(JSON.stringify(cart)); // You need to parse the cart otherwise state change will not re-render the navbar or any component using cart as a state. if you write only" const newCart=cart" then you will notice while removing items from cart when it reaches to 1 it will not remove further it will just throw an error.
     
-    if (foodId in cart) {
-      newCart[foodId].qty = cart[foodId].qty - qty;
+    if (name in cart) {
+      newCart[name].qty = cart[name].qty - qty;
       
     }
  
-    if (newCart[foodId]["qty"] <= 0) {
-      delete newCart[foodId];
+    if (newCart[name]["qty"] <= 0) {
+      delete newCart[name];
     
     }
 
