@@ -3,12 +3,13 @@ import { CartContext } from "./../../context/CartState";
 import { useRouter } from "next/router";
 import Food from './../../models/foods';
 import connectDb from './../../middleware/mongoose';
-export default function Product({ foodItem }) {
-//  to control the radio buttons 
 
+export default function Product({ foodItem }) {
+  console.log("product")
+  //  to control the radio buttons 
 const [selectedRadioBtn,setSelectedRadioBtn]=useState("small")
   const [foodPrice, setFoodPrice] = useState(foodItem[0].price[0])
-  const { cart, addToCart } = useContext(CartContext);
+  const { orderNow, addToCart } = useContext(CartContext);
   const [inputPin, setInputPin] = useState();
   const [pin, setPin] = useState();
   const router = useRouter();
@@ -26,6 +27,12 @@ const [selectedRadioBtn,setSelectedRadioBtn]=useState("small")
       setPin(false);
     }
   };
+
+
+
+
+ 
+
   const handleSizeChange = (e) => {
     setSelectedRadioBtn(e.target.value)
     if(e.target.value==="small"){
@@ -39,9 +46,11 @@ const [selectedRadioBtn,setSelectedRadioBtn]=useState("small")
     }
     console.log(foodPrice)
   }
+
   const isRadioSelected = (value) => {
     return selectedRadioBtn === value;
   }
+
   return (
     <section className="text-gray-600 body-font overflow-hidden">
       <div className="container px-5 py-24 mx-auto">
@@ -216,7 +225,7 @@ const [selectedRadioBtn,setSelectedRadioBtn]=useState("small")
                 Add to Cart
               </button> </div>
               <div >
-              <button className="flex ml-8 text-white bg-orange-500 border-0 py-2 px-6 focus:outline-none hover:bg-orange-600 rounded-lg">
+              <button onClick={()=>{orderNow(slug, 1, foodPrice, `${item.title} (${selectedRadioBtn})`, "large", "veg")}}className="flex ml-8 text-white bg-orange-500 border-0 py-2 px-6 focus:outline-none hover:bg-orange-600 rounded-lg">
                 Order Now
               </button></div>
           

@@ -22,6 +22,7 @@ body {
   width: 100%;
   position: relative;
   overflow-x: hidden;
+  /* background: #E9F3ED; */
 }
 
 .pink_btn {
@@ -34,3 +35,11 @@ body {
   background: linear-gradient(to right, #e78c4c, #de484b, #e14d86, #dd6bbb);
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 }
+
+/* // To control toast width 
+.Toastify__toast-container {
+  width:16rem !important;
+} */
+/* .Toastify__toast-body {
+  width:10rem;
+} */

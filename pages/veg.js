@@ -11,17 +11,17 @@ export default function Veg({ foodItems }) {
     <>
       <section className="text-gray-600 body-font">
         <div className="container px-5 py-24 mx-auto  ">
-          <div className="flex flex-wrap m-auto items-center justify-center ">
+          <div className="flex flex-wrap m-auto  justify-center ">
 
             {foodItems.map((item) => {
 
-              return <div key={item._id} className=" p-3 mt-3 shadow-lg r">
+              return <div key={item._id} className=" p-3 mt-3 mr-2 shadow-lg r">
                 <Link passHref href={`/product/${item.slug}`}><a className="block relative  rounded overflow-hidden">
                   <Image
                     loader={myLoader}
                     alt="ecommerce"
                     src={item.img}
-                    width={300}
+                    width={320}
                     height={280}
                   />
 
@@ -40,7 +40,7 @@ export default function Veg({ foodItems }) {
                     <h2 className="text-gray-900 title-font text-lg font-medium">
                       {item.title}
                     </h2>
-                    <span  className=" text-center text-gray-500 text-xs tracking-widest title-font mb-1   ">{ item.desc}</span>
+                    <p className=" text-gray-500 text-xs tracking-widest title-font mb-1 w-80   ">{ item.desc.slice(0,150)}...</p>
                   
                     <p className="mt-1">₹{item.price[0]}</p>
                   </div> </a>

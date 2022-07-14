@@ -5,6 +5,7 @@ import { FiPlusSquare } from "react-icons/fi";
 import { FiMinusSquare } from "react-icons/fi";
 import { CartContext } from "./../context/CartState";
 export default function Checkout() {
+  console.log("checkout")
   const { cart,Total, clearCart, removeFromCart, addToCart } =
   useContext(CartContext);
   return (
@@ -30,6 +31,62 @@ export default function Checkout() {
         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
     <label htmlFor="mail" className="ml-4 mt-6">Email address</label>
     <input type="mail" className="block w-9/12 ml-4 mr-8 mt-2
+        px-3
+        py-1.5
+        text-base
+        font-normal
+        text-gray-700
+        bg-white bg-clip-padding
+        border border-solid border-gray-300
+        rounded
+        transition
+        ease-in-out
+       
+        focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
+         <label htmlFor="name" className="ml-4 mt-6">Phone</label>
+    <input type="text" className="block w-9/12 ml-4 mr-8 mt-2
+        px-3
+        py-1.5
+        text-base
+        font-normal
+        text-gray-700
+        bg-white bg-clip-padding
+        border border-solid border-gray-300
+        rounded
+        transition
+        ease-in-out
+       
+        focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
+         <label htmlFor="name" className="ml-4 mt-6">City</label>
+    <input type="text" className="block w-9/12 ml-4 mr-8 mt-2
+        px-3
+        py-1.5
+        text-base
+        font-normal
+        text-gray-700
+        bg-white bg-clip-padding
+        border border-solid border-gray-300
+        rounded
+        transition
+        ease-in-out
+       
+        focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
+         <label htmlFor="name" className="ml-4 mt-6">State</label>
+    <input type="text" className="block w-9/12 ml-4 mr-8 mt-2
+        px-3
+        py-1.5
+        text-base
+        font-normal
+        text-gray-700
+        bg-white bg-clip-padding
+        border border-solid border-gray-300
+        rounded
+        transition
+        ease-in-out
+       
+        focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
+         <label htmlFor="name" className="ml-4 mt-6">Pin</label>
+    <input type="text" className="block w-9/12 ml-4 mr-8 mt-2
         px-3
         py-1.5
         text-base
@@ -81,12 +138,12 @@ export default function Checkout() {
             return (
               <li key={key}>
                 <div className=" flex items-center">
-                  <div className="w-2/3 font-semibold">{cart[key].name}</div>
+                  <div className="w-2/3 font-semibold">{key}</div>
                   <div className="flex w-1/3 font-semibold items-center justify-center">
                     <FiMinusSquare
                       className="text-xl"
                       onClick={() => {
-                        removeFromCart(key, 1,cart[key].price,cart[key].name,cart[key].size,cart[key].type);
+                        removeFromCart(cart[key].slug, 1,cart[key].price,key,cart[key].size,cart[key].type);
                       }}
                     />
 
@@ -95,7 +152,7 @@ export default function Checkout() {
                     <FiPlusSquare
                       className="text-xl"
                       onClick={() => {
-                        addToCart(key, 1,cart[key].price,cart[key].name,cart[key].size,cart[key].type);
+                        addToCart(cart[key].slug, 1,cart[key].price,key,cart[key].size,cart[key].type);
                       }}
                     />
                   </div>

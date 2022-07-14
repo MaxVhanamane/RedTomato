@@ -2,13 +2,18 @@ import React, { useEffect } from "react";
 
 // import NoteContext from "./NoteContext"
 import { createContext, useState } from "react";
-
+import { useRouter } from "next/router";
+import {toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 // creating context object and exporting it.
 export const CartContext = createContext();
 
 function CartState(props) {
   const [cart, setCart] = useState({});
   const [Total, setTotal] = useState(0);
+  const [token, setToken] = useState(null);
+  const router = useRouter();
+  const [progress, setProgress] = useState(0)
   const saveCart = (myCart) => {
     localStorage.setItem("cart", JSON.stringify(myCart)); //as we can't store object's in localStorage so let's convert it in JSON string
     let subTotal = 0;
@@ -22,6 +27,12 @@ function CartState(props) {
   };
 
   useEffect(() => {
+    router.events.on('routeChangeStart', ()=>{
+      setProgress(40)
+    })
+    router.events.on('routeChangeComplete', ()=>{
+      setProgress(100)
+    })
     try {
       if (localStorage.getItem("cart")) {
         setCart(JSON.parse(localStorage.getItem("cart")));
@@ -31,22 +42,26 @@ function CartState(props) {
     } catch (error) {
       localStorage.clear();
     }
-  }, []);
-
+    const token=localStorage.getItem("token");
+    if (token){
+      setToken(token)
+    }
+  }, [router.query]);
+// router.query will make this useEffect run on every route change.
   // add to cart
-  const addToCart = (foodID, qty, price, name, size, type) => {
+  const addToCart = (slug, qty, price, name, size, type) => {
     const newCart = JSON.parse(JSON.stringify(cart));
     if (name in cart) {
       newCart[name].qty = cart[name].qty + qty;
     } else {
-      newCart[name] = { qty: 1, price, name, size, type };
+      newCart[name] = { slug,qty: 1, price, size, type };
     }
     setCart(newCart);
     saveCart(newCart);
   };
 
   // delete items from cart
-  const removeFromCart = (foodID, qty, price, name, size, type) => {
+  const removeFromCart = (slug, qty, price, name, size, type) => {
     const newCart = JSON.parse(JSON.stringify(cart)); // You need to parse the cart otherwise state change will not re-render the navbar or any component using cart as a state. if you write only" const newCart=cart" then you will notice while removing items from cart when it reaches to 1 it will not remove further it will just throw an error.
     
     if (name in cart) {
@@ -68,10 +83,31 @@ function CartState(props) {
     setCart({});
     saveCart({});
   };
+ 
+  const orderNow=(slug, qty, price, name, size, type)=>{
+  
+    let  newCart={[`${name}`]:{slug, qty, price, size, type}}
+    setCart(newCart)
+    saveCart(newCart)
+    router.push("/checkout")
+  }
 
+  const removeToken=()=>{
+    localStorage.removeItem("token")
+    setToken(null)
+    toast.success('Logged out successfully!', {
+      position: "top-left",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  }
   return (
     <CartContext.Provider
-      value={{ cart, Total, addToCart, removeFromCart, clearCart }}
+      value={{ progress,setProgress,token,removeToken,cart, Total, addToCart, removeFromCart, clearCart,orderNow }}
     >
       {/* Provider will give access to all the above states and functions to the components which are in props.children */}
       {props.children}

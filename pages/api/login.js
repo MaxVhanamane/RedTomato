@@ -1,0 +1,41 @@
+import connectDb from '../../middleware/mongoose';
+import User from '../../models/users';
+import { AES, enc } from 'crypto-js';
+import jwt from "jsonwebtoken"
+export default async function handler(req, res) {
+    connectDb()
+    if (req.method === "POST") {
+
+        try {
+            let user = await User.findOne({ "email": req.body.email })
+            if (user) {
+                // Decrypting password to verify user
+               
+                let bytes = AES.decrypt(user.password, 'secretkey123');
+                let decryptedPass = bytes.toString(enc.Utf8);
+                if (user.email === req.body.email && decryptedPass === req.body.password) {
+                    const jwtToken = jwt.sign({
+                        name:user.name, email:user.email
+                    }, 'secretjwttoken', { expiresIn: '1d' });
+                    res.status(200).send({ success: true, jwtToken })
+                }
+                else {
+
+                    res.status(200).send({ success: false, error: "Invalid Password" })
+                }
+            }
+            else {
+                res.status(200).send({ success: false, error: "Invalid Credentials" })
+            }
+        }
+        catch (err) {
+            res.status(500).send({ error: err.message })
+        }
+
+    }
+
+
+    else {
+        res.status(400).send({ error: "Not allowed" })
+    }
+}

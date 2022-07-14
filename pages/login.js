@@ -1,10 +1,90 @@
-import React from 'react'
+import React, { useState,useEffect } from 'react'
 import Link from "next/link"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useRouter } from 'next/router';
+
 
 export default function Login() {
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const router=useRouter()
+  useEffect(()=>{
+ const token=localStorage.getItem("token")
+ if(token){
+  router.push("/")
+ }
+  },[])
+  const handleChange = (e) => {
+  
+    if (e.target.name === "email") {
+      setEmail(e.target.value)
+    }
+    else if (e.target.name === "password") {
+      setPassword(e.target.value)
+   
+  }
+}
+
+  const handleLogin = async (e) => {
+    e.preventDefault()
+    
+      const data = {  email, password };
+
+      const res = await fetch('http://localhost:3000/api/login', {
+        method: 'POST', // or 'PUT'
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+      const response = await res.json()
+      if(response.success){
+     localStorage.setItem("token",response.jwtToken)
+      toast.success('Logged in successfully!', {
+        position: "bottom-left",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+     
+        
+        router.push("/")
+    
+    }
+else{
+  toast.error(response.error, {
+    position: "bottom-left",
+    autoClose: 2000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+}
+   
+    
+
+  }
   return (
     <section className="h-screen gradient-form bg-gray-200 md:h-screen">
     <div className="container py-12 px-6 h-full">
+    <ToastContainer
+    
+    position="top-left"
+    autoClose={2000}
+    hideProgressBar={false}
+    newestOnTop={false}
+    closeOnClick
+    rtl={false}
+    pauseOnFocusLoss
+    draggable
+    pauseOnHover
+  />
       <div className="flex justify-center items-center flex-wrap h-full g-6 text-gray-800">
         <div className="xl:w-6/12">
           <div className="block bg-white shadow-lg rounded-lg">
@@ -15,30 +95,35 @@ export default function Login() {
                    
                     <h4 className="text-2xl font-bold mt-1 mb-5 pb-1">Login</h4>
                   </div>
-                  <form>
+                  <form onSubmit={handleLogin}>
                     {/* <p className="mb-4">Please login to your account</p> */}
                     <div className="mb-4">
-                      <input
+                      <input 
+                      onChange={handleChange}
                         type="email"
                         className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                        id="exampleFormControlInput1"
+                        id="email"
                         placeholder="Email"
+                        name="email"
                       />
                     </div>
                     <div className="mb-4">
                       <input
+                      onChange={handleChange}
                         type="password"
                         className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                        id="exampleFormControlInput1"
+                        id="password"
                         placeholder="Password"
+                        name="password"
                       />
                     </div>
                     <div className="text-center pt-1 mb-12 pb-1">
                       <button
                         className="  inline-block px-6 py-2.5 text-white font-medium text-xs leading-tight uppercase rounded shadow-md   active:shadow-lg transition duration-150 ease-in-out w-full mb-3 pink_btn "
-                        type="button"
+      
                         data-mdb-ripple="true"
                         data-mdb-ripple-color="light"
+                        type="submit"
                       
                       >
                         Log in
