@@ -1,13 +1,108 @@
-import React, { useContext } from "react";
+import React, { useState,useContext } from "react";
 import Link from "next/link";
 import { AiFillCloseCircle } from "react-icons/ai";
 import { FiPlusSquare } from "react-icons/fi";
 import { FiMinusSquare } from "react-icons/fi";
 import { CartContext } from "./../context/CartState";
 export default function Checkout() {
-  console.log("checkout")
+
   const { cart,Total, clearCart, removeFromCart, addToCart } =
   useContext(CartContext);
+ // loading state is for razorpay.
+  const [loading, setLoading] = useState(false);
+  
+
+  function loadRazorpay() {
+    console.log("func",Total)
+    const script = document.createElement('script');
+    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+    script.onerror = () => {
+      alert('Razorpay SDK failed to load. Are you online?');
+    };
+    script.onload = async () => {
+      try {
+  // initially setting loading as true because when page loads sometimes razorpay script takes time to load that's why we want to keep 
+  // pay button disabled.
+        setLoading(true);
+        // const result = await fetch('http://localhost:3000/api/createorder', {
+        //   total: 55 + '00',
+        // });
+
+       // amount(here i.e total) :"integer" The amount for which the order was created, in currency subunits. 
+       //For example, for an amount of ₹295, enter 29500. that is why added "00" in the end. (according to razor pay docs)
+        const data = {  total: Total+"00" };  
+      const res = await fetch('http://localhost:3000/api/createorder', {
+        method: 'POST', // or 'PUT'
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+      const response = await res.json()
+// while destructuring an object if you want to rename the key you can use this syntax "id: order_id" . now you can use order_id to access id's value.
+        const { amount, id: order_id, currency } = response;
+
+         
+        // const {
+        //   data: { key: razorpayKey },
+        // } = await fetch('http://localhost:3000/api/getrazorpaykey');
+     
+        // getting rezorpay key
+        const resKey = await fetch('http://localhost:3000/api/getrazorpaykey')
+        const razorpayKey=await resKey.json()
+
+        const options = {
+          key: razorpayKey,
+          amount: amount,
+          currency: currency,
+          name: 'example name',
+          description: 'example transaction',
+          order_id: order_id,
+          // handler will run once the payment is done successfully.
+          handler: async function (response) {
+            // const result = await fetch('/pay-order', {
+            //   amount: amount,
+            //   razorpayPaymentId: response.razorpay_payment_id,
+            //   razorpayOrderId: response.razorpay_order_id,
+            //   razorpaySignature: response.razorpay_signature,
+            // });
+            // alert(result.data.msg);
+            // fetchOrders();
+            alert("Payment Successfull!")
+          },
+          // prefill will show all the initial data when user clicks on pay. it's like a placeholder.
+          prefill: {
+            name: 'example name',
+            email: 'example@gmail.com',
+            contact: '111111',
+          },
+          notes: {
+            address: 'example address',
+          },
+          // theme is to control your razorpay color
+          theme: {
+            color: 'Orange',
+          },
+        };
+  
+        // when script loads we will set loading as false this will enable the pay button.
+        setLoading(false);
+        // following code is to open razorpay gui.
+        const paymentObject = new window.Razorpay(options);
+        paymentObject.open();
+      } catch (err) {
+        // alert(err);
+        console.log(err)
+        setLoading(false);
+      }
+    };
+    document.body.appendChild(script);
+  }
+
+
+
+
+
   return (
     <div className="flex container pt-20 ">
      <div className="w-1/2 ml-20   ">
@@ -163,7 +258,7 @@ export default function Checkout() {
         </ol>
         {Object.keys(cart).length>0 && <div>Grand total : ₹{Total}</div>}
         <div className=" text-center">
-         <Link href="/checkout"><button className="bg-gray-400 mt-6 hover:bg-gray-400 text-gray-800 font-bold  px-4 py-1 rounded inline-flex items-center">
+         <Link href="/checkout"><button disabled={loading} onClick={loadRazorpay} className="bg-gray-400 mt-6 hover:bg-gray-400 text-gray-800 font-bold  px-4 py-1 rounded inline-flex items-center">
             
             {Object.keys(cart).length>0 && <span> Pay ₹{Total} </span>}
           </button></Link>
