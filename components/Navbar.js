@@ -71,12 +71,12 @@ export default function Navbar() {
        {token && <FaUserAlt onMouseOver={()=>{setDropDown(true)}} onMouseLeave={()=>{setDropDown(false)}} className=" text-white text-lg mr-4"/>}
        { dropDown && <div onMouseOver={()=>{setDropDown(true)}} onMouseLeave={()=>{setDropDown(false)}}  className="absolute right-12  top-5 bg-gradient-to-l from-white to-yellow-500 p-2 rounded shadow-2xl ">
         <ul>
-          <li  className="p-2 whitespace-nowrap hover:text-white">My Account</li>
-          <li className="p-2 hover:text-white">Orders</li>
+        <Link href="/myaccount" ><li  className="p-2 whitespace-nowrap hover:text-white">My Account</li></Link>
+          <Link href="/orders" ><li className="p-2 hover:text-white">Orders</li></Link>
           <li onClick={removeToken} className="p-2 hover:text-white">Logout</li>
         </ul>
        </div>}
-        <BsCart4 onClick={toggleCart} className="md:text-2xl text-2xl text-white" />
+        <BsCart4 onClick={toggleCart} className="md:text-2xl text-2xl text-white hover:text-black" />
       </div>
       <div
         ref={ref}
