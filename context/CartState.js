@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect,useRef } from "react";
 
 // import NoteContext from "./NoteContext"
 import { createContext, useState } from "react";
@@ -13,7 +13,8 @@ function CartState(props) {
   const [Total, setTotal] = useState(0);
   const [token, setToken] = useState(null);
   const router = useRouter();
-  const [progress, setProgress] = useState(0)
+  const [progress, setProgress] = useState(0);
+  let ref=useRef()
   const saveCart = (myCart) => {
     localStorage.setItem("cart", JSON.stringify(myCart)); //as we can't store object's in localStorage so let's convert it in JSON string
     let subTotal = 0;
@@ -44,6 +45,7 @@ function CartState(props) {
     }
     const token=localStorage.getItem("token");
     if (token){
+     
       setToken(token)
     }
   }, [router.query]);
@@ -95,6 +97,7 @@ function CartState(props) {
   const removeToken=()=>{
     localStorage.removeItem("token")
     setToken(null)
+    router.push("/")
     toast.success('Logged out successfully!', {
       position: "top-left",
       autoClose: 2000,
@@ -105,9 +108,18 @@ function CartState(props) {
       progress: undefined,
     });
   }
+  const toggleCart = () => {
+    if (ref.current.classList.contains("translate-x-full")) {
+      ref.current.classList.remove("translate-x-full");
+      ref.current.classList.add("translate-x-0");
+    } else if (!ref.current.classList.contains("translate-x-full")) {
+      ref.current.classList.remove("translate-x-0");
+      ref.current.classList.add("translate-x-full");
+    }
+  };
   return (
     <CartContext.Provider
-      value={{ progress,setProgress,token,removeToken,cart, Total, addToCart, removeFromCart, clearCart,orderNow }}
+      value={{ progress,setProgress,token,removeToken,cart, Total, addToCart, removeFromCart, clearCart,orderNow,ref,toggleCart }}
     >
       {/* Provider will give access to all the above states and functions to the components which are in props.children */}
       {props.children}

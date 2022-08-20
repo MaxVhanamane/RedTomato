@@ -12,19 +12,19 @@ import { CartContext } from "./../context/CartState";
 import LoadingBar from 'react-top-loading-bar'
 
 export default function Navbar() {
-  const {progress,setProgress, token,removeToken,cart,Total, clearCart, removeFromCart, addToCart } =
+  const {progress,setProgress, token,removeToken,cart,Total, clearCart, removeFromCart, addToCart,ref,toggleCart } =
     useContext(CartContext);
  const [dropDown,setDropDown]=useState(false)
-  const ref = useRef();
-  const toggleCart = () => {
-    if (ref.current.classList.contains("translate-x-full")) {
-      ref.current.classList.remove("translate-x-full");
-      ref.current.classList.add("translate-x-0");
-    } else if (!ref.current.classList.contains("translate-x-full")) {
-      ref.current.classList.remove("translate-x-0");
-      ref.current.classList.add("translate-x-full");
-    }
-  };
+  // const ref = useRef();
+  // const toggleCart = () => {
+  //   if (ref.current.classList.contains("translate-x-full")) {
+  //     ref.current.classList.remove("translate-x-full");
+  //     ref.current.classList.add("translate-x-0");
+  //   } else if (!ref.current.classList.contains("translate-x-full")) {
+  //     ref.current.classList.remove("translate-x-0");
+  //     ref.current.classList.add("translate-x-full");
+  //   }
+  // };
   return (
     <>     <LoadingBar
     color='#f11946'
@@ -32,7 +32,8 @@ export default function Navbar() {
     waitingTime={500}
     onLoaderFinished={() => setProgress(0)}
   />
-    <div className="flex fixed flex-col z-50 w-full  p-2 justify-start  items-center md:flex-row sm:flex-col  md:justify-start md:items-center bg-[#FC6A03] bg-gradient-to-r from-pink-500 to-yellow-500 ">
+    <div className="flex fixed flex-col z-50 w-full  p-2 justify-start  items-center md:flex-row sm:flex-col  md:justify-start md:items-center bg-[#FC6A03]   ">
+    {/* bg-gradient-to-r from-pink-500 to-yellow-500 bg-[#FC6A03]*/}
       <div className="logo ml-2 mr-6">
         {/* <Image src="/assets/logo.png" alt="logo" width={120} height={45} /> */}
         Your Chef
@@ -68,8 +69,8 @@ export default function Navbar() {
          {!token &&<Link href="/login"><button className="h-8 w-16 mr-2 text-center text-white rounded-lg  hover:text-black">
                     Login
                   </button></Link>}
-       {token && <FaUserAlt onMouseOver={()=>{setDropDown(true)}} onMouseLeave={()=>{setDropDown(false)}} className=" text-white text-lg mr-4"/>}
-       { dropDown && <div onMouseOver={()=>{setDropDown(true)}} onMouseLeave={()=>{setDropDown(false)}}  className="absolute right-12  top-5 bg-gradient-to-l from-white to-yellow-500 p-2 rounded shadow-2xl ">
+       {token && <FaUserAlt onMouseOver={()=>{setDropDown(true)}} onMouseLeave={()=>{setDropDown(false)}} className=" text-white text-lg mr-4 "/>}
+       { dropDown && <div onMouseOver={()=>{setDropDown(true)}} onMouseLeave={()=>{setDropDown(false)}}  className="absolute right-12  top-5 bg-gradient-to-r from-[#FC6A03] to-[#ffffff] p-2 rounded shadow-2xl ">
         <ul>
         <Link href="/myaccount" ><li  className="p-2 whitespace-nowrap hover:text-white">My Account</li></Link>
           <Link href="/orders" ><li className="p-2 hover:text-white">Orders</li></Link>
@@ -80,7 +81,7 @@ export default function Navbar() {
       </div>
       <div
         ref={ref}
-        className="  h-96 overflow-y-scroll   sidebar w-80 absolute top-0 right-0 bg-gradient-to-r from-pink-500 to-yellow-500 p-10 transform transition-transform translate-x-full"
+        className="  h-96 overflow-y-scroll  shadow-md rounded-md  sidebar w-80 absolute top-0 right-0 bg-gradient-to-r from-[#FC6A03] to-[#ffffff] p-10 transform transition-transform translate-x-full"
       >
         <h2 className="font-bold text-xl text-center">My cart</h2>
         <span
@@ -122,7 +123,7 @@ export default function Navbar() {
         </ol>
         {Object.keys(cart).length>0 && <div className="font-bold text-lg">Total : {Total}</div>}
         <div className="flex text-center mt-4">
-         <Link href="/checkout"><button className="bg-gray-300 mr-6 hover:bg-gray-400 text-gray-800 font-bold  px-1 rounded inline-flex items-center">
+         <Link href="/checkout"><button disabled={Object.keys(cart).length==0} className="bg-gray-300 mr-6 disabled:bg-gray-400 hover:bg-gray-200 text-gray-800 font-bold  px-1 rounded inline-flex items-center">
             <span className="fill-current w-2  mr-2">
               <GiShoppingBag className=" flex justify-center items-center text-center" />{" "}
             </span>
@@ -130,7 +131,8 @@ export default function Navbar() {
           </button></Link>
           <button
             onClick={clearCart}
-            className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold px-1 rounded inline-flex items-center"
+            disabled={Object.keys(cart).length==0}
+            className="bg-gray-300 disabled:bg-gray-400 hover:bg-gray-200 text-gray-800 font-bold px-1 rounded inline-flex items-center"
           >
             <span className="fill-current w-2 mr-2">
               <MdDelete />{" "}

@@ -1,15 +1,32 @@
 import React,{useEffect,useState,useContext} from 'react'
 import { useRouter } from 'next/router';
-import { CartContext } from "./../context/CartState";
+import Link from 'next/link';
 export default function Orders() {
     const router=useRouter()
-    const {token}=useContext(CartContext)
+    const [orders,setOrders]=useState([])
     useEffect(()=>{
-     
-      if(!token){
+      const fetchOrders= async ()=>{
+       const res=await fetch('http://localhost:3000/api/myorders', {
+              method: 'POST', // or 'PUT'
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({token:localStorage.getItem("token")}),
+            })
+            const finalRes = await res.json()
+            
+            setOrders(finalRes.orders)
+          
+      }
+      if(!localStorage.getItem("token")){
        router.push("/")
       }
-       },[token])
+      else {
+        fetchOrders()
+      }
+       },[])
+
+       
   return (
     <div className="container pt-24">
       <h1 className="text-center font-semibold text-2xl mb-2">My Orders</h1>
@@ -20,57 +37,36 @@ export default function Orders() {
         <table className="min-w-full">
           <thead className="bg-white border-b">
             <tr>
+              {/* <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                Sr No.
+              </th> */}
               <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                #
+                Order Id
               </th>
               <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                First
+                Email
               </th>
               <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                Last
-              </th>
-              <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                Handle
+                Details
               </th>
             </tr>
           </thead>
           <tbody>
-            <tr className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">1</td>
+            {orders.map((items)=>{
+              return <tr key={items._id} className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
+         
               <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                Mark
+                {items.orderId}
               </td>
               <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                Otto
+                {items.email}
               </td>
               <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                @mdo
-              </td>
-            </tr>
-            <tr className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">2</td>
-              <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                Jacob
-              </td>
-              <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                Thornton
-              </td>
-              <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                @fat
+                <Link href={`/order?id=${items.orderId}`}><a className="text-blue-700">View Details</a></Link>
               </td>
             </tr>
-            <tr className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">3</td>
-              <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                Larry
-              </td>
-              <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                Wild
-              </td>
-              <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                @twitter
-              </td>
-            </tr>
+            })}
+            
           </tbody>
         </table>
       </div>

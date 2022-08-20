@@ -49,7 +49,7 @@ export default function SignUp() {
         body: JSON.stringify(data),
       })
       const response = await res.json()
-      console.log(response)
+      
       toast.success('Your account has been created successfully!', {
         position: "top-left",
         autoClose: 2000,
@@ -59,6 +59,7 @@ export default function SignUp() {
         draggable: true,
         progress: undefined,
       });
+      router.push("/login")
     }
     else{
       toast.error("Password and confirm password didn't match", {

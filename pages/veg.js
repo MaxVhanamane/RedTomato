@@ -15,9 +15,9 @@ export default function Veg({ foodItems }) {
 
             {foodItems.map((item) => {
 
-              return <div key={item._id} className=" p-3 mt-3 mr-2 shadow-lg r">
+              return <div key={item._id} className=" p-3 mt-3 mr-2 shadow-xl rounded ">
                 <Link passHref href={`/product/${item.slug}`}><a className="block relative  rounded overflow-hidden">
-                  <Image
+                  <Image className="rounded"
                     loader={myLoader}
                     alt="ecommerce"
                     src={item.img}

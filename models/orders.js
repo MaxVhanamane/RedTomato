@@ -1,15 +1,14 @@
 const mongoose = require('mongoose');
 
 const OrderSchema = new mongoose.Schema({
-    userId: { type: String, required: true },
-    products: [{
-        productId: { type: String },
-        quntity: { type: Number, default: 1 }
-    }],
+    email: { type: String, required: true },
+    orderId: { type: String, required: true },
+    paymentInfo: { type: String, required: true },
+    products: {type: Object, required: true},
     address: { type: String, required: true },
     amount: { type: Number, required: true },
-    status: { type: String, required: true, default: "pending" }
+    img: { type: String, required: true },
+    status: { type: String,  default: "pending" }
 }, { timestamps: true });
-const Order =mongoose.models.Order || mongoose.model("Order", OrderSchema)
+const Order = mongoose.models.Order || mongoose.model("Order", OrderSchema)
 export default Order
- 

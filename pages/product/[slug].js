@@ -18,7 +18,7 @@ const [selectedRadioBtn,setSelectedRadioBtn]=useState("small")
     setInputPin(e.target.value);
   };
   const handlePinCheck = async () => {
-    const allPins = await fetch("http://localhost:3000/api/checkpin");
+    const allPins = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/checkpin`);
     const pins = await allPins.json();
     
     if (pins.includes(parseInt(inputPin))) {
@@ -200,6 +200,7 @@ const [selectedRadioBtn,setSelectedRadioBtn]=useState("small")
                 </div>
               </div>
             </div>
+            <div className="mb-5">{item.availableQty==0 && <p className="text-red-600">Sorry! Currently this food is not deliverable.</p>}</div>
             <div className="flex items-center">
               <div className="basis-16 text-center title-font font-medium text-xl text-gray-900 w-auto" >
                 {/* // adding a function which will decide the price accoding to size of the food */}
@@ -215,17 +216,21 @@ const [selectedRadioBtn,setSelectedRadioBtn]=useState("small")
    })()
 }
               </div>
+             
+              
               <div >
-              <button
+                {/* if availableQty is zero then we will not allow user to add item to the cart.  */}
+              <button disabled={item.availableQty==0}
                 onClick={() => {
-                  addToCart(slug, 1, foodPrice, `${item.title} (${selectedRadioBtn})`, "large", "veg");
+                  addToCart(slug, 1, foodPrice, `${item.title} (${selectedRadioBtn})`, `${item.size}`, `${item.category}`);
                 }}
-                className="flex ml-5 text-white bg-orange-500 border-0 py-2 px-6 focus:outline-none hover:bg-orange-600 rounded-lg"
+                className=" disabled:bg-gray-400 flex ml-5 text-white bg-orange-500 border-0 py-2 px-6 focus:outline-none hover:bg-orange-600 rounded-lg"
               >
                 Add to Cart
-              </button> </div>
+              </button> 
+              </div>
               <div >
-              <button onClick={()=>{orderNow(slug, 1, foodPrice, `${item.title} (${selectedRadioBtn})`, "large", "veg")}}className="flex ml-8 text-white bg-orange-500 border-0 py-2 px-6 focus:outline-none hover:bg-orange-600 rounded-lg">
+              <button disabled={item.availableQty==0} onClick={()=>{orderNow(slug, 1, foodPrice, `${item.title} (${selectedRadioBtn})`, `${item.size}`, `${item.category}`)}}className="flex  disabled:bg-gray-400 ml-8 text-white bg-orange-500 border-0 py-2 px-6 focus:outline-none hover:bg-orange-600 rounded-lg">
                 Order Now
               </button></div>
           
@@ -239,6 +244,7 @@ const [selectedRadioBtn,setSelectedRadioBtn]=useState("small")
                   className="  h-14 w-96 pl-10 pr-20 rounded-lg z-0  border-2 border-gray-600 focus:shadow focus:outline-none"
                   placeholder="
             Enter your pincode"
+            maxLength={6}
                 />
                 <div className="absolute top-2 right-2">
                   {" "}
@@ -253,13 +259,12 @@ const [selectedRadioBtn,setSelectedRadioBtn]=useState("small")
             </div>
             <div className="pinCodeMessage my-4">
               {!pin && pin != null && (
-                <span className="text-red-700">
-                  Sorry! Delivery to above pincode is currently not available
-                  for this item.
+                <span className="text-red-600">
+                  Sorry! Delivery to the above pincode is currently unavailable.
                 </span>
               )}
               {pin && pin != null && (
-                <span className="text-green-700">Delivery is available</span>
+                <span className="text-green-500">Delivery is available.</span>
               )}
             </div>
           </div>
