@@ -14,6 +14,7 @@ function CartState(props) {
   const [token, setToken] = useState(null);
   const router = useRouter();
   const [progress, setProgress] = useState(0);
+  const [cartChange,setCartChange]=useState(Math.random())
   let ref=useRef()
   const saveCart = (myCart) => {
     localStorage.setItem("cart", JSON.stringify(myCart)); //as we can't store object's in localStorage so let's convert it in JSON string
@@ -60,6 +61,8 @@ function CartState(props) {
     }
     setCart(newCart);
     saveCart(newCart);
+    setCartChange(Math.random())
+
   };
 
   // delete items from cart
@@ -78,12 +81,15 @@ function CartState(props) {
 
     setCart(newCart);
     saveCart(newCart);
+    setCartChange(Math.random())
+
   };
 
   // clear cart
   const clearCart = () => {
     setCart({});
     saveCart({});
+    setCartChange(Math.random())
   };
  
   const orderNow=(slug, qty, price, name, size, type)=>{
@@ -119,7 +125,7 @@ function CartState(props) {
   };
   return (
     <CartContext.Provider
-      value={{ progress,setProgress,token,removeToken,cart, Total, addToCart, removeFromCart, clearCart,orderNow,ref,toggleCart }}
+      value={{ progress,setProgress,token,removeToken,cart, Total, addToCart, removeFromCart, clearCart,orderNow,ref,toggleCart,cartChange,setCartChange }}
     >
       {/* Provider will give access to all the above states and functions to the components which are in props.children */}
       {props.children}

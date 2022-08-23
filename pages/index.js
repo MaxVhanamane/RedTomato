@@ -16,7 +16,7 @@ export default function Home() {
       height={100}  
       quality={100}
       style={{width:"100%",height:"auto"}}  />
-     <input type="text" placeholder="Search" className="bg-white rounded-xl p-2 w-96 pl-5 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 outline-none " />
+     <input type="text" placeholder="Search" className="bg-white rounded-xl p-2 w-96 pl-5 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 outline-none  shadow-neutral-300" />
      <div className="text-center">
      <h1 className="font-bold text-3xl mt-4 text-orange-500">Our most popular foods.</h1>
      </div>

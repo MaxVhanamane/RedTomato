@@ -17,13 +17,13 @@ export default async function handler(req, res) {
       if (cart[item].size === "small") {
         // console.log(foodItem.price[0], cart[item].price)
         if (foodItem.price[0] != cart[item].price) {
-          res.status(200).json({ success: false, error: "The price of some food items has changed in your cart. Please try again." })
+          res.status(200).json({ cartTempered:true,success: false, error: "The price of some food items has changed in your cart. Please try again!" })
           return
         }
       }
       if (cart[item].size === "medium") {
         if (foodItem.price[1] != cart[item].price) {
-          res.status(200).json({ success: false, error: "The price of some food items has changed in your cart. Please try again." })
+          res.status(200).json({cartTempered:true, success: false, error: "The price of some food items has changed in your cart. Please try again!" })
           return
         }
       }
@@ -31,7 +31,7 @@ export default async function handler(req, res) {
         
         if (foodItem.price[2] != cart[item].price) {
           
-          res.status(200).json({ success: false, error: "The price of some food items has changed in your cart. Please try again." })
+          res.status(200).json({cartTempered:true, success: false, error: "The price of some food items has changed in your cart. Please try again!" })
           return
         }
       }
@@ -68,10 +68,16 @@ export default async function handler(req, res) {
       // adding order in db
       if (order) {
         let orderItem = new Order({
+          name:req.body.name,
           email: req.body.email,
           paymentInfo: " ",
           orderId: order.id,
           address: req.body.address,
+          pin: req.body.pin,
+          phone: req.body.phone,
+          area: req.body.area,
+          city: req.body.city,
+          state: req.body.state,
           amount: (req.body.total) / 100, //To store money in rupees in our db we will divide it by 100 as razor pay gives money in paise
           products: req.body.cart,
           img:foodItem.img,

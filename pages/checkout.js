@@ -19,9 +19,13 @@ export default function Checkout() {
   const [email, setEmail] = useState("")
   const [phone, setPhone] = useState("")
   const [address, setAddress] = useState("")
+  const [area, setArea] = useState("")
+  const [city, setCity] = useState("")
+  const [state, setState] = useState("")
   const [pin, setPin] = useState("")
 
   useEffect(() => {
+
     // If there are no items in the cart then we will not allow user to visit checkout page. we will redirect him to home page.
     if (Object.keys(JSON.parse(localStorage.getItem("cart"))).length == 0) {
       router.push("/")
@@ -32,7 +36,20 @@ export default function Checkout() {
     else if (pin.length == 6) {
       setLoading(false)
     }
+    
+  
   }, [pin])
+  useEffect(()=>{
+    let myUser= localStorage.getItem("user")
+    let token= localStorage.getItem("token")
+    if(!myUser){
+      router.push("/")
+     }
+     if(myUser && token){
+       setEmail(myUser)
+       fetchUserDetails(token)
+     }
+  },[])
 
 
   const handleChange = (e) => {
@@ -53,12 +70,47 @@ export default function Checkout() {
 
 
     }
+    else if (e.target.name === "state") {
+      setState(e.target.value)
 
-    if (name.length > 0 && email.length > 0 && phone.length > 1 && address.length > 0 && pin.length > 4) {
+
+    }
+    else if (e.target.name === "city") {
+      setCity(e.target.value)
+
+
+    }
+    else if (e.target.name === "area") {
+      setArea(e.target.value)
+
+
+    }
+
+    if (name.length > 0 && email.length > 0 && phone.length > 1 && address.length > 0 && pin.length > 4 && state.length>0  && city.length>0) {
       setLoading(false)
     }
 
 
+  }
+
+
+  const fetchUserDetails=async(tokenVal)=>{
+    const data = {tokenVal };
+    const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/getuserdetails`, {
+      method: 'POST', // or 'PUT'
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+    const response = await res.json()
+    setName(response.name)
+    setAddress(response.address)
+    setPin(response.pin)
+    setCity(response.city)
+    setState(response.state)
+    setArea(response.area)
+    setPhone(response.phone)
   }
 
   // RazorPay
@@ -81,7 +133,7 @@ export default function Checkout() {
 
         // amount(here i.e total) :"integer" The amount for which the order was created, in currency subunits. 
         //For example, for an amount of ₹295, enter 29500. that is why added "00" in the end. (according to razor pay docs)
-        const data = { total: Total + "00", oid, email, pin, phone, address, cart };
+        const data = { total: Total + "00", oid,name, email, pin, phone, address,area,state,city, cart };
         const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/createorder`, {
           method: 'POST', // or 'PUT'
           headers: {
@@ -147,7 +199,7 @@ export default function Checkout() {
               if (finalResponse.success) {
                 // showing toast message after successful payment verification.
                 toast.success(finalResponse.message, {
-                  position: "top-left",
+                
                   autoClose: 3000,
                   hideProgressBar: false,
                   closeOnClick: true,
@@ -162,7 +214,7 @@ export default function Checkout() {
               else {
                 // showing toast message if signature verification fails.
                 toast.error(finalResponse.message, {
-                  position: "top-left",
+                
                   autoClose: 3000,
                   hideProgressBar: false,
                   closeOnClick: true,
@@ -202,16 +254,22 @@ export default function Checkout() {
           // }
         }
         else {
+          if(response.cartTempered){
+            clearCart()
+          }
 
           toast.error(response.error, {
-            position: "top-left",
-            autoClose: 5000,
+      
+            autoClose: 3000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
             draggable: true,
             progress: undefined,
           });
+          // To keep pay button enabled if the phone number is not 10 digit number. else it will disable pay button after getting response from the 
+          // server.
+          setLoading(false)
         }
       } catch (err) {
         // alert(err);
@@ -226,24 +284,13 @@ export default function Checkout() {
 
 
   return (
-    <div className="flex flex-col md:flex-row container pt-20 justify-center m-auto ">
-      <ToastContainer
-        position="top-left"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
+    <div className="flex flex-col md:flex-row container pt-20 justify-center m-auto mb-10">
       <div className="md:w-1/2 w-3/4 md:ml-20 m-auto mt-10  ">
         <h2 className="font-bold ml-4">Delivery Details</h2>
         <div className=" mt-6 ">
 
 
-          <label htmlFor="name" className="ml-4 mt-6">Name</label>
+          <label htmlFor="name" className="block ml-4 mt-4">Name</label>
           <input type="text" name="name" onChange={handleChange} value={name} className="block md:w-9/12 w-full ml-4 mr-8 mt-2
         px-3
         py-1.5
@@ -257,7 +304,7 @@ export default function Checkout() {
         ease-in-out
        
         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
-          <label htmlFor="mail" className="ml-4 mt-6">Email address</label>
+          <label htmlFor="mail" className="block ml-4 mt-4">Email address</label>
           <input type="mail" name="email" onChange={handleChange} value={email} className="block md:w-9/12 w-full ml-4 mr-8 mt-2
         px-3
         py-1.5
@@ -271,8 +318,8 @@ export default function Checkout() {
         ease-in-out
        
         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
-          <label htmlFor="name" className="ml-4 mt-6">Phone</label>
-          <input maxLength={10} type="text" name="phone" onChange={handleChange} value={phone} required className="block md:w-9/12 w-full ml-4 mr-8 mt-2
+          <label htmlFor="phone" className="block ml-4 mt-4">Phone</label>
+          <input maxLength={10} type="text" name="phone" onChange={handleChange} value={phone} placeholder="Enter your 10 digit phone number" required className="block md:w-9/12 w-full ml-4 mr-8 mt-2
         px-3
         py-1.5
         text-base
@@ -286,7 +333,7 @@ export default function Checkout() {
        
         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
 
-          <label htmlFor="address" className="ml-4 mt-6">Address</label>
+          <label htmlFor="address" className="block ml-4 mt-4">Address</label>
           <textarea type="text" name="address" onChange={handleChange} value={address} className="block md:w-9/12 w-full ml-4 mr-8 mt-2
         px-3
         py-1.5
@@ -298,11 +345,11 @@ export default function Checkout() {
         rounded
         transition
         ease-in-out
-       
+       resize-none
         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
 
-          <label htmlFor="name" className="ml-4 mt-6">Pin</label>
-          <input maxLength={6} type="text" name="pin" onChange={handleChange} value={pin} className="block md:w-9/12 w-full ml-4 mr-8 mt-2
+          <label htmlFor="pin" className="block ml-4 mt-4">Pin</label>
+          <input maxLength={6} type="text" name="pin" onChange={handleChange} value={pin} placeholder="Enter your 6 digit pincode" required className="block md:w-9/12 w-full ml-4 mr-8 mt-2
         px-3
         py-1.5
         text-base
@@ -315,8 +362,8 @@ export default function Checkout() {
         ease-in-out
        
         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
-          <label htmlFor="name" className="ml-4 mt-6">City</label>
-          <input type="text" className="block md:w-9/12 w-full ml-4 mr-8 mt-2
+         <label htmlFor="area" className="block ml-4 mt-4">Area, Street, Sector</label>
+          <input type="text" name="area" onChange={handleChange} value={area} className="block md:w-9/12 w-full ml-4 mr-8 mt-2
         px-3
         py-1.5
         text-base
@@ -329,8 +376,22 @@ export default function Checkout() {
         ease-in-out
        
         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
-          <label htmlFor="name" className="ml-4 mt-6">State</label>
-          <input type="text" className="block md:w-9/12 w-full ml-4 mr-8 mt-2
+          <label htmlFor="city" className="block ml-4 mt-4">Town/City</label>
+          <input type="text" name="city" onChange={handleChange} value={city} className="block md:w-9/12 w-full ml-4 mr-8 mt-2
+        px-3
+        py-1.5
+        text-base
+        font-normal
+        text-gray-700
+        bg-white bg-clip-padding
+        border border-solid border-gray-300
+        rounded
+        transition
+        ease-in-out
+       
+        focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
+          <label htmlFor="state" className="block ml-4 mt-4">State</label>
+          <input type="text" name="state" onChange={handleChange} value={state} className="block md:w-9/12 w-full ml-4 mr-8 mt-2
         px-3
         py-1.5
         text-base
@@ -348,7 +409,6 @@ export default function Checkout() {
 
       </div>
       <div className="md:w-1/2 w-3/4 md:ml-20 m-auto mt-10 mb-10 ">
-
         {/*  Order summary */}
         <h2 className="font-bold ml-4">Order summary</h2>
 
@@ -400,7 +460,9 @@ export default function Checkout() {
             </button></Link>
 
           </div>
+
         </div>
+          <p className="text-gray-500 text-center mt-2" >* Fill delivery details to enable pay button.</p>
 
 
       </div>

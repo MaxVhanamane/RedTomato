@@ -12,7 +12,7 @@ import { CartContext } from "./../context/CartState";
 import LoadingBar from 'react-top-loading-bar'
 
 export default function Navbar() {
-  const {progress,setProgress, token,removeToken,cart,Total, clearCart, removeFromCart, addToCart,ref,toggleCart } =
+  const {progress,setProgress, token,removeToken,cart,Total, clearCart, removeFromCart, addToCart,ref,toggleCart,cartChange,setCartChange} =
     useContext(CartContext);
  const [dropDown,setDropDown]=useState(false)
   // const ref = useRef();
@@ -74,7 +74,7 @@ export default function Navbar() {
         <ul>
         <Link href="/myaccount" ><li  className="p-2 whitespace-nowrap hover:text-white">My Account</li></Link>
           <Link href="/orders" ><li className="p-2 hover:text-white">Orders</li></Link>
-          <li onClick={removeToken} className="p-2 hover:text-white">Logout</li>
+          <li onClick={()=>{removeToken(); clearCart();localStorage.removeItem("user")}} className="p-2 hover:text-white">Logout</li>
         </ul>
        </div>}
         <BsCart4 onClick={toggleCart} className="md:text-2xl text-2xl text-white hover:text-black" />

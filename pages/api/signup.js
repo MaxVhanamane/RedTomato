@@ -8,7 +8,7 @@ export default async function handler(req, res) {
     if (req.method === "POST") {
        
       // Encrypting password
-        var encyPass = AES.encrypt(req.body.password, process.env.JWT_TOKEN).toString();
+        let encyPass = AES.encrypt(req.body.password, process.env.JWT_SECRET).toString();
         try{
             let user= new User({name,email,password:encyPass})
             await user.save()

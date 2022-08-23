@@ -39,7 +39,7 @@ export default function SignUp() {
     e.preventDefault()
     if (password === confirmPass) {
       const data = { name, email, password };
-      console.log(data)
+     
 
       const res = await fetch('http://localhost:3000/api/signup', {
         method: 'POST', // or 'PUT'
@@ -51,7 +51,7 @@ export default function SignUp() {
       const response = await res.json()
       
       toast.success('Your account has been created successfully!', {
-        position: "top-left",
+      
         autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
@@ -63,7 +63,7 @@ export default function SignUp() {
     }
     else{
       toast.error("Password and confirm password didn't match", {
-        position: "top-left",
+     
         autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
@@ -76,18 +76,7 @@ export default function SignUp() {
   }
   return (
     <section className="h-screen gradient-form bg-gray-200 md:h-screen">
-      {/* <ToastContainer
-    
-        position="top-left"
-        autoClose={2000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      /> */}
+  
       <div className="container py-12 px-6 h-full">
         <div className="flex justify-center items-center flex-wrap h-full g-6 text-gray-800">
           <div className="xl:w-6/12">

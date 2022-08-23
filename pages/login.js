@@ -41,8 +41,8 @@ export default function Login() {
       const response = await res.json()
       if(response.success){
      localStorage.setItem("token",response.jwtToken)
+     localStorage.setItem("user",response.email)
       toast.success('Logged in successfully!', {
-        position: "bottom-left",
         autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
@@ -57,7 +57,6 @@ export default function Login() {
     }
 else{
   toast.error(response.error, {
-    position: "bottom-left",
     autoClose: 2000,
     hideProgressBar: false,
     closeOnClick: true,
@@ -73,18 +72,7 @@ else{
   return (
     <section className="h-screen gradient-form bg-gray-200 md:h-screen">
     <div className="container py-12 px-6 h-full">
-    <ToastContainer
-    
-    position="top-left"
-    autoClose={2000}
-    hideProgressBar={false}
-    newestOnTop={false}
-    closeOnClick
-    rtl={false}
-    pauseOnFocusLoss
-    draggable
-    pauseOnHover
-  />
+   
       <div className="flex justify-center items-center flex-wrap h-full g-6 text-gray-800">
         <div className="xl:w-6/12">
           <div className="block bg-white shadow-lg rounded-lg">

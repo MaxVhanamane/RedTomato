@@ -4,18 +4,25 @@ import Link from 'next/link';
 export default function Orders() {
     const router=useRouter()
     const [orders,setOrders]=useState([])
+    const [fetchError,setFetchError]=useState(false)
     useEffect(()=>{
       const fetchOrders= async ()=>{
-       const res=await fetch('http://localhost:3000/api/myorders', {
+       const res=await fetch( `${process.env.NEXT_PUBLIC_HOST}/api/myorders`, {
               method: 'POST', // or 'PUT'
               headers: {
                 'Content-Type': 'application/json',
               },
               body: JSON.stringify({token:localStorage.getItem("token")}),
             })
+
             const finalRes = await res.json()
-            
-            setOrders(finalRes.orders)
+            if(finalRes.success){
+
+              setOrders(finalRes.orders)
+            }
+            else{
+              setFetchError(true)
+            }
           
       }
       if(!localStorage.getItem("token")){
@@ -30,7 +37,8 @@ export default function Orders() {
   return (
     <div className="container pt-24">
       <h1 className="text-center font-semibold text-2xl mb-2">My Orders</h1>
-      <div className="flex flex-col lg:mx-40">
+      {fetchError? <h2 className="text-center font-semibold text-xl mb-2 mt-20">Internal Server Error. Please try again later!</h2>
+     : <div className="flex flex-col lg:mx-40">
   <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
     <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
       <div className="overflow-hidden">
@@ -72,7 +80,7 @@ export default function Orders() {
       </div>
     </div>
   </div>
-</div>
+</div>}
     </div>
   )
 }

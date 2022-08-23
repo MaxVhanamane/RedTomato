@@ -1,6 +1,8 @@
 import React,{useEffect} from 'react'
 import { useRouter } from 'next/router';
-
+import Link from "next/link"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 export default function Forgotpassword() {
   const router=useRouter()
 
@@ -10,9 +12,118 @@ export default function Forgotpassword() {
      router.push("/")
     }
      },[])
+
+
+     const handleLogin = async (e) => {
+      e.preventDefault()
+      
+        const data = {  email, password };
+  
+        const res = await fetch('http://localhost:3000/api/login', {
+          method: 'POST', // or 'PUT'
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        })
+        const response = await res.json()
+        if(response.success){
+       localStorage.setItem("token",response.jwtToken)
+       localStorage.setItem("user",response.email)
+        toast.success('Logged in successfully!', {
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+       
+          
+          router.push("/")
+      
+      }
+  else{
+    toast.error(response.error, {
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  }
+}
+
+const handleChange = (e) => {
+  
+  if (e.target.name === "email") {
+    setEmail(e.target.value)
+  }
+  else if (e.target.name === "password") {
+    setPassword(e.target.value)
+ 
+}
+}
   return (
-    <div>
-      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laborum esse repudiandae, iure placeat enim quas nisi asperiores suscipit tenetur? Accusantium sint consequuntur amet tempore magnam doloremque asperiores expedita, eaque culpa nesciunt sunt atque velit, cum ditate quae fugit quibusdam cum iure perspiciatis unde neque accusamus repellendus quis. Deserunt sit laboriosam sapiente eum labore ut earum suscipit. Dicta odit laborum ratione facilis delectus reiciendis libero autem distinctio! Sequi magni cupiditate quo sapiente facere corrupti, qui praesentium numquam odit distinctio odio totam dolorum. Ea facilis qui eveniet error eaque ab rem perferendis eos laudantium. Suscipit aperiam labore dolore possimus ratione maxime illo expedita voluptatem voluptas, aspchitecto illum? Laboriosam ab sunt, aliquid voluptate, totam deserunt laborum excepturi ea, iste similique consequatur minima itaque pluptatum accusamus dolore dolores non? Dolorem placeat sapiente a vitae repudiandae asperiores mollitia, adipisci labore qui alias, necessitatibus nemo quos sed possimus. Culpa ab ipsa, voluptatibus beatae nostrum recusandae id, cupiditate odio reiciendis necessitatibus provident fugiat, qui officia laboriosam tempore natus.
+    <section className="h-screen gradient-form bg-gray-200 md:h-screen">
+    <div className="container py-12 px-6 h-full">
+   
+      <div className="flex justify-center items-center flex-wrap h-full g-6 text-gray-800">
+        <div className="xl:w-6/12">
+          <div className="block bg-white shadow-lg rounded-lg">
+            <div className="flex justify-center items-center g-0">
+              <div className=" px-4 md:px-0">
+                <div className="md:p-12 md:mx-6">
+                  <div className="text-center rounded-full">
+                   
+                    <h4 className="text-2xl font-bold mt-1 mb-5 pb-1">Forgot Password</h4>
+                  </div>
+                  <form onSubmit={handleLogin}>
+                    {/* <p className="mb-4">Please login to your account</p> */}
+                    <div className="mb-4">
+                      <input 
+                      onChange={handleChange}
+                        type="email"
+                        className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                        id="email"
+                        placeholder="Email"
+                        name="email"
+                      />
+                    </div>
+                   
+                    <div className="text-center pt-1 mb-12 pb-1">
+                      <button
+                        className="  inline-block px-6 py-2.5 text-white font-medium text-xs leading-tight uppercase rounded shadow-md   active:shadow-lg transition duration-150 ease-in-out w-full mb-3 pink_btn "
+      
+                        data-mdb-ripple="true"
+                        data-mdb-ripple-color="light"
+                        type="submit"
+                      
+                      >
+                        Continue
+                      </button>
+                    </div>
+                    <div className="flex items-center justify-between pb-6">
+                      <p className="mb-0 mr-2">Don't have an account?</p>
+                      <Link href="/signup"><button
+                        type="button"
+                        className="inline-block px-6 py-2 border-2 border-red-600 text-red-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out"
+                        data-mdb-ripple="true"
+                        data-mdb-ripple-color="light"
+                      >
+                        Sign Up
+                      </button></Link>
+                    </div>
+                  </form>
+                </div>
+              </div>
+       
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </section>
   )
 }
