@@ -25,6 +25,7 @@ body {
   /* to hide scrollbar in firefox */
   scrollbar-width: none;  
   /* background: #E9F3ED; */
+  background-color: #f9fafb
 }
 
 .pink_btn {
@@ -48,3 +49,6 @@ body {
 ::-webkit-scrollbar {
   display: none;
 }
+
+
+

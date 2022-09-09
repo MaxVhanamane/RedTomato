@@ -10,42 +10,45 @@ export default function Veg({ foodItems }) {
   return (
     <>
       <section className="text-gray-600 body-font">
-        <div className="container px-5 py-24 mx-auto  ">
+        <div className="container px-5 pt-16  mx-auto  ">
+        <h1 className="font-bold text-2xl text-center mb-4 text-red-500 lg:mt-6 mt-10 underline">Nonveg food items</h1>
+
           <div className="flex flex-wrap m-auto  justify-center ">
 
             {foodItems.map((item) => {
 
-              return <div key={item._id} className=" p-3 mt-3 mr-2 shadow-lg r">
-                <Link passHref href={`/product/${item.slug}`}><a className="block relative  rounded overflow-hidden">
-                  <Image
-                    loader={myLoader}
-                    alt="ecommerce"
-                    src={item.img}
-                    width={320}
-                    height={280}
-                  />
+              return <div key={item._id} className=" mt-3 mr-2 hover:shadow-xl hover:bg-gray-100 rounded-xl  antialiased">
+              <Link passHref href={`/product/${item.slug}`}><a className="block relative p-3  rounded-xl overflow-hidden">
+                <Image className="rounded-xl"
+                  loader={myLoader}
+                  alt="ecommerce"
+                  src={item.img}
+                  width={320}
+                  height={250}
+                />
 
-                  <div className="mt-4">
-                    {/* Types:
-                    {item.type.map((foodtypes) => {
-                      return <span key={foodtypes} className=" text-center text-gray-500 text-xs tracking-widest title-font mb-1 border px-1 border-gray-300 mx-1 "> {foodtypes}</span>
-                    })}
-                    <br />
-                    Sizes:
-                    {item.size.map((foodtsizes) => {
-                      return <span key={foodtsizes} className="text-center text-gray-500 text-xs tracking-widest title-font mb-1  border  border-gray-300 mx-1 px-1"> {foodtsizes} </span>
-                    })} */}
+<div className="mt-3">
+                  {/* Types:
+                  {item.type.map((foodtypes) => {
+                    return <span key={foodtypes} className=" text-center text-gray-500 text-xs tracking-widest title-font mb-1 border px-1 border-gray-300 mx-1 "> {foodtypes}</span>
+                  })}
+                  <br />
+                  Sizes:
+                  {item.size.map((foodtsizes) => {
+                    return <span key={foodtsizes} className="text-center text-gray-500 text-xs tracking-widest title-font mb-1  border  border-gray-300 mx-1 px-1"> {foodtsizes} </span>
+                  })} */}
 
 
-                    <h2 className="text-gray-900 title-font text-lg font-medium">
-                      {item.title}
-                    </h2>
-                    <p className=" text-gray-500 text-xs tracking-widest title-font mb-1 w-80   ">{ item.desc.slice(0,150)}...</p>
-                  
-                    <p className="mt-1">₹{item.price[0]}</p>
-                  </div> </a>
-                </Link>
-              </div>
+<h2 className=" text-gray-900 title-font text-lg font-medium">
+                    {item.title}
+                  </h2>
+                  <p className="  text-gray-500 text-xs tracking-widest title-font mb-1 w-80   ">{ item.desc.slice(0,150)}...</p>
+                  <hr className="block bg-gray-400 h-0.5"/>
+                
+                  <p className=" pb-2 mt-1">₹{item.price[0]}</p>
+                </div> </a>
+              </Link>
+            </div>
             })}
 
           </div>

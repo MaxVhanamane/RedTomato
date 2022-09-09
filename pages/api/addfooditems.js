@@ -7,7 +7,7 @@ export default async function handler(req, res) {
         for (let i = 0; i < req.body.length; i++) {
             let food = new Food({
                 title: req.body[i].title,
-                slug: req.body[i].slug, unique: req.body[i].unique,
+                slug: req.body[i].slug, 
                 desc: req.body[i].desc,
                 img: req.body[i].img,
                 type: req.body[i].type,
@@ -26,3 +26,5 @@ export default async function handler(req, res) {
     }
 
 }
+
+// unique: req.body[i].unique,

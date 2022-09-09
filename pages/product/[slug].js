@@ -118,7 +118,7 @@ console.log(Object.keys(pins)[0][0])
               <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
                 {item.title}
               </h1>
-              <div className="flex mb-4">
+              {/* <div className="flex mb-4">
                 <span className="flex items-center">
                   <svg
                     fill="currentColor"
@@ -215,7 +215,7 @@ console.log(Object.keys(pins)[0][0])
                     </svg>
                   </a>
                 </span>
-              </div>
+              </div> */}
               <p className="leading-relaxed">
                 {item.desc}
               </p>

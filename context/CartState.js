@@ -15,7 +15,8 @@ function CartState(props) {
   const router = useRouter();
   const [progress, setProgress] = useState(0);
   const [cartChange,setCartChange]=useState(Math.random())
-  let ref=useRef()
+  const sidebar=useRef()
+  const ref=useRef()
   const saveCart = (myCart) => {
     localStorage.setItem("cart", JSON.stringify(myCart)); //as we can't store object's in localStorage so let's convert it in JSON string
     let subTotal = 0;
@@ -46,7 +47,6 @@ function CartState(props) {
     }
     const token=localStorage.getItem("token");
     if (token){
-     
       setToken(token)
     }
   }, [router.query]);
@@ -123,9 +123,18 @@ function CartState(props) {
       ref.current.classList.add("translate-x-full");
     }
   };
+  const toggleSidebar = () => {
+    if (sidebar.current.classList.contains("-translate-x-full")) {
+      sidebar.current.classList.remove("-translate-x-full");
+      sidebar.current.classList.add("translate-x-0");
+    } else if (!sidebar.current.classList.contains("-translate-x-full")) {
+      sidebar.current.classList.remove("translate-x-0");
+      sidebar.current.classList.add("-translate-x-full");
+    }
+  };
   return (
     <CartContext.Provider
-      value={{ progress,setProgress,token,removeToken,cart, Total, addToCart, removeFromCart, clearCart,orderNow,ref,toggleCart,cartChange,setCartChange }}
+      value={{ progress,setProgress,token,removeToken,cart, Total, addToCart, removeFromCart, clearCart,orderNow,ref,toggleCart,cartChange,setCartChange ,sidebar,toggleSidebar}}
     >
       {/* Provider will give access to all the above states and functions to the components which are in props.children */}
       {props.children}

@@ -1,10 +1,14 @@
-import React,{useEffect} from 'react'
+import React,{useEffect,useState} from 'react'
 import { useRouter } from 'next/router';
 import Link from "next/link"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 export default function Forgotpassword() {
   const router=useRouter()
+const [email,setEmail]=useState("")
+const [newPassword,setNewPassword]=useState("")
+const [cNewpassword,setCNewPassword]=useState("")
+
 
   useEffect(()=>{
     const token=localStorage.getItem("token")
@@ -55,20 +59,115 @@ export default function Forgotpassword() {
   }
 }
 
+
 const handleChange = (e) => {
   
   if (e.target.name === "email") {
     setEmail(e.target.value)
   }
   else if (e.target.name === "password") {
-    setPassword(e.target.value)
+    setNewPassword(e.target.value)
+ 
+}
+  else if (e.target.name === "cpassword") {
+    setCNewPassword(e.target.value)
  
 }
 }
+
+
+
+const handleSendMail=async()=>{
+
+
+  const data = {  email, sendMail:true };
+  
+  const res = await fetch('http://localhost:3000/api/forgotpassword', {
+    method: 'POST', // or 'PUT'
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  })
+  const response = await res.json()
+if(response.success){
+  toast.success("We have emailed you password reset link. Check your mail.", {
+         
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+}
+
+
+}
+
+
+const handleResetPassword=async()=>{
+  if(newPassword===cNewpassword){
+
+    const data = {  email:router.query.email, sendMail:false,token:router.query.token,newPassword:newPassword };
+  
+    const res = await fetch('http://localhost:3000/api/forgotpassword', {
+      method: 'POST', // or 'PUT'
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+    const response = await res.json()
+
+    if(response.success){
+      toast.success("Your password has been Changed successfully.", {
+         
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      router.push("/login")
+    }
+
+    else{
+      toast.success(response.message, {
+         
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      router.push("/forgotpassword")
+
+    }
+
+  }
+  else{
+    toast.success("New password and confirm new password must be same.", {
+         
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  }
+
+}
+
+
+
+
   return (
     <section className="h-screen gradient-form bg-gray-200 md:h-screen">
     <div className="container py-12 px-6 h-full">
-   
       <div className="flex justify-center items-center flex-wrap h-full g-6 text-gray-800">
         <div className="xl:w-6/12">
           <div className="block bg-white shadow-lg rounded-lg">
@@ -79,7 +178,70 @@ const handleChange = (e) => {
                    
                     <h4 className="text-2xl font-bold mt-1 mb-5 pb-1">Forgot Password</h4>
                   </div>
-                  <form onSubmit={handleLogin}>
+
+
+
+
+                  {router.query.token && <div>
+                    
+                   
+                    {/* <p className="mb-4">Please login to your account</p> */}
+                    <div className="mb-4">
+                      <input 
+                      onChange={handleChange}
+                        type="password"
+                        className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                        id="password"
+                        placeholder="New password"
+                        name="password"
+                        value={newPassword}
+                      />
+                    </div>
+                    <div className="mb-4">
+
+                      <input 
+                      onChange={handleChange}
+                        type="password"
+                        className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                        id="cpassword"
+                        placeholder="Confirm new password"
+                        name="cpassword"
+                        value={cNewpassword}
+
+                      />
+                    </div>
+                   
+                    <div className="text-center pt-1 mb-12 pb-1">
+                      <button
+                      onClick={handleResetPassword}
+
+                        className="  inline-block px-6 py-2.5 text-white font-medium text-xs leading-tight uppercase rounded shadow-md   active:shadow-lg transition duration-150 ease-in-out w-full mb-3 pink_btn "
+      
+                        data-mdb-ripple="true"
+                        data-mdb-ripple-color="light"
+                        type="submit"
+                      
+                      >
+                        Change Password
+                      </button>
+                    </div>
+               
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    </div>}
+
+
+
+
+
+                  {!router.query.token && <div> 
                     {/* <p className="mb-4">Please login to your account</p> */}
                     <div className="mb-4">
                       <input 
@@ -89,11 +251,14 @@ const handleChange = (e) => {
                         id="email"
                         placeholder="Email"
                         name="email"
+                        value={email}
+
                       />
                     </div>
                    
                     <div className="text-center pt-1 mb-12 pb-1">
                       <button
+                      onClick={handleSendMail}
                         className="  inline-block px-6 py-2.5 text-white font-medium text-xs leading-tight uppercase rounded shadow-md   active:shadow-lg transition duration-150 ease-in-out w-full mb-3 pink_btn "
       
                         data-mdb-ripple="true"
@@ -101,7 +266,7 @@ const handleChange = (e) => {
                         type="submit"
                       
                       >
-                        Continue
+                        Send Reset Email
                       </button>
                     </div>
                     <div className="flex items-center justify-between pb-6">
@@ -115,7 +280,7 @@ const handleChange = (e) => {
                         Sign Up
                       </button></Link>
                     </div>
-                  </form>
+                 </div> }
                 </div>
               </div>
        

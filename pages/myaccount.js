@@ -97,13 +97,38 @@ export default function Orders() {
         body: JSON.stringify(data),
       })
       const response = await res.json()
-      setName(response.name)
-      setAddress(response.address)
-      setPin(response.pin)
-      setCity(response.city)
-      setState(response.state)
-      setArea(response.area)
-      setPhone(response.phone)
+      // checking if the response has undefined properties if I directly set them without checking then console will show a warning.
+      // A component is changing a controlled input to be uncontrolled. 
+      if(response.name != undefined){
+
+        setName(response.name)
+      }
+      if(response.address != undefined){
+
+        setAddress(response.address)
+      }
+      if(response.pin != undefined){
+
+        setPin(response.pin)
+      }
+      if(response.city != undefined){
+
+        setCity(response.city)
+      }
+     
+      if(response.state != undefined){
+
+        setState(response.state)
+      }
+      if(response.area != undefined){
+
+        setArea(response.area)
+      }
+      if(response.phone != undefined){
+
+        setPhone(response.phone)
+      }
+     
     }
 
     const handleUpdateUserDetails=async()=>{
@@ -189,10 +214,10 @@ export default function Orders() {
       
     }
   return (
-    <div className="container pt-20  ">
+    <div className="container pt-28 md:pt-20 ">
      
-      <h1 className="text-xl text-center font-bold">Update your account</h1>
-      <div className='flex flex-row mb-10'>
+      <h1 className="text-xl text-center font-bold">Your account</h1>
+      <div className='flex md:flex-row flex-col mb-10'>
       <div className="md:w-1/2 w-3/4 md:ml-20 m-auto mt-10  ">
         <h2 className="font-bold ml-4">1. Delivery Details</h2>
         <div className=" mt-6 ">
@@ -313,7 +338,7 @@ export default function Orders() {
        
         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
 
-        <button onClick={handleUpdateUserDetails} className="disabled:bg-gray-400 enabled:bg-gradient-to-r from-pink-500 to-yellow-500 mt-6 enabled:hover:bg-gray-500 text-gray-800 font-bold ml-4 px-4 py-1 rounded inline-flex items-center">
+        <button onClick={handleUpdateUserDetails} className="disabled:bg-gray-400 enabled:bg-blue-400 mt-6 enabled:hover:bg-blue-500 text-gray-800 font-bold ml-4 px-4 py-1 rounded inline-flex items-center">
 
  <span> Update Details </span>
 </button>
@@ -324,7 +349,7 @@ export default function Orders() {
       </div>
 
 
-      <div className="md:w-1/2 w-3/4 md:ml-20 m-auto mt-10  ">
+      <div className="md:w-1/2 w-3/4 md:ml-20 m-auto mt-10 mb-24  ">
         <h2 className="font-bold ml-4">2. Password</h2>
         <div className=" mt-6 ">
 
@@ -374,7 +399,7 @@ export default function Orders() {
         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
           
 
-        <button onClick={handleUpdatePassword}  className="disabled:bg-gray-400 enabled:bg-gradient-to-r from-pink-500 to-yellow-500 mt-6 enabled:hover:bg-gray-500 text-gray-800 font-bold ml-4 px-4 py-1 rounded inline-flex items-center">
+        <button onClick={handleUpdatePassword}  className="disabled:bg-gray-400 enabled:bg-blue-400 mt-6 enabled:hover:bg-blue-500 text-gray-800 font-bold ml-4 px-4 py-1 rounded inline-flex items-center">
 
 <span> Update Password</span>
 </button>

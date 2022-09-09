@@ -35,7 +35,7 @@ export default function Orders() {
 
        
   return (
-    <div className="container pt-24">
+    <div className="container pt-24 mb-24">
       <h1 className="text-center font-semibold text-2xl mb-2">My Orders</h1>
       {fetchError? <h2 className="text-center font-semibold text-xl mb-2 mt-20">Internal Server Error. Please try again later!</h2>
      : <div className="flex flex-col lg:mx-40">

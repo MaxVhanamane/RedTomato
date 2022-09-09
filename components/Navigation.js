@@ -1,0 +1,96 @@
+import React,{useState,useContext,useEffect} from "react";
+import { AiOutlineHome } from "react-icons/ai";
+import { AiOutlineLogout } from "react-icons/ai";
+import { FaUserCircle } from "react-icons/fa";
+import { VscThreeBars } from "react-icons/vsc";
+import { AiOutlineShoppingCart } from "react-icons/ai";
+
+import { ImBook } from "react-icons/im";
+import { IoChatboxOutline } from "react-icons/io5";
+import { IoGitNetworkOutline } from "react-icons/io5";
+import styles from "../styles/Navigation.module.css"
+import { useRouter } from 'next/router';
+import Link from "next/link";
+import { CartContext } from "./../context/CartState";
+
+function Navigation() {
+  const {
+    toggleCart,
+    toggleSidebar,removeToken,clearCart,token
+  } = useContext(CartContext);
+  const router = useRouter()
+let currentPath=router.pathname
+
+  return (
+    <nav className={styles.nav}>
+
+
+         
+<button   
+     className={styles.linkTag  }
+        title="sidebar"
+      >
+         <VscThreeBars
+            onClick={toggleSidebar}
+            
+          />
+      </button> 
+
+{/* if you want to show active link add className={styles.linkTag +" " + (currentPath==="/" && styles.active )  } */}
+<Link href="/" >
+<a   
+     className={styles.linkTag }
+        title="home"
+      >
+        <AiOutlineHome />
+      </a> 
+            </Link>
+
+
+   
+
+
+<button   
+     className={styles.linkTag}
+        title="cart"
+      >
+         <AiOutlineShoppingCart
+            onClick={toggleCart}
+           
+          />
+      </button> 
+      {/* If token available then show logout button else show login button */}
+     {!token ? <Link href="/login" >
+<a   
+     className={styles.linkTag }
+        title="login"
+      >
+        <FaUserCircle />
+      </a> 
+            </Link>
+
+     : <button  >
+      <a
+                  onClick={() => {
+                   let confirmLogout= confirm("Are you sure you want to logout?")
+                   if(confirmLogout) {removeToken();
+                    clearCart();
+                    localStorage.removeItem("user");
+                   }
+                  }}
+                  
+                >
+                  <AiOutlineLogout className=" text-red-500 text-2xl"/>
+                </a>
+            </button>}
+
+   
+           
+
+   
+    
+    </nav>
+  );
+}
+
+export default Navigation;
