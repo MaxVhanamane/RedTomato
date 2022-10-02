@@ -4,14 +4,15 @@ import connectDb from './../middleware/mongoose';
 import Food from './../models/foods';
 import Link from 'next/link';
 export default function Veg({ foodItems }) {
-  const myLoader = () => {
-    return `https://images.unsplash.com/photo-1550547660-d9450f859349?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Zm9vZCUyMGltYWdlc3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60`;
+  const myLoader = ({ src, width, quality }) => {
+    return `${src}?w=${width}&q=${quality || 100}`;
   };
   return (
     <>
       <section className="text-gray-600 body-font">
         <div className="container px-5 pt-16  mx-auto  ">
-        <h1 className="font-bold text-2xl text-center mb-4 text-red-500 lg:mt-6 mt-10 underline">Nonveg food items</h1>
+        <h1 className="font-bold md:text-3xl text-2xl text-center mb-4 text-gray-700 lg:mt-6 mt-4 drop-shadow"><span className="px-6 ">Nonveg food items</span></h1>
+
 
           <div className="flex flex-wrap m-auto  justify-center ">
 

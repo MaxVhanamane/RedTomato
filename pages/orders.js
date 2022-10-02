@@ -39,7 +39,7 @@ export default function Orders() {
       <h1 className="text-center font-semibold text-2xl mb-2">My Orders</h1>
       {fetchError? <h2 className="text-center font-semibold text-xl mb-2 mt-20">Internal Server Error. Please try again later!</h2>
      : <div className="flex flex-col lg:mx-40">
-  <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
+  {orders.lenght>0 ?<div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
     <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
       <div className="overflow-hidden">
         <table className="min-w-full">
@@ -60,7 +60,7 @@ export default function Orders() {
             </tr>
           </thead>
           <tbody>
-            {orders.map((items)=>{
+            { orders.map((items)=>{
               return <tr key={items._id} className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
          
               <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
@@ -79,7 +79,7 @@ export default function Orders() {
         </table>
       </div>
     </div>
-  </div>
+  </div>: <h1 className="text-center mt-6 text-md sm:text-xl"> No orders found!</h1>}
 </div>}
     </div>
   )

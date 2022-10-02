@@ -55,8 +55,8 @@ export default function Home({ foodItems }) {
 
 
 
-  const myLoader = ({src,width, quality }) => {
-    return `${src}w=${width}&q=${quality}`;
+  const myLoader = ({ src, width, quality }) => {
+    return `${src}?w=${width}&q=${quality || 100}`;
   };
   return (
    <>
@@ -117,7 +117,7 @@ export default function Home({ foodItems }) {
 <h2 className=" text-gray-900 title-font text-lg font-medium">
                     {item.title}
                   </h2>
-                  <p className="  text-gray-500 text-xs tracking-widest title-font mb-1 w-80   ">{ item.desc.slice(0,150)}...</p>
+                  <p className="  text-gray-500 text-xs tracking-widest title-font mb-1 w-80   ">{ item.desc.slice(0,80)}...</p>
                   <p className="  text-gray-500 text-xs tracking-widest title-font mb-2 w-80   "> category: 
                     <span className={`${item.category==="veg" ? "text-green-600" :" text-red-500"}  text-xs tracking-widest title-font w-80   `}> { item.category}</span></p>
                   <hr className="block bg-gray-400 h-0.5"/>
@@ -197,7 +197,7 @@ export default function Home({ foodItems }) {
 <h2 className=" text-gray-900 title-font text-lg font-medium">
                       {item.title}
                     </h2>
-                    <p className="  text-gray-500 text-xs tracking-widest title-font mb-1 w-80   ">{ item.desc.slice(0,150)}...</p>
+                    <p className="  text-gray-500 text-xs tracking-widest title-font mb-1 w-80   ">{ item.desc.slice(0,80)}...</p>
                     <p className="  text-gray-500 text-xs tracking-widest title-font mb-2 w-80   "> category: 
                     <span className={`${item.category==="veg" ? "text-green-600" :" text-red-500"}  text-xs tracking-widest title-font w-80   `}> { item.category}</span></p>
                     <hr className="block bg-gray-400 h-0.5"/>

@@ -5,9 +5,9 @@ const FoodSchema = new mongoose.Schema({
     slug: { type: String, required: true, unique: true },
     desc: { type: String, required: true },
     img: { type: String, required: true },
-    popularity: { type: String, required: true,default:"moderate" },
+    popularity: { type: String, required: true,default:"low" },
     category: { type: String, required: true },
-    size: { type: String },
+    size: { type: String,default:"small" },
     price: [{ type: Number, required: true }],
     availableQty: { type: Number, required: true }
 }, { timestamps: true });

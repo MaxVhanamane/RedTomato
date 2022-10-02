@@ -5,7 +5,6 @@ import { FiPlusSquare } from "react-icons/fi";
 import { FiMinusSquare } from "react-icons/fi";
 import { CartContext } from "./../context/CartState";
 import { useRouter } from 'next/router';
-import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 export default function Checkout() {
 
@@ -177,7 +176,7 @@ export default function Checkout() {
             amount: amount,
             currency: currency,
             name: 'Red Tomato',
-            description: 'example transaction',
+            description: order_id,
             order_id: order_id,
             // handler will run once the payment is done successfully.
             handler: async function (response) {
@@ -250,7 +249,7 @@ export default function Checkout() {
             },
             // theme is to control your razorpay color
             theme: {
-              color: 'Orange',
+              color: 'green',
             },
 
           };
@@ -421,12 +420,12 @@ export default function Checkout() {
         </div>
 
       </div>
-      <div className="md:w-1/2 w-3/4 md:ml-20 m-auto mt-10 mb-10 ">
+      <div className="md:w-1/2 w-3/4 md:ml-10 m-auto mt-10 mb-10 ">
         {/*  Order summary */}
         <h2 className="font-bold ml-4">2. Order summary</h2>
 
         <div
-          className=" mt-6 m-auto h-auto sidebar md:w-9/12 w-3/4  bg-gray-100 p-10 "
+          className=" mt-6 m-auto h-auto sidebar md:w-72 w-72  bg-gray-100 p-10 "
         >
 
           <span
@@ -442,10 +441,10 @@ export default function Checkout() {
               return (
                 <li key={key}>
                   <div className=" flex items-center">
-                    <div className="w-2/3 font-semibold">{key}</div>
+                    <div className="w-2/3 font-semibold text-gray-800">{key}</div>
                     <div className="flex w-1/3 font-semibold items-center justify-center">
                       <FiMinusSquare
-                        className="text-xl"
+                        className="text-xl text-gray-800"
                         onClick={() => {
                           removeFromCart(cart[key].slug, 1, cart[key].price, key, cart[key].size, cart[key].type);
                         }}
@@ -454,7 +453,7 @@ export default function Checkout() {
                       <span className="m-2">{cart[key].qty}</span>
 
                       <FiPlusSquare
-                        className="text-xl"
+                        className="text-xl text-gray-800"
                         onClick={() => {
                           addToCart(cart[key].slug, 1, cart[key].price, key, cart[key].size, cart[key].type);
                         }}
@@ -467,7 +466,7 @@ export default function Checkout() {
           </ol>
           {Object.keys(cart).length > 0 && <div>Grand total : ₹{Total}</div>}
           <div className=" text-center">
-            <Link href="/checkout"><button disabled={loading} onClick={loadRazorpay} className="disabled:bg-gray-400 enabled:bg-cyan-400 mt-6 enabled:hover:bg-cyan-500 text-gray-800 font-bold  px-4 py-1 rounded inline-flex items-center">
+            <Link href="/checkout"><button disabled={loading} onClick={loadRazorpay} className="disabled:bg-gray-400 enabled:bg-blue-500 mt-6 enabled:hover:bg-blue-600 text-gray-100 font-bold  px-4 py-1 rounded inline-flex items-center">
 
               {Object.keys(cart).length > 0 && <span> Pay ₹{Total} </span>}
             </button></Link>

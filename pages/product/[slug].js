@@ -26,7 +26,6 @@ export default function Product({ foodItem, error }) {
   
   const router = useRouter();
   const { slug } = router.query;
-  let value
   const handleInputPin = (e) => {
     setInputPin(e.target.value);
   };
@@ -47,6 +46,8 @@ console.log(Object.keys(pins)[0][0])
   useEffect(()=>{
   let cartItems=JSON.parse(localStorage.getItem("cart"))
   // console.log(cartItems)
+ if(cartItems){
+
   let arr=Object.keys(cartItems)
   
   if(arr.length===0){
@@ -78,6 +79,9 @@ console.log(Object.keys(pins)[0][0])
     }
    
    })
+
+
+ }
 },[selectedRadioBtn,goToCart,cartChange])
   const handleSizeChange = (e) => {
     setSelectedRadioBtn(e.target.value)
@@ -113,7 +117,7 @@ console.log(Object.keys(pins)[0][0])
             />
             <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
               <h2 className="text-sm title-font text-gray-500 tracking-widest">
-                Your Chef
+                Red Tomato
               </h2>
               <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
                 {item.title}
@@ -290,7 +294,7 @@ console.log(Object.keys(pins)[0][0])
                       });
                       setGoToCart(true)
                     }}
-                    className=" disabled:bg-gray-400 flex ml-5 text-white bg-orange-500 border-0 py-2 px-6 focus:outline-none hover:bg-orange-600 rounded-lg"
+                    className=" disabled:bg-gray-400 flex lg:ml-5 ml-3  text-white bg-orange-500 border-0 py-2 lg:px-6 px-2 focus:outline-none hover:bg-orange-600 rounded-lg"
                   >
                     Add to Cart
                   </button> :
@@ -299,7 +303,7 @@ console.log(Object.keys(pins)[0][0])
                       onClick={() => {
                         toggleCart()
                       }}
-                      className=" disabled:bg-gray-400 flex ml-5 text-white bg-orange-500 border-0 py-2 px-6 focus:outline-none hover:bg-orange-600 rounded-lg"
+                      className=" disabled:bg-gray-400 flex lg:ml-5 ml-3 text-white bg-orange-500 border-0 py-2 lg:px-6 px-2 focus:outline-none hover:bg-orange-600 rounded-lg"
                     >
                       Go to Cart
                     </button>
@@ -309,7 +313,7 @@ console.log(Object.keys(pins)[0][0])
 
                 </div>
                 <div >
-                  <button disabled={item.availableQty == 0} onClick={() => { orderNow(slug, 1, foodPrice, `${item.title} (${selectedRadioBtn})`, `${item.size}`, `${item.category}`) }} className="flex  disabled:bg-gray-400 ml-8 text-white bg-orange-500 border-0 py-2 px-6 focus:outline-none hover:bg-orange-600 rounded-lg">
+                  <button disabled={item.availableQty == 0} onClick={() => { orderNow(slug, 1, foodPrice, `${item.title} (${selectedRadioBtn})`, `${item.size}`, `${item.category}`) }} className="flexdisabled:bg-gray-400 ml-8 text-white bg-orange-500 border-0 py-2 px-6 focus:outline-none hover:bg-orange-600 rounded-lg">
                     Order Now
                   </button></div>
 
@@ -320,13 +324,12 @@ console.log(Object.keys(pins)[0][0])
                   <input
                     onChange={handleInputPin}
                     type="text"
-                    className="  h-14 w-96 pl-10 pr-20 rounded-lg z-0  border-2 border-gray-600 focus:shadow focus:outline-none"
+                    className="  h-14 w-full lg:w-11/12 pl-10 pr-32 rounded-lg z-0  border-2 border-gray-600 focus:shadow focus:outline-none"
                     placeholder="
             Enter your pincode"
                     maxLength={6}
                   />
-                  <div className="absolute top-2 right-2">
-                    {" "}
+                  <div className="absolute top-2 lg:right-10 right-4 ">
                     <button
                       onClick={handlePinCheck}
                       className="h-10 w-20 text-white rounded-lg bg-orange-500 hover:bg-orange-600"

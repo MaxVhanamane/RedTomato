@@ -42,6 +42,7 @@ export default function Login() {
       if(response.success){
      localStorage.setItem("token",response.jwtToken)
      localStorage.setItem("user",response.email)
+     localStorage.setItem("role",response.role)
       toast.success('Logged in successfully!', {
         autoClose: 2000,
         hideProgressBar: false,

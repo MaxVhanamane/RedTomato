@@ -10,7 +10,7 @@ export default function MyOrder({ order }) {
       <div className="flex justify-center container px-5 py-24 mx-auto">
         <div className="lg:w-4/5 mx-5 mt-5 flex flex-wrap ">
           <div className="lg:w-1/2 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0">
-            <h2 className="text-sm title-font text-gray-500 tracking-widest">Your Chef</h2>
+            <h2 className="text-sm title-font text-gray-500 tracking-widest">Red Tomato</h2>
             <h1 className="text-gray-900 md:text-2xl text-md lg:text-xl title-font font-medium mb-2 mt-2">Order Id : # {order.orderId}</h1>
             <p className="leading-relaxed mb-1">Your order has been placed successfully.</p>
             <p className="leading-relaxed mb-4">Payment status : <span className='font-bold'> {order.status}</span></p>

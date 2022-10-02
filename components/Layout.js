@@ -1,23 +1,14 @@
 import Footer from "./Footer"
 import Navbar from "./Navbar"
-import {useContext,useEffect,useState} from "react";
-import { useRouter } from 'next/router';
+import {useContext,useEffect} from "react";
 import { CartContext } from './../context/CartState';
+import {useRouter} from "next/router"
 export default function Layout({children}) {
-  const router =useRouter()
+  const router= useRouter()
   const {
-    progress,
-    setProgress,
-    removeToken,
-    cart,
-    Total,
+  
     clearCart,
-    removeFromCart,
-    addToCart,
-    ref,
-    toggleCart,
-    cartChange,
-    setCartChange,sidebar,toggleSidebar
+   
   } = useContext(CartContext);
   useEffect(()=>{
     let token = localStorage.getItem("token");
@@ -36,14 +27,19 @@ export default function Layout({children}) {
     clearCart()
     localStorage.removeItem("user")
     localStorage.removeItem("token")
-     alert("Token expired \n please login again to refresh your token.")
+    localStorage.removeItem("role")
+     alert("Token expired : \n please login again to refresh your token.")
+    }
+    else{
+      // If someone changed the role in localStorage then we will reset it here.
+      localStorage.setItem("role",response.role)
     }
     })()}
    
   
   
    
-  })
+  },[router.query])
     return (
       <div className='h-screen'>
    <Navbar />

@@ -4,19 +4,20 @@ import connectDb from './../middleware/mongoose';
 import Food from './../models/foods';
 import Link from 'next/link';
 export default function Veg({ foodItems }) {
-  const myLoader = () => {
-    return `https://images.unsplash.com/photo-1550547660-d9450f859349?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Zm9vZCUyMGltYWdlc3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60`;
+  const myLoader = ({ src, width, quality }) => {
+    return `${src}?w=${width}&q=${quality || 100}`;
   };
   return (
     <>
       <section className="text-gray-600 body-font">
         <div className="container px-5 pt-16 mx-auto  ">
-              <h1 className="font-bold text-2xl text-center mb-4 text-green-600 lg:mt-6 mt-10 underline">Veg food items</h1>
+              <h1 className="font-bold md:text-3xl text-2xl text-center mb-4 text-gray-700 lg:mt-6 mt-4 drop-shadow "><p></p><span className="px-6">Veg food items</span></h1>
+
               
           <div className="flex flex-wrap m-auto  justify-center ">
             {foodItems.map((item) => {
 
-              return <div key={item._id} className=" mt-3 mr-2 hover:shadow-xl hover:bg-gray-100 rounded-xl  antialiased">
+              return <div key={item._id} className=" mt-3 mb-8 mr-2 hover:shadow-xl hover:bg-gray-100 rounded-xl  antialiased">
               <Link passHref href={`/product/${item.slug}`}><a className="block relative p-3  rounded-xl overflow-hidden">
                 <Image className="rounded-xl"
                   loader={myLoader}
@@ -41,7 +42,7 @@ export default function Veg({ foodItems }) {
 <h2 className=" text-gray-900 title-font text-lg font-medium">
                     {item.title}
                   </h2>
-                  <p className="  text-gray-500 text-xs tracking-widest title-font mb-1 w-80   ">{ item.desc.slice(0,150)}...</p>
+                  <p className=" text-gray-500 text-xs tracking-widest title-font mb-1 w-80 h-8 ">{ item.desc.slice(0,80)}...</p>
                   <hr className="block bg-gray-400 h-0.5"/>
                 
                   <p className=" pb-2 mt-1">₹{item.price[0]}</p>

@@ -49,7 +49,7 @@ function CartState(props) {
     if (token){
       setToken(token)
     }
-  }, [router.query]);
+  }, [router.events,router.query]);
 // router.query will make this useEffect run on every route change.
   // add to cart
   const addToCart = (slug, qty, price, name, size, type) => {

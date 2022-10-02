@@ -8,8 +8,8 @@ export default async function handler(req, res) {
         let token = req.body.tokenVal
        let user= jwt.verify(token, process.env.JWT_SECRET);
        let dbUser=await User.findOne({email:user.email})
-       const {name,email,address,city,state,phone,pin,area}=dbUser
-       res.status(200).json({success:true,name,email,address,city,state,phone,pin,area})
+       const {name,email,address,city,state,phone,pin,area,role}=dbUser
+       res.status(200).json({success:true,name,email,address,city,state,phone,pin,area,role})
     }
     catch(error){
         res.status(200).json({success:false,error:error.message})
