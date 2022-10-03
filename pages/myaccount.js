@@ -218,13 +218,13 @@ export default function Orders() {
      
       <h1 className="text-xl text-center font-bold">Your account</h1>
       <div className='flex md:flex-row flex-col mb-10'>
-      <div className="md:w-1/2 w-3/4 md:ml-20 m-auto mt-10  ">
-        <h2 className="font-bold ml-4">1. Delivery Details</h2>
+      <div className="md:w-1/2 w-3/4 md:ml-28  m-auto mt-10  ">
+        <h2 className="font-bold ">1. Delivery Details</h2>
         <div className=" mt-6 ">
 
 
-          <label htmlFor="name" className="ml-4 mt-6">Name</label>
-          <input type="text" name="name" onChange={handleChange} value={name} className="block md:w-9/12 w-full ml-4 mr-8 mt-2
+          <label htmlFor="name" className=" mt-6">Name</label>
+          <input type="text" name="name" onChange={handleChange} value={name} className="block md:w-9/12 w-full  mr-8 mt-2
         px-3
         py-1.5
         text-base
@@ -237,8 +237,8 @@ export default function Orders() {
         ease-in-out
        
         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
-          <label htmlFor="mail" className="block ml-4 mt-4">Email address (can not be changed)</label>
-          <input type="mail" name="email" onChange={handleChange} value={email} readOnly className="block md:w-9/12 w-full ml-4 mr-8 mt-2
+          <label htmlFor="mail" className="block  mt-4">Email address (can't be changed)</label>
+          <input type="mail" name="email" onChange={handleChange} value={email} readOnly className="block md:w-9/12 w-full  mr-8 mt-2
         px-3
         py-1.5
         text-base
@@ -251,8 +251,8 @@ export default function Orders() {
         ease-in-out
        
         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
-          <label htmlFor="phone" className="block ml-4 mt-4">Phone</label>
-          <input maxLength={10} type="text" name="phone" onChange={handleChange} value={phone} placeholder="Enter your 10 digit phone number" required className="block md:w-9/12 w-full ml-4 mr-8 mt-2
+          <label htmlFor="phone" className="block  mt-4">Phone</label>
+          <input maxLength={10} type="text" name="phone" onChange={handleChange} value={phone} placeholder="Enter your 10 digit phone number" required className="block md:w-9/12 w-full  mr-8 mt-2
         px-3
         py-1.5
         text-base
@@ -266,8 +266,8 @@ export default function Orders() {
        
         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
 
-          <label htmlFor="address" className="block ml-4 mt-4">Address</label>
-          <textarea type="text" name="address" onChange={handleChange} value={address} className="block md:w-9/12 w-full ml-4 mr-8 mt-2
+          <label htmlFor="address" className="block  mt-4">Address</label>
+          <textarea type="text" name="address" onChange={handleChange} value={address} className="block md:w-9/12 w-full  mr-8 mt-2
         px-3
         py-1.5
         text-base
@@ -281,8 +281,8 @@ export default function Orders() {
        resize-none
         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
 
-          <label htmlFor="pin" className="block ml-4 mt-4">Pin</label>
-          <input maxLength={6} type="text" name="pin" onChange={handleChange} value={pin} placeholder="Enter your 6 digit pincode" required className="block md:w-9/12 w-full ml-4 mr-8 mt-2
+          <label htmlFor="pin" className="block  mt-4">Pin</label>
+          <input maxLength={6} type="text" name="pin" onChange={handleChange} value={pin} placeholder="Enter your 6 digit pincode" required className="block md:w-9/12 w-full  mr-8 mt-2
         px-3
         py-1.5
         text-base
@@ -295,8 +295,8 @@ export default function Orders() {
         ease-in-out
        
         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
-         <label htmlFor="area" className="block ml-4 mt-4">Area, Street, Sector</label>
-          <input type="text" name="area" onChange={handleChange} value={area} className="block md:w-9/12 w-full ml-4 mr-8 mt-2
+         <label htmlFor="area" className="block  mt-4">Area, Street, Sector</label>
+          <input type="text" name="area" onChange={handleChange} value={area} className="block md:w-9/12 w-full  mr-8 mt-2
         px-3
         py-1.5
         text-base
@@ -309,8 +309,8 @@ export default function Orders() {
         ease-in-out
        
         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
-          <label htmlFor="city" className="block ml-4 mt-4">Town/City</label>
-          <input type="text" name="city" onChange={handleChange} value={city} className="block md:w-9/12 w-full ml-4 mr-8 mt-2
+          <label htmlFor="city" className="block  mt-4">Town/City</label>
+          <input type="text" name="city" onChange={handleChange} value={city} className="block md:w-9/12 w-full  mr-8 mt-2
         px-3
         py-1.5
         text-base
@@ -323,8 +323,8 @@ export default function Orders() {
         ease-in-out
        
         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
-          <label htmlFor="state" className="block ml-4 mt-4">State</label>
-          <input type="text" name="state" onChange={handleChange} value={state} className="block md:w-9/12 w-full ml-4 mr-8 mt-2
+          <label htmlFor="state" className="block  mt-4">State</label>
+          <input type="text" name="state" onChange={handleChange} value={state} className="block md:w-9/12 w-full  mr-8 mt-2
         px-3
         py-1.5
         text-base
@@ -338,7 +338,7 @@ export default function Orders() {
        
         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
 
-        <button onClick={handleUpdateUserDetails} className="disabled:bg-gray-400 enabled:bg-blue-400 mt-6 enabled:hover:bg-blue-500 text-gray-800 font-bold ml-4 px-4 py-1 rounded inline-flex items-center">
+        <button onClick={handleUpdateUserDetails} className="disabled:bg-gray-400 enabled:bg-blue-400 mt-6 enabled:hover:bg-blue-500 text-gray-800 font-bold  px-4 py-1 rounded inline-flex items-center">
 
  <span> Update Details </span>
 </button>
@@ -350,12 +350,12 @@ export default function Orders() {
 
 
       <div className="md:w-1/2 w-3/4 md:ml-20 m-auto mt-10 mb-24  ">
-        <h2 className="font-bold ml-4">2. Password</h2>
+        <h2 className="font-bold ">2. Password</h2>
         <div className=" mt-6 ">
 
 
-          <label htmlFor="password" className="block ml-4 mt-4">Old password</label>
-          <input type="password" name="password" onChange={handleChange} value={password} className="block md:w-9/12 w-full ml-4 mr-8 mt-2
+          <label htmlFor="password" className="block  mt-4">Old password</label>
+          <input type="password" name="password" onChange={handleChange} value={password} className="block md:w-9/12 w-full  mr-8 mt-2
         px-3
         py-1.5
         text-base
@@ -368,8 +368,8 @@ export default function Orders() {
         ease-in-out
        
         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
-          <label htmlFor="newpassword" className="block ml-4 mt-4">New password</label>
-          <input type="password" name="newpassword" onChange={handleChange} value={newPassword} className="block md:w-9/12 w-full ml-4 mr-8 mt-2
+          <label htmlFor="newpassword" className="block  mt-4">New password</label>
+          <input type="password" name="newpassword" onChange={handleChange} value={newPassword} className="block md:w-9/12 w-full  mr-8 mt-2
         px-3
         py-1.5
         text-base
@@ -383,8 +383,8 @@ export default function Orders() {
        
         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
 
-          <label htmlFor="cnewpassword" className="block ml-4 mt-4">Confirm new password</label>
-          <input type="password" name="cnewpassword" onChange={handleChange} value={cNewPassword} className="block md:w-9/12 w-full ml-4 mr-8 mt-2
+          <label htmlFor="cnewpassword" className="block  mt-4">Confirm new password</label>
+          <input type="password" name="cnewpassword" onChange={handleChange} value={cNewPassword} className="block md:w-9/12 w-full  mr-8 mt-2
         px-3
         py-1.5
         text-base
@@ -399,7 +399,7 @@ export default function Orders() {
         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
           
 
-        <button onClick={handleUpdatePassword}  className="disabled:bg-gray-400 enabled:bg-blue-400 mt-6 enabled:hover:bg-blue-500 text-gray-800 font-bold ml-4 px-4 py-1 rounded inline-flex items-center">
+        <button onClick={handleUpdatePassword}  className="disabled:bg-gray-400 enabled:bg-blue-400 mt-6 enabled:hover:bg-blue-500 text-gray-800 font-bold  px-4 py-1 rounded inline-flex items-center">
 
 <span> Update Password</span>
 </button>

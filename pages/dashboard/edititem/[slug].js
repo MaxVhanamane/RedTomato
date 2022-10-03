@@ -65,6 +65,9 @@ useEffect(()=>{
 
         const finalRes = await res.json()
         if( !(finalRes.success && finalRes.role==="admin")){
+          localStorage.removeItem("user")
+          localStorage.removeItem("token")
+          localStorage.removeItem("role")
           router.push("/")
         }
         
@@ -254,18 +257,6 @@ function uploadImageToFirebase(imageRef){
             progress: undefined,
           });
 
-// setFoodItem({
-//     ...foodItem,
-//     title: "",
-//     slug: "",
-//     desc: "",
-//     popularity:"",
-//     category: "",
-//     price: "",
-//     img:"",
-//     availableQty: ""
-// })
-
     }
 
     }
@@ -281,9 +272,9 @@ function uploadImageToFirebase(imageRef){
        }
       `}</style>
     <DashboardSidebar/>
-    <div className="ml-60 sticky top-0  z-10">
+    <div className="lg:ml-60 sticky top-0  z-10">
     <div className="  py-4 font-bold md:text-3xl text-2xl bg-[#f9fafb] mx-auto text-center shadow  text-gray-700 drop-shadow mb-8 "><h1 className="text-center mx-auto">Edit the food item</h1></div></div>
-    {isItemAvailable?<div className='pt-16 flex justify-center w-full'>
+    {isItemAvailable?<div className='lg:pt-6 flex justify-center w-full'>
         
     <div className="block p-6 rounded-lg shadow-lg bg-white w-[50rem]  mb-28">
         

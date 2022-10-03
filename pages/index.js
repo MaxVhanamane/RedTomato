@@ -140,7 +140,7 @@ export default function Home({ foodItems }) {
 <div style={{width:"100vw", height:"30vw",position:"relative" ,cursor:"pointer"}}>
 <h1 className="absolute top-0 left-0 z-10 font-bold text-xs py-1 px-1 text-white md:text-2xl bg-green-700 md:px-2 md:py-1"> Veg </h1>
             
-<Image src="/assets/veg.jpg"  alt="home" layout="fill"  />
+<Image src="/assets/chanamasala.webp"  alt="home" layout="fill"  />
             
 </div>
 </Link>
@@ -150,7 +150,7 @@ export default function Home({ foodItems }) {
 
 
   
-<Image src="/assets/nonveg.jpg"  alt="home" layout="fill"  />
+<Image src="/assets/butterchicken.jpg"  alt="home" layout="fill"  />
 
 
 </div>

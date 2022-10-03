@@ -33,6 +33,9 @@ export default function Viewall({ foodItems }) {
     
               const finalRes = await res.json()
               if( !(finalRes.success && finalRes.role==="admin")){
+                localStorage.removeItem("user")
+                localStorage.removeItem("token")
+                localStorage.removeItem("role")
                 router.push("/")
               }
               
@@ -94,9 +97,10 @@ export default function Viewall({ foodItems }) {
        }
       `}</style>
     <DashboardSidebar/>
-    <section className="text-gray-600 body-font ml-60">
+    <section className="text-gray-600 body-font lg:ml-60">
+    <div className=" sticky top-0 py-4 font-bold md:text-3xl text-2xl bg-[#f9fafb]  text-center shadow  text-gray-700 drop-shadow mb-8 z-10 "><h1 className="text-center mx-auto">All food items</h1></div>
     <div className="container  mx-auto  ">
-          <div className=" sticky top-0 py-4 font-bold md:text-3xl text-2xl bg-gray-100 mx-auto text-center shadow  text-gray-700 drop-shadow mb-8 z-10 "><h1 className="text-center mx-auto">All food items</h1></div>
+        
 
           
       <div className="flex flex-wrap m-auto  justify-center space-x-2 ">

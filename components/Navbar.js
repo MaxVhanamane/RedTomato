@@ -93,7 +93,7 @@ export default function Navbar() {
         {/* bg-gradient-to-r from-pink-500 to-yellow-500 bg-[#FC6A03]*/}
         
         <div className=" hidden md:flex ml-2 mr-6 ">
-          <Image src="/assets/logo.png" alt="logo"  objectFit="contain" width={120} height={40} quality={100}  />
+          <Image src="/assets/logo.png" alt="logo"  objectFit="contain" width={130} height={45} quality={100}  />
           {/* <img src="/assets/logo.png" alt="logo" width={120} height={25}  /> */}
         </div>
 
@@ -159,18 +159,18 @@ export default function Navbar() {
               // from-[#FC6A03] to-[#ffffff]
             >
               <ul>
-             {token&&role==="admin" && <Link href="/dashboard">
-                  <li className="p-2 whitespace-nowrap text-gray-600 hover:text-gray-900">
+             {token&&role==="admin" && <Link href="/dashboard/allorders">
+                  <li className="p-2 whitespace-nowrap text-gray-600 hover:text-red-500">
                     Dashboard
                   </li>
                 </Link>}
                 <Link href="/myaccount">
-                  <li className="p-2 whitespace-nowrap text-gray-600 hover:text-gray-900">
+                  <li className="p-2 whitespace-nowrap text-gray-600 hover:text-red-500">
                     My Account
                   </li>
                 </Link>
                 <Link href="/orders">
-                  <li className="p-2 text-gray-600 hover:text-gray-900">My Orders</li>
+                  <li className="p-2 text-gray-600 hover:text-red-500">My Orders</li>
                 </Link>
                 <li
                   onClick={() => {
@@ -179,10 +179,11 @@ export default function Navbar() {
                       removeToken();
                       clearCart();
                       localStorage.removeItem("user");
+                      localStorage.removeItem("role");
                     }
                    
                   }}
-                  className="p-2 text-gray-600 hover:text-gray-900"
+                  className="p-2 text-gray-600 hover:text-red-500"
                 >
                   Logout
                 </li>
@@ -201,7 +202,7 @@ export default function Navbar() {
         <div
           ref={ref}
           
-          className=" h-96 overflow-y-scroll  shadow-md rounded-sm  sidebar w-80 absolute top-0 right-0 bg-gray-100  p-10 transform transition-transform translate-x-full "
+          className=" h-96 overflow-y-scroll  shadow-md rounded-sm  sidebar w-80 absolute top-0 right-0 bg-gray-100  p-10 transform transition-transform translate-x-full duration-300 "
         >
           <h2 className="font-bold  text-center text-base  text-gray-900 ">My cart</h2>
           <span
@@ -211,7 +212,10 @@ export default function Navbar() {
             <AiFillCloseCircle />
           </span>
           {Object.keys(cart).length == 0 && (
+            <div>
             <p className="text-center">Your cart is empty</p>
+            <p className="text-center">Add some items to checkout</p>
+            </div>
           )}
           <ol className=" list-decimal my-2 font-semibold">
             {Object.keys(cart).map((key) => {
@@ -262,7 +266,7 @@ export default function Navbar() {
             <Link href="/checkout">
               <button
                 disabled={Object.keys(cart).length == 0}
-                className="bg-gray-200 mr-6  disabled:bg-gray-400 hover:bg-gray-300 text-gray-800 font-bold  px-1 rounded inline-flex items-center"
+                className="bg-gray-200 mr-6  disabled:bg-gray-300 hover:bg-gray-300 disabled:text-gray-500 text-gray-800 font-bold  px-1 rounded inline-flex items-center"
               >
                 <span className="fill-current w-2  mr-2">
                   <GiShoppingBag className=" flex justify-center items-center text-center" />{" "}
@@ -340,10 +344,11 @@ export default function Navbar() {
 
 {/* Sidebar  */}
 
-<aside ref={sidebar} className=" overflow-y-scroll  shadow-md rounded-sm  sidebar w-80 absolute top-0 left-0 bg-gray-100 transform transition-transform -translate-x-full " aria-label="Sidebar">
-   <div className="overflow-y-auto py-4 px-3 bg-gray-50  ">
+<aside ref={sidebar} className=" overflow-y-scroll  shadow-md rounded-sm  sidebar w-80 absolute top-0 left-0 bg-gray-100 transform transition-transform -translate-x-full duration-300" aria-label="Sidebar">
+   <div className="overflow-y-auto py-8 px-3 bg-gray-50  ">
+    <p className="text-center mb-2 text-red-500 font-semibold">Menu</p>
       <ul className="space-y-2">
-      {(token && role==="admin") && <Link href="/dashboard">
+      {(token && role==="admin") && <Link href="/dashboard/allorders">
          <li onClick={toggleSidebar}>
             <a  className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg  hover:bg-gray-100 ">
                <svg aria-hidden="true" className="w-6 h-6 text-gray-500 transition duration-75  group-hover:text-gray-900 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path><path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path></svg>
@@ -363,7 +368,7 @@ export default function Navbar() {
                   <span className="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item="">Category</span>
                   <svg sidebar-toggle-item="" className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
             </button>
-            <ul id="dropdown-example" className="hidden py-2 space-y-2">
+            <ul id="dropdown-example" className="hidden  py-2 space-y-2">
             <Link href="/veg">
                   <li onClick={toggleSidebar}>
                      <a  className="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100  ">Veg</a>

@@ -41,7 +41,7 @@
  
   .imageContainer {
     width: 100vw;
-    height: 10vh;
+    height: 4.2rem;
     position: fixed;
     z-index:40;
   }

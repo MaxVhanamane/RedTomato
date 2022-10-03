@@ -5,7 +5,8 @@ import { FiPlusSquare } from "react-icons/fi";
 import { FiMinusSquare } from "react-icons/fi";
 import { CartContext } from "./../context/CartState";
 import { useRouter } from 'next/router';
-import 'react-toastify/dist/ReactToastify.css';
+import {  toast } from 'react-toastify';
+
 export default function Checkout() {
 
   const { cart, Total, clearCart, removeFromCart, addToCart } =

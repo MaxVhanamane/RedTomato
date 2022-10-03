@@ -18,6 +18,9 @@ export default function Dashbord() {
 
           const finalRes = await res.json()
           if( !(finalRes.success && finalRes.role==="admin")){
+            localStorage.removeItem("user")
+            localStorage.removeItem("token")
+            localStorage.removeItem("role")
             router.push("/")
           }
           
