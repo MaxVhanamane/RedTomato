@@ -1,14 +1,12 @@
 import React ,{useContext,useRef} from 'react'
 import Link  from 'next/link';
 import { IoIosAddCircle } from "react-icons/io";
-import { BsImage } from "react-icons/bs";
 import { BsFillEyeFill } from "react-icons/bs";
 import { IoListCircleSharp } from "react-icons/io5";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import { RiCloseCircleFill } from "react-icons/ri";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { AiFillHome } from "react-icons/ai";
-import Image from "next/image";
 import { useRouter } from 'next/router';
 
 import { CartContext } from './../context/CartState';

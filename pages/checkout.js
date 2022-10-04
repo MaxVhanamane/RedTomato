@@ -30,12 +30,7 @@ export default function Checkout() {
     if (Object.keys(JSON.parse(localStorage.getItem("cart"))).length == 0) {
       router.push("/")
     }
-    // if (pin.length < 6) {
-    //   setLoading(true)
-    // }
-    // else if (pin.length == 6) {
-    //   setLoading(false)
-    // }
+  
     if(pin){
     if (pin.length < 6 || address.length<1 || phone.length<10 || state.length<1 || city.length<1) {
       setLoading(true)
@@ -50,9 +45,7 @@ export default function Checkout() {
   useEffect(()=>{
     let myUser= localStorage.getItem("user")
     let token= localStorage.getItem("token")
-    // if(!myUser){
-    //   router.push("/")
-    //  }
+   
      if(myUser && token){
        setEmail(myUser)
        fetchUserDetails(token)

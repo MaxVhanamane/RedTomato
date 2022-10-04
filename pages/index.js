@@ -6,7 +6,6 @@ import Link from 'next/link';
 import Image from "next/image";
 import { RiSearchLine } from "react-icons/ri";
 
-// import styles from "../styles/Home.module.css";
 
 
 export default function Home({ foodItems }) {
@@ -64,7 +63,7 @@ export default function Home({ foodItems }) {
   <div style={{width:"100vw", height:"30vw",position:"relative"}}>
 
 
-  <Image src="/assets/home.jpeg" priority={true}  alt="home" layout="fill"  />
+  <Image src="/assets/home.jpeg" priority={true}  alt="home image" layout="fill"  />
   </div>
 
 
@@ -96,7 +95,7 @@ export default function Home({ foodItems }) {
               <Link passHref href={`/product/${item.slug}`}><a className="block relative p-3  rounded-xl overflow-hidden">
                 <Image className="rounded-xl"
                   loader={myLoader}
-                  alt="ecommerce"
+                  alt={item.name}
                   src={item.img}
                   width={320}
                   height={250}
@@ -137,20 +136,20 @@ export default function Home({ foodItems }) {
 
 <Link href="/veg">
 
-<div style={{width:"100vw", height:"30vw",position:"relative" ,cursor:"pointer"}}>
+<div style={{width:"100vw", height:"33vw",position:"relative" ,cursor:"pointer"}}>
 <h1 className="absolute top-0 left-0 z-10 font-bold text-xs py-1 px-1 text-white md:text-2xl bg-green-700 md:px-2 md:py-1"> Veg </h1>
             
-<Image src="/assets/chanamasala.webp"  alt="home" layout="fill"  />
+<Image src="/assets/carrotsalad.jpg"  alt="veg food image" layout="fill"  />
             
 </div>
 </Link>
 <Link href="/nonveg">
-<div style={{width:"100vw", height:"30vw",position:"relative",cursor:"pointer"}}>
+<div style={{width:"100vw", height:"33vw",position:"relative",cursor:"pointer"}}>
 <h1 className="absolute top-0 left-0 z-10 font-bold text-xs py-1 px-1 text-white md:text-2xl bg-red-700 md:px-2 md:py-1"> Non Veg </h1>
 
 
   
-<Image src="/assets/butterchicken.jpg"  alt="home" layout="fill"  />
+<Image src="/assets/butterchicken.jpg"  alt="non veg food image" layout="fill"  />
 
 
 </div>
@@ -176,7 +175,7 @@ export default function Home({ foodItems }) {
                 <Link passHref href={`/product/${item.slug}`}><a className="block relative p-3  rounded-xl overflow-hidden">
                   <Image className="rounded-xl"
                     loader={myLoader}
-                    alt="ecommerce"
+                    alt={item.name}
                     src={item.img}
                     width={320}
                     height={250}

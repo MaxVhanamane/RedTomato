@@ -26,9 +26,6 @@ const [foodItem,setFoodItem]=useState({
 
 const uRef=useRef()
 
-// const [fileLocation,setFileLocation]=useState(null)
-// const [imageUpload,setImageUpload]=useState(null)
-//  const [imageUrlLink,setImageUrlLink]=useState(null)
 const [imageInfo,setImageInfo]=useState({
     imageUpload:"",
     fileLocation:""
@@ -75,7 +72,6 @@ useEffect(()=>{
 
 
 const handleFirebaseFileLocation=(e)=>{
-    // setFileLocation(e.target.value)
     setImageInfo({
         ...imageInfo,
         fileLocation:e.target.value
@@ -145,7 +141,6 @@ const handleChange=(e)=>{
 
  // Getting the information of the file that user has selected
     let handleFileChange=(e)=>{
-        // setImageUpload(e.target.files[0])
         setImageInfo({...imageInfo,
         imageUpload:e.target.files[0]
         })
