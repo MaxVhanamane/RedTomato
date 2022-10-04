@@ -237,7 +237,7 @@ export default function Orders() {
         ease-in-out
        
         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
-          <label htmlFor="mail" className="block  mt-4">Email address (can't be changed)</label>
+          <label htmlFor="mail" className="block  mt-4">Email address (can not be changed)</label>
           <input type="mail" name="email" onChange={handleChange} value={email} readOnly className="block md:w-9/12 w-full  mr-8 mt-2
         px-3
         py-1.5

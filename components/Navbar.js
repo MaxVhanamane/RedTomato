@@ -131,7 +131,7 @@ export default function Navbar() {
         <div className=" hidden md:flex items-center justify-center cursor-pointer  absolute right-4 mt-1 ">
           {!token && (
             <Link href="/login">
-              <button className="h-8 w-16 mr-2 text-center text-gray-500 hover:text-gray-700 rounded-lg  ">
+              <button className={`h-8 w-16 mr-2 ${router.pathname==="/login" && "text-red-500"} text-center text-gray-500 hover:text-gray-700 rounded-lg  `}>
                 Login
               </button>
             </Link>

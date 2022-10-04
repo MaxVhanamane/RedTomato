@@ -81,7 +81,7 @@ export default function Home({ foodItems }) {
 {showSearch && <div>
   
   <div className="text-center">
- <h1 className="font-bold sm:text-3xl text-2xl mt-4 text-orange-500">Search Results</h1>
+ <h1 className="font-semibold sm:text-3xl text-2xl mt-6 text-gray-800 mb-3">Search Results</h1>
  </div>
   <section className="text-gray-600 body-font mb-28 ">
         <div className="container px-5 py-2 mx-auto  ">

@@ -23,7 +23,7 @@ body {
   position: relative;
   overflow-x: hidden;
   /* to hide scrollbar in firefox */
-  scrollbar-width: none;  
+  /* scrollbar-width: none;   */
   /* background: #E9F3ED; */
   background-color: #f9fafb
 }
@@ -46,9 +46,9 @@ body {
 /* .Toastify__toast-body {
   width:10rem;
 } */
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   display: none;
-}
+} */
 
 
 

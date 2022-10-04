@@ -23,7 +23,7 @@ const [cNewpassword,setCNewPassword]=useState("")
       
         const data = {  email, password };
   
-        const res = await fetch('http://localhost:3000/api/login', {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/login`, {
           method: 'POST', // or 'PUT'
           headers: {
             'Content-Type': 'application/json',
@@ -82,7 +82,7 @@ const handleSendMail=async()=>{
 
   const data = {  email, sendMail:true };
   
-  const res = await fetch('http://localhost:3000/api/forgotpassword', {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/forgotpassword`, {
     method: 'POST', // or 'PUT'
     headers: {
       'Content-Type': 'application/json',
@@ -111,7 +111,7 @@ const handleResetPassword=async()=>{
 
     const data = {  email:router.query.email, sendMail:false,token:router.query.token,newPassword:newPassword };
   
-    const res = await fetch('http://localhost:3000/api/forgotpassword', {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/forgotpassword`, {
       method: 'POST', // or 'PUT'
       headers: {
         'Content-Type': 'application/json',
