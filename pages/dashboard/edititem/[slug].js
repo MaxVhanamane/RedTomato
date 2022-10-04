@@ -10,7 +10,7 @@ import {  toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 
 
-export default function editItem({foodItemData}) {
+export default function EditItem({foodItemData}) {
 const [uploading,setUploading]=useState(false)
 const[isItemAvailable,setIsItemAvailable]=useState(false)
 const [foodItem,setFoodItem]=useState({})

@@ -9,18 +9,16 @@ import Food from './../../models/foods';
 import connectDb from './../../middleware/mongoose';
 // To show custom error page.
 import Error from "next/error"
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Head from "next/head";
+import Image from "next/image"
 
 export default function Product({ foodItem, error }) {
-  // if slug doesn't match then we will return 404 page not found error. 
-  if (error) {
-    return <Error statusCode={error} />
-  }
+ 
   //  to control the radio buttons 
   const [selectedRadioBtn, setSelectedRadioBtn] = useState("small")
-  const [foodPrice, setFoodPrice] = useState(foodItem[0].price[0])
+  const [foodPrice, setFoodPrice] = useState(foodItem?foodItem[0].price[0]:"")
   const { orderNow, addToCart, toggleCart, cartChange,setCartChange } = useContext(CartContext);
   const [inputPin, setInputPin] = useState();
   const [pin, setPin] = useState();
@@ -109,18 +107,24 @@ export default function Product({ foodItem, error }) {
   return (
     <>
     <Head>
-    <title>{foodItem.length>0?foodItem[0].title:"Red Tomato"}</title>
-    <meta name="description" content={foodItem.length>0?foodItem[0].title:"Red Tomato"} />
+    <title>{foodItem?foodItem[0].title:"Red Tomato"}</title>
+    <meta name="description" content={foodItem?foodItem[0].title:"Red Tomato"} />
    </Head>
-    <section className="text-gray-600 body-font overflow-hidden">
+    {!error ?<section className="text-gray-600 body-font overflow-hidden">
       <div className="container px-5 py-24 mx-auto">
         {foodItem.map((item) => {
           return <div key={item._id} className="lg:w-4/5 my-auto mx-auto flex flex-wrap">
-            <img
-              alt="ecommerce"
-              className="lg:w-1/2 w-full lg:h-[500px] h-64 object-cover object-center rounded"
+             <div  className="prod_img lg:w-1/2 w-full " >
+            <Image
+              alt={item.title}
+              layout="fill"
               src={item.img}
+             
+              className="rounded-xl"
+              objectFit="cover"
             />
+            </div>
+          
             <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
               <h2 className="text-sm title-font text-gray-500 tracking-widest">
                 Red Tomato
@@ -359,7 +363,7 @@ export default function Product({ foodItem, error }) {
           </div>
         })}
       </div>
-    </section>
+    </section>: <Error statusCode={error} /> }
     </>
   );
 }

@@ -143,7 +143,7 @@ export default function Home({ foodItems }) {
 {!showSearch &&  <div className="md:hidden w-screen flex  justify-center items-center mt-[0.1rem] gap-[0.1rem] ">
 
 <Link href="/veg">
-<div style={{width:"100vw", height:"33vw",position:"relative" ,cursor:"pointer"}} className="shadow bg-orange-500">
+<div style={{width:"100vw", height:"19vh",position:"relative" ,cursor:"pointer"}} className="shadow bg-orange-500">
 <h1 className="absolute top-0 left-0 z-10 font-bold text-xs py-0.5 px-1 text-white md:text-2xl bg-green-600 md:px-2 md:py-1"> Veg </h1>
             
 <Image src="/assets/veg.png"  alt="veg food image" layout="fill" objectFit="cover" priority={true}  />
@@ -151,7 +151,7 @@ export default function Home({ foodItems }) {
 </div>
 </Link>
 <Link href="/nonveg">
-<div style={{width:"100vw", height:"33vw",position:"relative",cursor:"pointer" }} className="shadow bg-orange-500">
+<div style={{width:"100vw", height:"19vh",position:"relative",cursor:"pointer" }} className="shadow bg-orange-500">
 <h1 className="absolute top-0 left-0 z-10 font-bold text-xs py-0.5 px-1 text-white md:text-2xl bg-red-500 md:px-2 md:py-1"> Non Veg </h1>
 
 

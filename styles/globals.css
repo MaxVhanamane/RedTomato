@@ -39,6 +39,12 @@ body {
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 }
 
+.prod_img{
+  width:100vw;
+  height:38vh;
+  position:relative;
+}
+
 /* // To control toast width 
 .Toastify__toast-container {
   width:16rem !important;
@@ -57,3 +63,10 @@ body {
     /* background-color: white; */
   /* }
 } */
+
+
+@media only screen and (min-width: 1024px) {
+  .prod_img{
+    height:50vh;
+  }
+}
