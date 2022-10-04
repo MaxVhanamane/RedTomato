@@ -59,6 +59,12 @@ export default function Home({ foodItems }) {
   };
   return (
    <>
+   <Head>
+    <title>Red Tomato - Home</title>
+    <meta name="description" content={ foodItems.length>0? foodItems.map((item) =>{
+      return item.title
+    } ):"We deliver Veg and Non veg food"} />
+   </Head>
  <div className=" relative pt-[4rem] sm:pt-[4.75rem] lg:pt-6 md:pt-8 text-gray-400 focus-within:text-gray-600 ">
   <div style={{width:"100vw", height:"30vw",position:"relative"}}>
 
@@ -95,7 +101,7 @@ export default function Home({ foodItems }) {
               <Link passHref href={`/product/${item.slug}`}><a className="block relative p-3  rounded-xl overflow-hidden">
                 <Image className="rounded-xl"
                   loader={myLoader}
-                  alt={item.name}
+                  alt={item.title}
                   src={item.img}
                   width={320}
                   height={250}
@@ -175,7 +181,7 @@ export default function Home({ foodItems }) {
                 <Link passHref href={`/product/${item.slug}`}><a className="block relative p-3  rounded-xl overflow-hidden">
                   <Image className="rounded-xl"
                     loader={myLoader}
-                    alt={item.name}
+                    alt={item.title}
                     src={item.img}
                     width={320}
                     height={250}

@@ -6,6 +6,7 @@ import { storage } from '../../components/firebase';
 import {ref,uploadBytes,getDownloadURL} from "firebase/storage"
 import {  toast } from 'react-toastify';
 import { useRouter } from 'next/router';
+import Head from "next/head";
 
 
 export default function Additems() {
@@ -260,6 +261,10 @@ setFoodItem({
         display:none;
        }
       `}</style>
+           <Head>
+    <title>Dashboard - Add items</title>
+    <meta name="description" content="Add a food item" />
+   </Head>
     <DashboardSidebar/>
     <div className="lg:ml-60 sticky top-0 bg-[#f9fafb] z-10">
     <div className="  py-4 font-bold md:text-3xl text-2xl  mx-auto text-center shadow  text-gray-700 drop-shadow mb-8 "><h1 className="text-center mx-auto">Add a food item</h1></div></div>

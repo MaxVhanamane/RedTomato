@@ -3,6 +3,7 @@ import Link from "next/link"
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/router';
+import Head from "next/head";
 
 
 export default function Login() {
@@ -71,6 +72,11 @@ else{
 
   }
   return (
+    <>
+    <Head>
+    <title>Red Tomato - Login</title>
+    <meta name="description" content="Red Tomatos login page" />
+   </Head>
     <section className="h-screen gradient-form bg-gray-200 md:h-screen">
     <div className="container py-12 px-6 h-full">
    
@@ -140,5 +146,6 @@ else{
       </div>
     </div>
   </section>
+  </>
   )
 }

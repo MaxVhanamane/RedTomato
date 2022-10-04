@@ -11,6 +11,8 @@ import connectDb from './../../middleware/mongoose';
 import Error from "next/error"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Head from "next/head";
+
 export default function Product({ foodItem, error }) {
   // if slug doesn't match then we will return 404 page not found error. 
   if (error) {
@@ -33,7 +35,6 @@ export default function Product({ foodItem, error }) {
     const allPins = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/checkpin`);
     const pins = await allPins.json();
 
-console.log(Object.keys(pins)[0][0])
     if (Object.keys(pins[0]).includes(inputPin)) {
       setPin(true);
     } else {
@@ -106,6 +107,11 @@ console.log(Object.keys(pins)[0][0])
 
 
   return (
+    <>
+    <Head>
+    <title>{foodItem.length>0?foodItem[0].title:"Red Tomato"}</title>
+    <meta name="description" content={foodItem.length>0?foodItem[0].title:"Red Tomato"} />
+   </Head>
     <section className="text-gray-600 body-font overflow-hidden">
       <div className="container px-5 py-24 mx-auto">
         {foodItem.map((item) => {
@@ -354,6 +360,7 @@ console.log(Object.keys(pins)[0][0])
         })}
       </div>
     </section>
+    </>
   );
 }
 

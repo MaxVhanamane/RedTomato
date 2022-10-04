@@ -3,12 +3,21 @@ import Image from "next/image";
 import connectDb from './../middleware/mongoose';
 import Food from './../models/foods';
 import Link from 'next/link';
+import Head from "next/head";
+
+
 export default function Veg({ foodItems }) {
   const myLoader = ({ src, width, quality }) => {
     return `${src}?w=${width}&q=${quality || 100}`;
   };
   return (
     <>
+    <Head>
+    <title>Red Tomato - Veg</title>
+    <meta name="description" content={foodItems.map((item) =>{
+      return item.title
+    } )} />
+   </Head>
       <section className="text-gray-600 body-font">
         <div className="container px-5 pt-16 mx-auto  ">
               <h1 className="font-bold md:text-3xl text-2xl text-center mb-4 text-gray-700 lg:mt-6 mt-4 drop-shadow "><p></p><span className="px-6">Veg food items</span></h1>

@@ -2,6 +2,8 @@ import React,{useEffect,useState} from 'react'
 import { useRouter } from 'next/router';
 import {toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Head from "next/head";
+
 export default function Orders() {
   const router=useRouter()
   // const {token}=useContext(CartContext)
@@ -213,6 +215,11 @@ export default function Orders() {
       
     }
   return (
+    <>
+    <Head>
+    <title>My account</title>
+    <meta name="description" content="My account page" />
+   </Head>
     <div className="container pt-28 md:pt-20 ">
      
       <h1 className="text-xl text-center font-bold">Your account</h1>
@@ -406,5 +413,6 @@ export default function Orders() {
       </div>
       </div>
     </div>
+    </>
   )
 }

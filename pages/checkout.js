@@ -6,6 +6,8 @@ import { FiMinusSquare } from "react-icons/fi";
 import { CartContext } from "./../context/CartState";
 import { useRouter } from 'next/router';
 import {  toast } from 'react-toastify';
+import Head from "next/head";
+
 
 export default function Checkout() {
 
@@ -290,6 +292,11 @@ export default function Checkout() {
 
 
   return (
+    <>
+    <Head>
+    <title>Checkout</title>
+    <meta name="description" content="Red Tomatos Checkout page"/>
+   </Head>
     <div className="flex flex-col md:flex-row container pt-20 justify-center m-auto mb-44 sm:mb-20">
       <div className="md:w-1/2 w-3/4 md:ml-20 m-auto mt-10  ">
         <h2 className="font-bold ml-4">1. Delivery Details</h2>
@@ -473,7 +480,7 @@ export default function Checkout() {
 
       </div>
     </div>
-
+</>
 
   )
 }

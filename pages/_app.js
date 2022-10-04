@@ -4,11 +4,15 @@ import Layout from "./../components/Layout";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CartState,{CartContext} from "./../context/CartState";
-
+import Head from "next/head"
 function MyApp({ Component, pageProps }) {
 
   return (
     <>
+    <Head>
+    <title>Red Tomato</title>
+
+      </Head>
       <CartState>
   
         {/* Using toast container in _app.js it will act as a global variable it will show all the toasts without any problems

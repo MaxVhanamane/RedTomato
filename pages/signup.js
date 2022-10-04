@@ -3,6 +3,7 @@ import Link from "next/link"
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/router';
+import Head from "next/head";
 
 export default function SignUp() {
   const [name, setName] = useState("")
@@ -75,6 +76,11 @@ export default function SignUp() {
 
   }
   return (
+    <>
+    <Head>
+    <title>Red Tomato - SignUp </title>
+    <meta name="description" content="Red Tomatos signup page" />
+   </Head>
     <section className="h-screen gradient-form bg-gray-200 md:h-screen">
   
       <div className="container py-12 px-6 h-full">
@@ -169,5 +175,6 @@ export default function SignUp() {
         </div>
       </div>
     </section>
+    </>
   )
 }

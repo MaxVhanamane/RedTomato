@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Orders from '../../models/orders';
 import connectDb from './../../middleware/mongoose';
 import DashboardSidebar from './../../components/DashboardSidebar';
+import Head from "next/head";
 
 export default function AllOrders({allOrders}) {
     const router=useRouter()
@@ -59,6 +60,10 @@ export default function AllOrders({allOrders}) {
         display:none;
        }
       `}</style>
+           <Head>
+    <title>Dashboard - All orders</title>
+    <meta name="description" content="View all the orders received" />
+   </Head>
     <DashboardSidebar/>
 
     <div className="lg:ml-60 sticky top-0  z-10">

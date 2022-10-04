@@ -1,9 +1,16 @@
 import React from 'react'
 import { SiRottentomatoes } from "react-icons/si";
+import Head from "next/head";
+
+
 
 export default function Contact() {
     return (
     <>
+    <Head>
+    <title>Contact Us</title>
+    <meta name="description" content="Red Tomatos contact us page" />
+   </Head>
             <div className=" lg:pt-28  pt-[3.45rem] lg:mb-20">
                 <div className="max-w-screen-xl md:pt-24 px-4 md:px-8 lg:px-12 xl:px-26 py-16 mx-auto bg-gray-100 text-gray-900 lg:rounded-lg shadow-lg">
                     <div className="flex flex-col justify-center items-center">

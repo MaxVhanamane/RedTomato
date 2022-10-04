@@ -1,6 +1,7 @@
 import React,{useEffect,useState,useContext} from 'react'
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import Head from "next/head";
 export default function Orders() {
     const router=useRouter()
     const [orders,setOrders]=useState([])
@@ -35,6 +36,11 @@ export default function Orders() {
 
        
   return (
+    <>
+      <Head>
+    <title>My orders</title>
+    <meta name="description" content="Orders page "/>
+   </Head>
     <div className="container pt-24 mb-24">
       <h1 className="text-center font-semibold text-2xl mb-2">My Orders</h1>
       {fetchError? <h2 className="text-center font-semibold text-xl mb-2 mt-20">Internal Server Error. Please try again later!</h2>
@@ -82,5 +88,6 @@ export default function Orders() {
   </div>: <h1 className="text-center mt-6 text-md sm:text-xl"> No orders found!</h1>}
 </div>}
     </div>
+    </>
   )
 }
