@@ -34,6 +34,7 @@ export default function Veg({ foodItems }) {
                   src={item.img}
                   width={320}
                   height={250}
+                  layout="responsive"
                 />
 
 <div className="mt-3">

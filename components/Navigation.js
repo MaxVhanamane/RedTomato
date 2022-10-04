@@ -69,8 +69,8 @@ let currentPath=router.pathname
       </a> 
             </Link>
 
-     : <button  >
-      <a
+     : <button aria-label="Logout"  
+      
                   onClick={() => {
                    let confirmLogout= confirm("Are you sure you want to logout?")
                    if(confirmLogout) {removeToken();
@@ -81,7 +81,7 @@ let currentPath=router.pathname
                   
                 >
                   <AiOutlineLogout className=" text-red-500 text-2xl"/>
-                </a>
+               
             </button>}
 
    

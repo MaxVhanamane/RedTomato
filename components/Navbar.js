@@ -71,7 +71,7 @@ export default function Navbar() {
       {/* <nav className="flex fixed flex-col z-50 w-full  p-2 justify-start  items-center md:flex-row sm:flex-col  md:justify-start md:items-center bg-[#FC6A03]   "> */}
       <div className="md:hidden">
       <div className={`${styles.imageContainer}`}>
-          <img src="/assets/logo8.png" className={styles.image} alt="logo" layout="fill" />
+          <Image src="/assets/logo8.png" className={styles.image} alt="logo" layout="fill" />
           {/* <img src="/assets/logo.png" alt="logo" width={120} height={25}  /> */}
         </div>
         </div>
@@ -97,7 +97,7 @@ export default function Navbar() {
 
         <div className="hidden md:flex p-4" >
           <ul className="flex md:gap-8 gap-2 md:flex-row sm:flex-row flex-row mt-4 md:mt-0 ">
-            <Link href="/">
+            <Link passHref href="/">
             {/* To show active path in red color ${router.pathname==="/about" && "text-red-500"}  focus:text-red-500 doesn't work when I 
             refresh the page.*/}
               <a className={`text-gray-500 hover:text-gray-700  ${router.pathname==="/" && "text-red-500"} focus:text-red-500`}>
@@ -105,17 +105,17 @@ export default function Navbar() {
               </a>
             </Link>
          
-            <Link href="/veg">
+            <Link passHref href="/veg">
               <a className={`text-gray-500 hover:text-gray-700  ${router.pathname==="/veg" && "text-red-500"} focus:text-red-500`}>
                 <li>Veg</li>
               </a>
             </Link>
-            <Link href="/nonveg">
+            <Link passHref href="/nonveg">
               <a className={`text-gray-500 hover:text-gray-700  ${router.pathname==="/nonveg" && "text-red-500"} focus:text-red-500`}>
                 <li>Non veg</li>
               </a>
             </Link>
-            <Link href="/about">
+            <Link passHref href="/about">
               <a className={`text-gray-500 hover:text-gray-700  ${router.pathname==="/about" && "text-red-500"} focus:text-red-500`}>
                 <li>About us</li>
               </a>
@@ -127,7 +127,7 @@ export default function Navbar() {
 
         <div className=" hidden md:flex items-center justify-center cursor-pointer  absolute right-4 mt-1 ">
           {!token && (
-            <Link href="/login">
+            <Link passHref href="/login">
               <button className={`h-8 w-16 mr-2 ${router.pathname==="/login" && "text-red-500"} text-center text-gray-500 hover:text-gray-700 rounded-lg  `}>
                 Login
               </button>
@@ -156,17 +156,17 @@ export default function Navbar() {
               // from-[#FC6A03] to-[#ffffff]
             >
               <ul>
-             {token&&role==="admin" && <Link href="/dashboard/viewall">
+             {token&&role==="admin" && <Link passHref href="/dashboard/viewall">
                   <li className="p-2 whitespace-nowrap text-gray-600 hover:text-red-500">
                     Dashboard
                   </li>
                 </Link>}
-                <Link href="/myaccount">
+                <Link passHref href="/myaccount">
                   <li className="p-2 whitespace-nowrap text-gray-600 hover:text-red-500">
                     My Account
                   </li>
                 </Link>
-                <Link href="/orders">
+                <Link passHref href="/orders">
                   <li className="p-2 text-gray-600 hover:text-red-500">My Orders</li>
                 </Link>
                 <li
@@ -260,7 +260,7 @@ export default function Navbar() {
             <div className="font-bold text-lg text-gray-700 ">Total : ₹{Total}</div>
           )}
           <div className="flex text-center mt-4">
-            <Link href="/checkout">
+            <Link passHref href="/checkout">
               <button
                 disabled={Object.keys(cart).length == 0}
                 className="bg-gray-200 mr-6  disabled:bg-gray-300 hover:bg-gray-300 disabled:text-gray-500 text-gray-800 font-bold  px-1 rounded inline-flex items-center"
@@ -345,14 +345,14 @@ export default function Navbar() {
    <div className="overflow-y-auto py-8 px-3 bg-gray-50  ">
     <p className="text-center mb-2 text-red-500 font-semibold">Menu</p>
       <ul className="space-y-2">
-      {(token && role==="admin") && <Link href="/dashboard/viewall">
+      {(token && role==="admin") && 
          <li onClick={toggleSidebar}>
-            <a  className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg  hover:bg-gray-100 ">
+            <Link passHref href="/dashboard/viewall"><a  className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg  hover:bg-gray-100 ">
                <svg aria-hidden="true" className="w-6 h-6 text-gray-500 transition duration-75  group-hover:text-gray-900 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path><path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path></svg>
                <span className="ml-3">Dashboard</span>
-            </a>
+            </a></Link>
          </li>
-         </Link>}
+        }
          <li>
             <button onClick={()=>{if(document.getElementById("dropdown-example").classList.contains("hidden")){
               document.getElementById("dropdown-example").classList.remove("hidden")
@@ -366,56 +366,56 @@ export default function Navbar() {
                   <svg sidebar-toggle-item="" className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
             </button>
             <ul id="dropdown-example" className="hidden  py-2 space-y-2">
-            <Link href="/veg">
+            
                   <li onClick={toggleSidebar}>
-                     <a  className="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100  ">Veg</a>
+                  <Link passHref href="/veg"><a  className="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100  ">Veg</a></Link>
                   </li>
-                  </Link>
-                  <Link href="/nonveg">
+                  
+                  
                   <li onClick={toggleSidebar}>
-                     <a  className="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 ">Non Veg</a>
+                  <Link passHref href="/nonveg"><a  className="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 ">Non Veg</a></Link>
                   </li>
-                  </Link>
+                  
                
             </ul>
          </li>
-        {token&& <Link href="/myaccount">
+        {token&& 
          <li onClick={toggleSidebar}>
-            <a  className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg  hover:bg-gray-100 ">
+            <Link passHref href="/myaccount"><a  className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg  hover:bg-gray-100 ">
                <svg aria-hidden="true" className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd"></path></svg>
                <span className="flex-1 ml-3 whitespace-nowrap">My Account</span>
-            </a>
+            </a></Link>
          </li>
-         </Link>}
+        }
         
         
 
-         {token&& <Link href="/orders">
+         {token&& 
          <li onClick={toggleSidebar}>
-            <a  className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg  hover:bg-gray-100 ">
+            <Link passHref href="/orders"><a  className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg  hover:bg-gray-100 ">
                <svg aria-hidden="true" className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75  group-hover:text-gray-900 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z" clipRule="evenodd"></path></svg>
                <span className="flex-1 ml-3 whitespace-nowrap">My orders</span>
-            </a>
+            </a></Link>
          </li>
-         </Link>}
-         <Link href="/contact">
+         }
+         
          <li onClick={toggleSidebar}>
-            <a  className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg  hover:bg-gray-100 ">
+         <Link passHref href="/contact"><a  className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg  hover:bg-gray-100 ">
              
                <IoIosCall className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75  group-hover:text-gray-900 "/>
                <span className="flex-1 ml-3 whitespace-nowrap">Contact us</span>
-            </a>
+            </a></Link>
          </li>
-         </Link>
-         <Link href="/about">
+         
+         
          <li onClick={toggleSidebar}>
-            <a  className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg  hover:bg-gray-100 ">
+         <Link passHref href="/about"><a  className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg  hover:bg-gray-100 ">
         
                <FaInfoCircle className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75  group-hover:text-gray-900 "/>
                <span className="flex-1 ml-3 whitespace-nowrap">About us</span>
-            </a>
+            </a></Link>
          </li>
-         </Link>
+         
       </ul>
    </div>
    <span

@@ -69,7 +69,7 @@ export default function Home({ foodItems }) {
   <div style={{width:"100vw", height:"30vw",position:"relative"}}>
 
 
-  <Image src="/assets/home.jpeg" priority={true}  alt="home image" layout="fill"  />
+  <Image src="/assets/home.jpeg" priority={true}  alt="home image" layout="fill" objectFit="cover"  />
   </div>
 
 
@@ -105,6 +105,8 @@ export default function Home({ foodItems }) {
                   src={item.img}
                   width={320}
                   height={250}
+                  layout="responsive"
+                  objectFit='cover'
                 />
 
 <div className="mt-3">
@@ -141,21 +143,20 @@ export default function Home({ foodItems }) {
 {!showSearch &&  <div className="md:hidden w-screen flex  justify-center items-center mt-[0.1rem] gap-[0.1rem] ">
 
 <Link href="/veg">
-
-<div style={{width:"100vw", height:"33vw",position:"relative" ,cursor:"pointer"}}>
-<h1 className="absolute top-0 left-0 z-10 font-bold text-xs py-1 px-1 text-white md:text-2xl bg-green-700 md:px-2 md:py-1"> Veg </h1>
+<div style={{width:"100vw", height:"33vw",position:"relative" ,cursor:"pointer"}} className="shadow bg-orange-500">
+<h1 className="absolute top-0 left-0 z-10 font-bold text-xs py-0.5 px-1 text-white md:text-2xl bg-green-600 md:px-2 md:py-1"> Veg </h1>
             
-<Image src="/assets/carrotsalad.jpg"  alt="veg food image" layout="fill"  />
+<Image src="/assets/veg.png"  alt="veg food image" layout="fill" objectFit="cover" priority={true}  />
             
 </div>
 </Link>
 <Link href="/nonveg">
-<div style={{width:"100vw", height:"33vw",position:"relative",cursor:"pointer"}}>
-<h1 className="absolute top-0 left-0 z-10 font-bold text-xs py-1 px-1 text-white md:text-2xl bg-red-700 md:px-2 md:py-1"> Non Veg </h1>
+<div style={{width:"100vw", height:"33vw",position:"relative",cursor:"pointer" }} className="shadow bg-orange-500">
+<h1 className="absolute top-0 left-0 z-10 font-bold text-xs py-0.5 px-1 text-white md:text-2xl bg-red-500 md:px-2 md:py-1"> Non Veg </h1>
 
 
   
-<Image src="/assets/butterchicken.jpg"  alt="non veg food image" layout="fill"  />
+<Image src="/assets/nonveg.png"  alt="non veg food image" layout="fill" objectFit="cover" priority={true}  />
 
 
 </div>
@@ -185,6 +186,8 @@ export default function Home({ foodItems }) {
                     src={item.img}
                     width={320}
                     height={250}
+                    layout="responsive"
+                    objectFit='cover'
                   />
 
 <div className="mt-3">
