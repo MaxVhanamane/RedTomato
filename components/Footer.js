@@ -13,7 +13,7 @@ export default function Footer() {
           <SiRottentomatoes className="text-3xl text-red-600"/>
           <span className="ml-3 text-xl text-red-500">RedTomato</span>
         </a></Link>
-        <p className="mt-4 text-sm text-gray-500 ml-2"> it is fast, fresh and delicious! <br/>We cook, you enjoy at home.</p>
+        <p className="mt-4 text-sm text-gray-500 ml-2"> It is fast, fresh and delicious! <br/>We cook, you enjoy at home.</p>
       </div>
       <div className="flex-grow flex flex-wrap md:pl-20 -mb-10 md:mt-0 mt-10 md:text-left text-center">
         <div className="lg:w-1/4 md:w-1/2 w-full px-4">

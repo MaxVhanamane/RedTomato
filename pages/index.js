@@ -66,17 +66,18 @@ export default function Home({ foodItems }) {
     } ):"We deliver Veg and Non veg food"} />
    </Head>
  <div className=" relative pt-[4rem] sm:pt-[4.75rem] lg:pt-6 md:pt-8 text-gray-400 focus-within:text-gray-600 ">
-  <div style={{width:"100vw", height:"30vw",position:"relative"}}>
+  <div style={{width:"100vw", height:"19vh",position:"relative"}} className="home_image">
 
 
-  <Image src="/assets/home.jpeg" priority={true}  alt="home image" layout="fill" objectFit="cover"  />
+  <Image src="/assets/wallpaper.jpg" priority={true}  alt="home image" layout="fill" objectFit="cover"  className="small_screen" />
+  <Image src="/assets/home3.jpg" priority={true}  alt="home image" layout="fill" objectFit="cover" className="large_screen"  />
   </div>
 
 
-  <div className="flex items-center justify-center pt-16 lg:pt-6 md:pt-8 text-gray-400 focus-within:text-gray-600 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-  <RiSearchLine className="w-5 h-5 z-20 absolute  sm:-ml-[22rem] -ml-[11.5rem] pointer-events-none  "/>
-  <input type="text" placeholder="Search" className="border-none ring-2 ring-gray-300 focus:ring-gray-500 focus:ring-2
-   bg-white rounded-xl sm:p-2 sm:w-96 p-[0.1rem] w-50 sm:pl-[3rem] pl-[2rem]
+  <div className="flex items-center justify-center pt-16 lg:pt-6 md:pt-8 text-gray-400 w-full focus-within:text-gray-600 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+  <RiSearchLine className="w-4 h-4 sm:w-5 sm:h-5 z-20 fixed  sm:-ml-[21rem] -ml-[11.5rem] pointer-events-none  "/>
+  <input type="text" placeholder="Search" className="fixed border-none ring-2 ring-gray-300 focus:ring-gray-500 focus:ring-2
+   bg-white rounded-xl sm:p-2 sm:w-96 p-[0.1rem]  sm:pl-[3rem] pl-[2rem]
    outline-none  shadow-neutral-300" onChange={handleSearch} />
  </div>
  </div>
@@ -143,7 +144,7 @@ export default function Home({ foodItems }) {
 {!showSearch &&  <div className="md:hidden w-screen flex  justify-center items-center mt-[0.1rem] gap-[0.1rem] ">
 
 <Link href="/veg">
-<div style={{width:"100vw", height:"19vh",position:"relative" ,cursor:"pointer"}} className="shadow bg-orange-500">
+<div style={{width:"100vw", height:"18vh",position:"relative" ,cursor:"pointer"}} className="shadow bg-gray-900">
 <h1 className="absolute top-0 left-0 z-10 font-bold text-xs py-0.5 px-1 text-white md:text-2xl bg-green-600 md:px-2 md:py-1"> Veg </h1>
             
 <Image src="/assets/veg.png"  alt="veg food image" layout="fill" objectFit="cover" priority={true}  />
@@ -151,7 +152,7 @@ export default function Home({ foodItems }) {
 </div>
 </Link>
 <Link href="/nonveg">
-<div style={{width:"100vw", height:"19vh",position:"relative",cursor:"pointer" }} className="shadow bg-orange-500">
+<div style={{width:"100vw", height:"18vh",position:"relative",cursor:"pointer" }} className="shadow bg-gray-900">
 <h1 className="absolute top-0 left-0 z-10 font-bold text-xs py-0.5 px-1 text-white md:text-2xl bg-red-500 md:px-2 md:py-1"> Non Veg </h1>
 
 

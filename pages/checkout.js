@@ -163,7 +163,7 @@ export default function Checkout() {
           //   data: { key: razorpayKey },
           // } = await fetch('http://localhost:3000/api/getrazorpaykey');
 
-          // getting rezorpay key
+          // get your razorpay key
           const resKey = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/getrazorpaykey`)
           const razorpayKey = await resKey.json()
 
@@ -174,6 +174,12 @@ export default function Checkout() {
             name: 'Red Tomato',
             description: order_id,
             order_id: order_id,
+            "method": {
+              "netbanking": "1",
+              "card": "1",
+              "upi": "0",
+              "wallet": "1",
+            },
             // handler will run once the payment is done successfully.
             handler: async function (response) {
 
@@ -254,7 +260,9 @@ export default function Checkout() {
           setLoading(false);
           // following code is to open razorpay gui.
           const paymentObject = new window.Razorpay(options);
+    
           paymentObject.open();
+
           // adding if statement to make sure pay button is enabled even if user closes the payment window without paying.
           // if I don't add this if statement then if user closes payment window without paying that will disable the pay button.
           // if(paymentObject.open()){

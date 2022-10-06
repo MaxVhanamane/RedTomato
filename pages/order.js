@@ -1,7 +1,7 @@
 import React from 'react'
 import connectDb from './../middleware/mongoose';
 import Order from './../models/orders';
-
+import Image from "next/image"
 export default function MyOrder({ order }) {
   const products = order.products
 
@@ -38,7 +38,8 @@ export default function MyOrder({ order }) {
             </button> */}
             </div>
           </div>
-          <img alt="ecommerce" className="lg:w-1/2 w-full  mt-5 lg:h-[22rem] h-80 object-cover object-center rounded" src={order.img} />
+          {/* <img alt="ecommerce" className="lg:w-1/2 w-full  mt-5 lg:h-[22rem] h-80 object-cover object-center rounded" src={order.img} /> */}
+          <Image src={order.img} alt="Food image" width={500} height={500} className="rounded-md"/>
         </div>
       </div>
     </section>

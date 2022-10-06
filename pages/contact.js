@@ -24,7 +24,7 @@ export default function Contact() {
                                  
                                         <div className="text-center px-5 md:px-0 md:text-left py-10">
                                             <span className="flex justify-center mb-2 font-bold">Customer Support <br/></span>
-                                            Call/Whatsapp: <a className="underline text-blue-600" rel="noreferrer" target="_blank" href="https://wa.me/8390008589?text=Hi,I need to enquire about">+91 8390008589</a>
+                                            Call/Whatsapp: <a className="underline text-blue-600" rel="noreferrer" target="_blank" href="https://wa.me/918390008589?text=Hi,I need to enquire about">+91 839 000 8589</a>
                                             <br/>Email: maxvhanamane@gmail.com <br/> Support open: from 9AM - 7PM
                                         </div>
                                         </div>

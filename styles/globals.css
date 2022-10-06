@@ -57,16 +57,51 @@ body {
 } */
 
 
-
-/* @media only screen and (max-width: 767px) {
-  body { */
-    /* background-color: white; */
-  /* }
+/* 
+@media only screen and (max-width: 767px) {
+  body {
+    background-color: white;
+  }
 } */
 
+.large_screen{
+  display:block;
+}
+.small_screen{
+  display:block;
+}
+
+@media only screen and (max-width: 767px) {
+
+  .large_screen{
+    display:none !important;
+  }
+
+  
+}
+
+@media only screen and (min-width: 768px) {
+ 
+  .home_image{
+    height:35vh !important;
+  }
+  
+  .small_screen{
+    display:none !important;
+  }
+}
 
 @media only screen and (min-width: 1024px) {
   .prod_img{
     height:50vh;
   }
+  .home_image{
+    height:74vh !important;
+  }
+  .small_screen{
+    display:none !important;
+  }
+ 
 }
+
+

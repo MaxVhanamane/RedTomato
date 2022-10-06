@@ -23,6 +23,7 @@
     display: flex;
     color: rgb(31 41 55);
     font-size: 1.3rem;
+    outline:none;
   }
   
   /* .linkTag:hover {
