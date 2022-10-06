@@ -69,15 +69,15 @@ export default function Home({ foodItems }) {
   <div style={{width:"100vw", height:"19vh",position:"relative"}} className="home_image">
 
 
-  <Image src="/assets/wallpaper.jpg" priority={true}  alt="home image" layout="fill" objectFit="cover"  className="small_screen" />
+  <Image src="/assets/small_screen_home.jpg" priority={true}  alt="home image" layout="fill" objectFit="cover"  className="small_screen" />
   <Image src="/assets/home3.jpg" priority={true}  alt="home image" layout="fill" objectFit="cover" className="large_screen"  />
   </div>
 
 
   <div className="flex items-center justify-center pt-16 lg:pt-6 md:pt-8 text-gray-400 w-full focus-within:text-gray-600 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-  <RiSearchLine className="w-4 h-4 sm:w-5 sm:h-5 z-20 fixed  sm:-ml-[21rem] -ml-[11.5rem] pointer-events-none  "/>
+  <RiSearchLine className="hidden md:block w-4 h-4 sm:w-5 sm:h-5 z-20 fixed  sm:-ml-[21rem] -ml-[11.5rem] pointer-events-none  "/>
   <input type="text" placeholder="Search" className="fixed border-none ring-2 ring-gray-300 focus:ring-gray-500 focus:ring-2
-   bg-white rounded-xl sm:p-2 sm:w-96 p-[0.1rem]  sm:pl-[3rem] pl-[2rem]
+   bg-white rounded-lg sm:p-2 sm:w-96 p-[0.1rem]  sm:pl-[3rem] pl-[1rem]
    outline-none  shadow-neutral-300" onChange={handleSearch} />
  </div>
  </div>
