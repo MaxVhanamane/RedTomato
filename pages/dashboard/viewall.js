@@ -117,11 +117,13 @@ export default function Viewall({ foodItems }) {
           return <div key={item._id} className=" mt-3 mb-8 mr-2 hover:shadow-xl hover:bg-gray-100 rounded-xl  antialiased">
             <Image className="rounded-xl"
               loader={myLoader}
-              alt="ecommerce"
+              alt={item.title}
               src={item.img}
               width={320}
               height={250}
               layout="responsive"
+              objectFit='cover'
+
             />
 
 <div className="mt-3">
@@ -144,9 +146,16 @@ export default function Viewall({ foodItems }) {
             <div className="flex mt-4">
               <p className=" pb-2 mt-1 pl-1">₹{item.price[0]}</p>
               <div className="flex ml-24 space-x-2 mb-2">
-          <Link passHref href={`/dashboard/edititem/${item.slug}`}><button  className="  text-white bg-green-800 border-0  px-6 focus:outline-none hover:bg-green-900 rounded-md">
+          <Link passHref href={`/dashboard/edititem/${item.slug}`}><button  className=" outline-none text-white bg-green-800 border-0  px-6 focus:outline-none hover:bg-green-900 rounded-md">
                     Edit</button></Link>
-          <button onClick={()=>{handleDelete(item._id)}} className="  text-white bg-red-500 border-0  px-6 focus:outline-none hover:bg-red-600 rounded-md">
+          <button onClick={()=>{
+           let confirmVal= confirm("Do you really want to delete this item?")
+            if(confirmVal){
+              handleDelete(item._id)
+
+            }
+            
+            }} className="  text-white bg-red-500 border-0 outline-none  px-6 focus:outline-none hover:bg-red-600 rounded-md">
                     Delete</button>
                     </div>
 

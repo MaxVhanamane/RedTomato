@@ -251,7 +251,7 @@ export default function Checkout() {
             },
             // theme is to control your razorpay color
             theme: {
-              color: 'green',
+              color: 'red',
             },
 
           };
@@ -475,7 +475,7 @@ export default function Checkout() {
           </ol>
           {Object.keys(cart).length > 0 && <div>Grand total : ₹{Total}</div>}
           <div className=" text-center">
-            <Link href="/checkout"><button disabled={loading} onClick={loadRazorpay} className="disabled:bg-gray-400 enabled:bg-blue-500 mt-6 enabled:hover:bg-blue-600 text-gray-100 font-bold  px-4 py-1 rounded inline-flex items-center">
+            <Link href="/checkout"><button disabled={loading} onClick={loadRazorpay} className="outline-none disabled:bg-gray-400 enabled:bg-blue-500 mt-6 enabled:hover:bg-blue-600 text-gray-100 font-bold  px-4 py-1 rounded inline-flex items-center">
 
               {Object.keys(cart).length > 0 && <span> Pay ₹{Total} </span>}
             </button></Link>

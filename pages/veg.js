@@ -35,6 +35,8 @@ export default function Veg({ foodItems }) {
                   width={320}
                   height={250}
                   layout="responsive"
+                  objectFit='cover'
+
                 />
 
 <div className="mt-3">

@@ -70,7 +70,7 @@ let currentPath=router.pathname
             </Link>
 
      : <button aria-label="Logout"  
-      
+                  className="outline-none"
                   onClick={() => {
                    let confirmLogout= confirm("Are you sure you want to logout?")
                    if(confirmLogout) {removeToken();

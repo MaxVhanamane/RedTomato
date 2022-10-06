@@ -262,8 +262,9 @@ export default function Navbar() {
           <div className="flex text-center mt-4">
             <Link passHref href="/checkout">
               <button
+              onClick={toggleCart}
                 disabled={Object.keys(cart).length == 0}
-                className="bg-gray-200 mr-6  disabled:bg-gray-300 hover:bg-gray-300 disabled:text-gray-500 text-gray-800 font-bold  px-1 rounded inline-flex items-center"
+                className="bg-gray-200 mr-6 outline-none  disabled:bg-gray-300 hover:bg-gray-300 disabled:text-gray-500 text-gray-800 font-bold  px-1 rounded inline-flex items-center"
               >
                 <span className="fill-current w-2  mr-2">
                   <GiShoppingBag className=" flex justify-center items-center text-center" />{" "}
@@ -274,7 +275,7 @@ export default function Navbar() {
             <button
               onClick={clearCart}
               disabled={Object.keys(cart).length == 0}
-              className="bg-red-600  disabled:bg-gray-400 hover:bg-red-700 text-gray-100 font-bold px-1 rounded inline-flex items-center"
+              className="bg-red-600 outline-none disabled:bg-gray-400 hover:bg-red-700 text-gray-100 font-bold px-1 rounded inline-flex items-center"
             >
               <span className="fill-current w-2 mr-2">
                 <MdDelete />{" "}
