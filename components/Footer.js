@@ -87,7 +87,7 @@ export default function Footer() {
     </div>
     <div className="bg-gray-200 pb-20 md:pb-0  lg:mb-0">
       <div className="container mx-auto py-4 px-5 flex flex-wrap flex-col sm:flex-row">
-        <p className="text-gray-500 text-sm text-center sm:text-left">© {new Date().getFullYear()}  Redtomato — All rights reserved.
+        <p className="text-gray-500 text-sm text-center sm:text-left">© {new Date().getFullYear()}  RedTomato — All rights reserved.
         </p>
         
       </div>

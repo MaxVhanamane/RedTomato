@@ -70,7 +70,7 @@ export default function Home({ foodItems }) {
 
 
   <Image src="/assets/small_screen_home.jpg" priority={true}  alt="home image" layout="fill" objectFit="cover"  className="small_screen" />
-  <Image src="/assets/home3.jpg" priority={true}  alt="home image" layout="fill" objectFit="cover" className="large_screen"  />
+  <Image src="/assets/home4.jpg" priority={true}  alt="home image" layout="fill" objectFit="cover" className="large_screen"  />
   </div>
 
 
@@ -144,7 +144,7 @@ export default function Home({ foodItems }) {
 {!showSearch &&  <div className="md:hidden w-screen flex  justify-center items-center mt-[0.1rem] gap-[0.1rem] ">
 
 <Link href="/veg">
-<div style={{width:"100vw", height:"18vh",position:"relative" ,cursor:"pointer"}} className="shadow bg-gray-900">
+<div style={{width:"100vw", height:"18vh",position:"relative" ,cursor:"pointer"}} className="shadow bg-gradient-to-r from-[#020b14] to-[#021e2a] ">
 <h1 className="absolute top-0 left-0 z-10 font-bold text-xs py-0.5 px-1 text-white md:text-2xl bg-green-600 md:px-2 md:py-1"> Veg </h1>
             
 <Image src="/assets/veg.png"  alt="veg food image" layout="fill" objectFit="cover" priority={true}  />
@@ -152,7 +152,9 @@ export default function Home({ foodItems }) {
 </div>
 </Link>
 <Link href="/nonveg">
-<div style={{width:"100vw", height:"18vh",position:"relative",cursor:"pointer" }} className="shadow bg-gray-900">
+<div style={{width:"100vw", height:"18vh",position:"relative",cursor:"pointer" }} className="shadow bg-gradient-to-r from-[#020b14] to-[#021e2a]"> 
+ {/* #183e49 */}
+
 <h1 className="absolute top-0 left-0 z-10 font-bold text-xs py-0.5 px-1 text-white md:text-2xl bg-red-500 md:px-2 md:py-1"> Non Veg </h1>
 
 
@@ -169,13 +171,13 @@ export default function Home({ foodItems }) {
 {!showSearch && <div>
  <div className="lg:w-1/2 w-full m-8 lg:mb-0">
  <h1 className="sm:text-3xl text-2xl font-medium title-font m-2 text-gray-900">Our best-selling dishes</h1>
- <div className="h-1 mx-2 w-20 bg-gradient-to-r from-orange-400 to-orange-600 rounded"></div>
+ <div className="h-1 mx-2 w-20 bg-gradient-to-r from-red-400 to-red-500 rounded"></div>
  </div>
   
 
     <section className="text-gray-600 body-font mb-28">
         <div className="container px-5 py-2 mx-auto  ">
-          <div className="flex flex-wrap m-auto  justify-center gap-6">
+          <div className="flex flex-wrap m-auto  justify-center ">
 
             {popularFoodItems.map((item) => {
 

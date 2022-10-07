@@ -1,13 +1,9 @@
-import React,{useState,useContext,useEffect} from "react";
+import React,{useContext} from "react";
 import { AiOutlineHome } from "react-icons/ai";
 import { AiOutlineLogout } from "react-icons/ai";
 import { FaUserCircle } from "react-icons/fa";
 import { VscThreeBars } from "react-icons/vsc";
 import { AiOutlineShoppingCart } from "react-icons/ai";
-
-import { ImBook } from "react-icons/im";
-import { IoChatboxOutline } from "react-icons/io5";
-import { IoGitNetworkOutline } from "react-icons/io5";
 import styles from "../styles/Navigation.module.css"
 import { useRouter } from 'next/router';
 import Link from "next/link";
@@ -18,8 +14,6 @@ function Navigation() {
     toggleCart,
     toggleSidebar,removeToken,clearCart,token
   } = useContext(CartContext);
-  const router = useRouter()
-let currentPath=router.pathname
 
   return (
     <nav className={styles.nav}>

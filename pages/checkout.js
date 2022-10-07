@@ -307,12 +307,12 @@ export default function Checkout() {
    </Head>
     <div className="flex flex-col md:flex-row container pt-20 justify-center m-auto mb-44 sm:mb-20">
       <div className="md:w-1/2 w-3/4 md:ml-20 m-auto mt-10  ">
-        <h2 className="font-bold ml-4">1. Delivery Details</h2>
+        <h2 className="font-bold ">1. Delivery Details</h2>
         <div className=" mt-6 ">
 
 
-          <label htmlFor="name" className="block ml-4 mt-4">Name</label>
-          <input type="text" name="name" onChange={handleChange} value={name} className="block md:w-9/12 w-full ml-4 mr-8 mt-2
+          <label htmlFor="name" className="block  mt-4">Name</label>
+          <input type="text" name="name" onChange={handleChange} value={name} className="block md:w-9/12 w-full  mr-8 mt-2
         px-3
         py-1.5
         text-base
@@ -325,8 +325,8 @@ export default function Checkout() {
         ease-in-out
        
         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
-          <label htmlFor="mail" className="block ml-4 mt-4">Email address</label>
-          <input type="mail" name="email" onChange={handleChange} value={email} className="block md:w-9/12 w-full ml-4 mr-8 mt-2
+          <label htmlFor="mail" className="block  mt-4">Email address</label>
+          <input type="mail" name="email" onChange={handleChange} value={email} className="block md:w-9/12 w-full  mr-8 mt-2
         px-3
         py-1.5
         text-base
@@ -339,8 +339,8 @@ export default function Checkout() {
         ease-in-out
        
         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
-          <label htmlFor="phone" className="block ml-4 mt-4">* Phone</label>
-          <input maxLength={10} type="text" name="phone" onChange={handleChange} value={phone} placeholder="Enter your 10 digit phone number" required className="block md:w-9/12 w-full ml-4 mr-8 mt-2
+          <label htmlFor="phone" className="block  mt-4">* Phone</label>
+          <input maxLength={10} type="text" name="phone" onChange={handleChange} value={phone} placeholder="Enter your 10 digit phone number" required className="block md:w-9/12 w-full  mr-8 mt-2
         px-3
         py-1.5
         text-base
@@ -354,8 +354,8 @@ export default function Checkout() {
        
         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
 
-          <label htmlFor="address" className="block ml-4 mt-4">* Address</label>
-          <textarea type="text" name="address" onChange={handleChange} value={address} className="block md:w-9/12 w-full ml-4 mr-8 mt-2
+          <label htmlFor="address" className="block  mt-4">* Address</label>
+          <textarea type="text" name="address" onChange={handleChange} value={address} className="block md:w-9/12 w-full  mr-8 mt-2
         px-3
         py-1.5
         text-base
@@ -369,8 +369,8 @@ export default function Checkout() {
        resize-none
         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
 
-          <label htmlFor="pin" className="block ml-4 mt-4">* Pin</label>
-          <input maxLength={6} type="text" name="pin" onChange={handleChange} value={pin} placeholder="Enter your 6 digit pincode" required className="block md:w-9/12 w-full ml-4 mr-8 mt-2
+          <label htmlFor="pin" className="block  mt-4">* Pin</label>
+          <input maxLength={6} type="text" name="pin" onChange={handleChange} value={pin} placeholder="Enter your 6 digit pincode" required className="block md:w-9/12 w-full  mr-8 mt-2
         px-3
         py-1.5
         text-base
@@ -383,8 +383,8 @@ export default function Checkout() {
         ease-in-out
        
         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
-         <label htmlFor="area" className="block ml-4 mt-4">Area, Street, Sector</label>
-          <input type="text" name="area" onChange={handleChange} value={area} className="block md:w-9/12 w-full ml-4 mr-8 mt-2
+         <label htmlFor="area" className="block  mt-4">Area, Street, Sector</label>
+          <input type="text" name="area" onChange={handleChange} value={area} className="block md:w-9/12 w-full  mr-8 mt-2
         px-3
         py-1.5
         text-base
@@ -397,8 +397,8 @@ export default function Checkout() {
         ease-in-out
        
         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
-          <label htmlFor="city" className="block ml-4 mt-4">Town/City</label>
-          <input type="text" name="city" onChange={handleChange} value={city} className="block md:w-9/12 w-full ml-4 mr-8 mt-2
+          <label htmlFor="city" className="block  mt-4">Town/City</label>
+          <input type="text" name="city" onChange={handleChange} value={city} className="block md:w-9/12 w-full  mr-8 mt-2
         px-3
         py-1.5
         text-base
@@ -411,8 +411,8 @@ export default function Checkout() {
         ease-in-out
        
         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
-          <label htmlFor="state" className="block ml-4 mt-4">State</label>
-          <input type="text" name="state" onChange={handleChange} value={state} className="block md:w-9/12 w-full ml-4 mr-8 mt-2
+          <label htmlFor="state" className="block  mt-4">State</label>
+          <input type="text" name="state" onChange={handleChange} value={state} className="block md:w-9/12 w-full  mr-8 mt-2
         px-3
         py-1.5
         text-base
@@ -431,7 +431,7 @@ export default function Checkout() {
       </div>
       <div className="md:w-1/2 w-3/4 md:ml-10 m-auto mt-10 mb-10 ">
         {/*  Order summary */}
-        <h2 className="font-bold ml-4">2. Order summary</h2>
+        <h2 className="font-bold lg:ml-4">2. Order summary</h2>
 
         <div
           className=" mt-6 m-auto h-auto sidebar md:w-72 w-72  bg-gray-100 p-10 "

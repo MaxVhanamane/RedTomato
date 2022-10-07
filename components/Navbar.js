@@ -344,7 +344,7 @@ export default function Navbar() {
 
 <aside ref={sidebar} className=" overflow-y-scroll  shadow-md rounded-sm  sidebar w-80 absolute top-0 left-0 bg-gray-100 transform transition-transform -translate-x-full duration-300" aria-label="Sidebar">
    <div className="overflow-y-auto py-8 px-3 bg-gray-50  ">
-    <p className="text-center mb-2 text-red-500 font-semibold">Menu</p>
+    <p className="text-center mb-2 text-gray-900 font-semibold">Menu</p>
       <ul className="space-y-2">
       {(token && role==="admin") && 
          <li onClick={toggleSidebar}>

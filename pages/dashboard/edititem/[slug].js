@@ -20,6 +20,7 @@ useEffect(()=>{
     setFoodItem({
         ...foodItem,
             title: foodData.title,
+            id: foodData._id,
             slug: foodData.slug,
             desc: foodData.desc,
             popularity:foodData.popularity,
@@ -239,7 +240,7 @@ function uploadImageToFirebase(imageRef){
 
  const handleEdit=async()=>{
    
-    const data = [{_id:foodData._id,title:foodItem.title,slug:foodItem.slug,desc:foodItem.desc,popularity:foodItem.popularity,category:foodItem.category,price:JSON.parse(foodItem.price),img:foodItem.img,availableQty:foodItem.availableQty}];
+    const data = [{_id:foodItem.id,title:foodItem.title,slug:foodItem.slug,desc:foodItem.desc,popularity:foodItem.popularity,category:foodItem.category,price:JSON.parse(foodItem.price),img:foodItem.img,availableQty:foodItem.availableQty}];
      
 
     const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/editfooditems`, {

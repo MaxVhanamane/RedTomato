@@ -143,7 +143,7 @@ export default function Orders() {
       })
       const response = await res.json()
       if(response.success===true){
-        toast.success("Your delivery details has been successfully updated", {
+        toast.success("Your account details has been successfully updated", {
         
           autoClose: 2000,
           hideProgressBar: false,
@@ -225,7 +225,7 @@ export default function Orders() {
       <h1 className="text-xl text-center font-bold">Your account</h1>
       <div className='flex md:flex-row flex-col mb-10'>
       <div className="md:w-1/2 w-3/4 md:ml-28  m-auto mt-10  ">
-        <h2 className="font-bold ">1. Delivery Details</h2>
+        <h2 className="font-bold ">1. Account Details</h2>
         <div className=" mt-6 ">
 
 
@@ -344,7 +344,7 @@ export default function Orders() {
        
         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
 
-        <button onClick={handleUpdateUserDetails} className="disabled:bg-gray-400 enabled:bg-blue-400 mt-6 enabled:hover:bg-blue-500 text-gray-800 font-bold  px-4 py-1 rounded inline-flex items-center">
+        <button onClick={handleUpdateUserDetails} className="disabled:bg-gray-400 enabled:bg-blue-600 mt-6 enabled:hover:bg-blue-700 text-white font-bold  px-4 py-1 rounded inline-flex items-center">
 
  <span> Update Details </span>
 </button>
@@ -405,7 +405,7 @@ export default function Orders() {
         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
           
 
-        <button onClick={handleUpdatePassword}  className="disabled:bg-gray-400 enabled:bg-blue-400 mt-6 enabled:hover:bg-blue-500 text-gray-800 font-bold  px-4 py-1 rounded inline-flex items-center">
+        <button onClick={handleUpdatePassword}  className="disabled:bg-gray-400 enabled:bg-blue-600 mt-6 enabled:hover:bg-blue-700 text-white font-bold  px-4 py-1 rounded inline-flex items-center">
 
 <span> Update Password</span>
 </button>
