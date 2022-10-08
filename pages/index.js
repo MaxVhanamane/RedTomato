@@ -70,7 +70,7 @@ export default function Home({ foodItems }) {
 
 
   <Image src="/assets/small_screen_home.jpg" priority={true}  alt="home image" layout="fill" objectFit="cover"  className="small_screen" />
-  <Image src="/assets/home4.jpg" priority={true}  alt="home image" layout="fill" objectFit="cover" className="large_screen"  />
+  <Image src="/assets/home5.jpg" priority={true}  alt="home image" layout="fill" objectFit="cover" className="large_screen"  />
   </div>
 
 

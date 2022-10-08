@@ -171,7 +171,7 @@ export default function Navbar() {
                 </Link>
                 <li
                   onClick={() => {
-                    const con=confirm("do you really want to logout?")
+                    const con=confirm("Do you really want to logout?")
                     if(con){
                       removeToken();
                       clearCart();
