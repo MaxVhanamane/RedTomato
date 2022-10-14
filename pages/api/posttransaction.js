@@ -15,11 +15,9 @@ let  generated_signature = CryptoJS.HmacSHA256(body, process.env.RAZORPAY_SECRET
 // When signature mateches then we will make the payment status as paid else will send verification failed error.
 if (generated_signature == req.body.razorpaySignature) {
     order=await Order.findOneAndUpdate({orderId:req.body.razorpayOrderId},{status:"paid",paymentInfo:JSON.stringify(req.body)})
-        console.log("verified max")
     res.status(200).json({ success:true,order,message:"Payment Successful."})
 }
 else{
- console.log("failed max")
     res.status(200).json({ success:false,message:"Verification failed" })
 
 }

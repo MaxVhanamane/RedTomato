@@ -1,9 +1,8 @@
 import "../styles/globals.css";
-import {useContext,useEffect} from "react"
 import Layout from "./../components/Layout";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import CartState,{CartContext} from "./../context/CartState";
+import CartState from "./../context/CartState";
 import Head from "next/head"
 function MyApp({ Component, pageProps }) {
 

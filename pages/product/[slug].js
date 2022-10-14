@@ -304,8 +304,9 @@ export default function Product({ foodItem, error }) {
                       });
                       setGoToCart(true)
                     }}
-                    className=" disabled:bg-gray-400 flex lg:ml-5 ml-3  text-white bg-[#ff2400] border-0 py-2 lg:px-6 px-2 focus:outline-none hover:bg-[#FF0000] rounded-lg"
+                    className=" disabled:bg-gray-400 flex lg:ml-5 ml-3  text-white bg-[#FF0000] border-0 py-2 lg:px-6 px-2 focus:outline-none hover:bg-[#ff2400] rounded-lg"
                   >
+                    
                     Add to Cart
                   </button> :
 
@@ -313,7 +314,7 @@ export default function Product({ foodItem, error }) {
                       onClick={() => {
                         toggleCart()
                       }}
-                      className=" disabled:bg-gray-400 flex lg:ml-5 ml-3 text-white bg-[#ff2400] border-0 py-2 lg:px-6 px-2 focus:outline-none hover:bg-[#FF0000] rounded-lg"
+                      className=" disabled:bg-gray-400 flex lg:ml-5 ml-3 text-white bg-[#FF0000] border-0 py-2 lg:px-6 px-2 focus:outline-none hover:bg-[#ff2400] rounded-lg"
                     >
                       Go to Cart
                     </button>
@@ -323,7 +324,7 @@ export default function Product({ foodItem, error }) {
 
                 </div>
                 <div >
-                  <button disabled={item.availableQty == 0} onClick={() => { orderNow(slug, 1, foodPrice, `${item.title} (${selectedRadioBtn})`, `${item.size}`, `${item.category}`) }} className="flexdisabled:bg-gray-400 ml-8 text-white bg-[#ff2400] border-0 py-2 px-6 focus:outline-none hover:bg-[#FF0000] rounded-lg">
+                  <button disabled={item.availableQty == 0} onClick={() => { orderNow(slug, 1, foodPrice, `${item.title} (${selectedRadioBtn})`, `${item.size}`, `${item.category}`) }} className="flexdisabled:bg-gray-400 ml-8 text-white bg-[#FF0000] border-0 py-2 px-6 focus:outline-none hover:bg-[#ff2400] rounded-lg">
                     Order Now
                   </button></div>
 
@@ -342,7 +343,7 @@ export default function Product({ foodItem, error }) {
                   <div className="absolute top-2 lg:right-10 right-4 ">
                     <button
                       onClick={handlePinCheck}
-                      className="h-10 w-20 text-white rounded-lg bg-[#ff2400] hover:bg-[#FF0000]"
+                      className="h-10 w-20 text-white rounded-lg bg-[#FF0000] hover:bg-[#ff2400]"
                     >
                       Check
                     </button>{" "}

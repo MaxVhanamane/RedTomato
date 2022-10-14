@@ -5,15 +5,7 @@ export default async function handler(req, res) {
     if (req.method === "POST") {
        
         for (let i = 0; i < req.body.length; i++) {
-            console.log( "server",req.body[i].title,
-                 req.body[i].slug, 
-                 req.body[i].desc,
-                 req.body[i].img,
-                 req.body[i].popularity,
-                 req.body[i].category,
-                 req.body[i].size,
-                 req.body[i].price,
-                 req.body[i].availableQty)
+          
             let food = new Food({
                 title: req.body[i].title,
                 slug: req.body[i].slug, 

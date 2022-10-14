@@ -7,7 +7,6 @@ export default async function handler(req, res) {
         try{
         let token = req.body.tokenVal
        let user= jwt.verify(token, process.env.JWT_SECRET);
-       console.log("user",user)
        let dbUser=await User.findOneAndUpdate({email:user.email},{name:req.body.name,address:req.body.address,phone:req.body.phone,state:req.body.state,area:req.body.area,city:req.body.city,pin:req.body.pin})
        res.status(200).json({success:true})
     }
