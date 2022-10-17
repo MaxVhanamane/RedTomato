@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/router';
 import Head from "next/head";
+import { SiRottentomatoes } from "react-icons/si";
 
 export default function SignUp() {
   const [name, setName] = useState("")
@@ -91,8 +92,9 @@ export default function SignUp() {
                 <div className=" px-4 md:px-0">
                   <div className="md:p-12 md:mx-6">
                     <div className="text-center rounded-full">
+                    <div className="flex justify-center mt-4 text-5xl text-red-600"> <SiRottentomatoes className='text-center'/></div>
 
-                      <h4 className="text-2xl font-bold mt-1 mb-5 pb-1">Sign Up</h4>
+                      <h4 className="text-2xl font-bold mt-1 mb-5 pb-1 text-gray-800">Sign up for an account</h4>
                     </div>
                     <form onSubmit={handleSignup}>
                       {/* <p className="mb-4">Please login to your account</p> */}
@@ -144,7 +146,7 @@ export default function SignUp() {
                       </div>
                       <div className="text-center pt-1 mb-10 pb-1">
                         <button
-                          className="  inline-block px-6 py-2.5 text-white font-medium text-xs leading-tight uppercase rounded shadow-md   active:shadow-lg transition duration-150 ease-in-out w-full mb-3 pink_btn "
+                          className="  inline-block px-6 py-2.5 text-white font-medium text-xs leading-tight uppercase rounded shadow-md   active:shadow-lg transition duration-150 ease-in-out w-full mb-3 bg-red-600 hover:bg-red-500 "
                           type="submit"
                           data-mdb-ripple="true"
                           data-mdb-ripple-color="light"

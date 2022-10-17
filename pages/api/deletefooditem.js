@@ -5,7 +5,7 @@ export default async function handler(req, res) {
     if (req.method === "POST") {
        
             let deleteFoodItem = await Food.findByIdAndDelete(req.body)
-            res.status(200).send({ success: "updated successfully" })
+            res.status(200).send({ success: "deleted successfully" })
         
     }
     else {

@@ -28,7 +28,7 @@ body {
   background-color: #f9fafb
 }
 
-.pink_btn {
+/* .pink_btn {
 
   background: linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
 
@@ -37,7 +37,9 @@ body {
 .pink_btn:hover {
   background: linear-gradient(to right, #e78c4c, #de484b, #e14d86, #dd6bbb);
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-}
+} */
+
+
 
 .prod_img{
   width:100vw;
