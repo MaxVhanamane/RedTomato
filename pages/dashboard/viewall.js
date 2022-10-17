@@ -106,7 +106,7 @@ export default function Viewall({ foodItems }) {
    </Head>
     <DashboardSidebar/>
     <section className="text-gray-600 body-font lg:ml-60">
-    <div className=" sticky top-0 py-4 font-bold md:text-3xl text-2xl bg-[#f9fafb]  text-center shadow  text-gray-700 drop-shadow mb-8 z-10 "><h1 className="text-center mx-auto">All food items</h1></div>
+    <div className=" sticky top-0 py-3 font-bold md:text-3xl text-2xl bg-red-500 text-center shadow  text-gray-50 drop-shadow mb-8 z-10 "><h1 className="text-center mx-auto">All food items</h1></div>
     <div className="container  mx-auto  ">
         
 

@@ -33,7 +33,7 @@ export default function DashboardSidebar() {
   };
   return (
    <>
-   <div onClick={toggleSidebar}  className="lg:hidden fixed top-4 left-5 text-4xl text-gray-700 flex items-center justify-center  z-20">
+   <div onClick={toggleSidebar}  className="lg:hidden fixed top-2 left-5 text-4xl text-gray-50 flex items-center justify-center  z-20">
       <GiHamburgerMenu/>
       </div>
     <aside  ref={dashBoardToggler}  className="overflow-y-scroll h-full  shadow-md rounded-sm  sidebar w-60 fixed top-0 left-0 bg-gray-100 z-20 transform transition-transform -translate-x-full lg:translate-x-0 duration-300 " aria-label="Sidebar">

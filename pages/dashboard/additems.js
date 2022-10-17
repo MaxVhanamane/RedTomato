@@ -267,7 +267,7 @@ setFoodItem({
    </Head>
     <DashboardSidebar/>
     <div className="lg:ml-60 sticky top-0 bg-[#f9fafb] z-10">
-    <div className="  py-4 font-bold md:text-3xl text-2xl  mx-auto text-center shadow  text-gray-700 drop-shadow mb-8 "><h1 className="text-center mx-auto">Add a food item</h1></div></div>
+    <div className=" sticky top-0 py-3 font-bold md:text-3xl text-2xl bg-red-500 text-center shadow  text-gray-50 drop-shadow mb-8 z-10 "><h1 className="text-center mx-auto">Add a food item</h1></div></div>
     <div className='lg:ml-28 p-6  pt-6 flex justify-center w-full'>
     
     <div className="block p-6 rounded-lg shadow-lg bg-white w-[50rem]  mb-28">
@@ -399,7 +399,7 @@ setFoodItem({
 mt-8
         px-6
         py-2.5
-        bg-blue-600
+        bg-red-600
         text-white
         font-medium
         text-xs
@@ -407,9 +407,9 @@ mt-8
         uppercase
         rounded
         shadow-md
-        hover:bg-blue-700 hover:shadow-lg
-        focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
-        active:bg-blue-800 active:shadow-lg
+        hover:bg-red-500 hover:shadow-lg
+        focus:bg-red-500 focus:shadow-lg focus:outline-none focus:ring-0
+        active:bg-red-700 active:shadow-lg
         transition
         duration-150
         ease-in-out">Upload</button>
@@ -486,9 +486,10 @@ mt-8
     
      
       <button onClick={handleAdd} type="submit" className="
+mt-8
         px-6
         py-2.5
-        bg-blue-600
+        bg-red-600
         text-white
         font-medium
         text-xs
@@ -496,9 +497,9 @@ mt-8
         uppercase
         rounded
         shadow-md
-        hover:bg-blue-700 hover:shadow-lg
-        focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
-        active:bg-blue-800 active:shadow-lg
+        hover:bg-red-500 hover:shadow-lg
+        focus:bg-red-500 focus:shadow-lg focus:outline-none focus:ring-0
+        active:bg-red-700 active:shadow-lg
         transition
         duration-150
         ease-in-out">Add</button>

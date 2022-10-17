@@ -67,7 +67,7 @@ export default function AllOrders({allOrders}) {
     <DashboardSidebar/>
 
     <div className="lg:ml-60 sticky top-0  z-10">
-    <div className="  py-4 font-bold md:text-3xl text-2xl bg-[#f9fafb] mx-auto text-center shadow  text-gray-700 drop-shadow mb-8 "><h1 className="text-center mx-auto">All orders</h1></div></div>
+    <div className=" sticky top-0 py-3 font-bold md:text-3xl text-2xl bg-red-500 text-center shadow  text-gray-50 drop-shadow mb-8 z-10 "><h1 className="text-center mx-auto">All orders</h1></div></div>
     
     <div className=" lg:pt-2 pt-8 mb-24 lg:ml-60 p-4">
       <div className="flex flex-col lg:mx-16">
