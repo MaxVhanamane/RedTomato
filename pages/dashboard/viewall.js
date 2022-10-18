@@ -7,6 +7,8 @@ import DashboardSidebar from './../../components/DashboardSidebar';
 import {  toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import Head from "next/head";
+import { RiDashboardFill } from "react-icons/ri";
+
 export default function Viewall({ foodItems }) {
     const myLoader = ({ src, width, quality }) => {
         return `${src}?w=${width}&q=${quality || 100}`;
@@ -106,7 +108,8 @@ export default function Viewall({ foodItems }) {
    </Head>
     <DashboardSidebar/>
     <section className="text-gray-600 body-font lg:ml-60">
-    <div className=" sticky top-0 py-3 font-bold md:text-3xl text-2xl bg-red-500 text-center shadow  text-gray-50 drop-shadow mb-8 z-10 "><h1 className="text-center mx-auto">All food items</h1></div>
+    <div className=" sticky top-0 py-3 font-bold  bg-red-500 text-center shadow  text-gray-50 drop-shadow mb-8 z-10  ">
+    <RiDashboardFill className="absolute ml-4 text-4xl hidden lg:block"/> <span className="absolute ml-16 text-lg text-center top-4 hidden lg:block">Dashboard</span> <h1 className="text-center w-full mx-auto md:text-3xl text-2xl">All food items</h1></div>
     <div className="container  mx-auto  ">
         
 

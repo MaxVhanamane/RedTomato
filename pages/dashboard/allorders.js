@@ -5,6 +5,7 @@ import Orders from '../../models/orders';
 import connectDb from './../../middleware/mongoose';
 import DashboardSidebar from './../../components/DashboardSidebar';
 import Head from "next/head";
+import { RiDashboardFill } from "react-icons/ri";
 
 export default function AllOrders({allOrders}) {
     const router=useRouter()
@@ -67,7 +68,11 @@ export default function AllOrders({allOrders}) {
     <DashboardSidebar/>
 
     <div className="lg:ml-60 sticky top-0  z-10">
-    <div className=" sticky top-0 py-3 font-bold md:text-3xl text-2xl bg-red-500 text-center shadow  text-gray-50 drop-shadow mb-8 z-10 "><h1 className="text-center mx-auto">All orders</h1></div></div>
+    <div className=" sticky top-0 py-3 font-bold md:text-3xl text-2xl bg-red-500 text-center shadow  text-gray-50 drop-shadow mb-8 z-10 ">
+    <RiDashboardFill className="absolute ml-4 text-4xl hidden lg:block"/> <span className="absolute ml-16 text-lg text-center top-4 hidden lg:block">Dashboard</span>
+      <h1 className="text-center mx-auto">All orders</h1>
+      </div>
+      </div>
     
     <div className=" lg:pt-2 pt-8 mb-24 lg:ml-60 p-4">
       <div className="flex flex-col lg:mx-16">

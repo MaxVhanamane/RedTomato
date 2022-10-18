@@ -7,6 +7,7 @@ import {ref,uploadBytes,getDownloadURL} from "firebase/storage"
 import {  toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import Head from "next/head";
+import { RiDashboardFill } from "react-icons/ri";
 
 
 export default function Additems() {
@@ -267,7 +268,9 @@ setFoodItem({
    </Head>
     <DashboardSidebar/>
     <div className="lg:ml-60 sticky top-0 bg-[#f9fafb] z-10">
-    <div className=" sticky top-0 py-3 font-bold md:text-3xl text-2xl bg-red-500 text-center shadow  text-gray-50 drop-shadow mb-8 z-10 "><h1 className="text-center mx-auto">Add a food item</h1></div></div>
+    <div className=" sticky top-0 py-3 font-bold md:text-3xl text-2xl bg-red-500 text-center shadow  text-gray-50 drop-shadow mb-8 z-10 ">
+    <RiDashboardFill className="absolute ml-4 text-4xl hidden lg:block"/> <span className="absolute ml-16 text-lg text-center top-4 hidden lg:block">Dashboard</span>
+      <h1 className="text-center mx-auto">Add a food item</h1></div></div>
     <div className='lg:ml-28 p-6  pt-6 flex justify-center w-full'>
     
     <div className="block p-6 rounded-lg shadow-lg bg-white w-[50rem]  mb-28">
