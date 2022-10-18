@@ -18,8 +18,8 @@ export default function Orders() {
 
             const finalRes = await res.json()
             if(finalRes.success){
-
-              setOrders(finalRes.orders)
+   
+              setOrders(prev=>finalRes.orders)
             }
             else{
               setFetchError(true)
@@ -45,7 +45,7 @@ export default function Orders() {
       <h1 className="text-center font-semibold text-2xl mb-2">My Orders</h1>
       {fetchError? <h2 className="text-center font-semibold text-xl mb-2 mt-20">Internal Server Error. Please try again later!</h2>
      : <div className="flex flex-col lg:mx-40">
-  {orders.lenght>0 ?<div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
+  {orders.length>0 ?<div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
     <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
       <div className="overflow-hidden">
         <table className="min-w-full">

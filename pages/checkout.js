@@ -251,7 +251,7 @@ export default function Checkout() {
             },
             // theme is to control your razorpay color
             theme: {
-              color: 'red',
+              color: "green",
             },
 
           };
