@@ -28,7 +28,7 @@ export default function Navbar() {
     addToCart,
     ref,
     toggleCart,
-   sidebar,toggleSidebar
+   sidebar,toggleSidebar,changeHamburgerIcon,setChangeHamburgerIcon
   } = useContext(CartContext);
   const [dropDown, setDropDown] = useState(false);
   const [token, setToken] = useState(null);
@@ -347,7 +347,7 @@ export default function Navbar() {
     <p className="text-center mb-2 text-gray-900 font-semibold">Menu</p>
       <ul className="space-y-2">
       {(token && role==="admin") && 
-         <li onClick={toggleSidebar}>
+         <li onClick={()=>{toggleSidebar();setChangeHamburgerIcon(!changeHamburgerIcon)}}>
             <Link passHref href="/dashboard/viewall"><a  className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg  hover:bg-gray-100 ">
                <svg aria-hidden="true" className="w-6 h-6 text-gray-500 transition duration-75  group-hover:text-gray-900 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path><path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path></svg>
                <span className="ml-3">Dashboard</span>
@@ -368,12 +368,12 @@ export default function Navbar() {
             </button>
             <ul id="dropdown-example" className="hidden  py-2 space-y-2">
             
-                  <li onClick={toggleSidebar}>
+                  <li onClick={()=>{toggleSidebar();setChangeHamburgerIcon(!changeHamburgerIcon)}}>
                   <Link passHref href="/veg"><a  className="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100  ">Veg</a></Link>
                   </li>
                   
                   
-                  <li onClick={toggleSidebar}>
+                  <li onClick={()=>{toggleSidebar();setChangeHamburgerIcon(!changeHamburgerIcon)}}>
                   <Link passHref href="/nonveg"><a  className="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 ">Non Veg</a></Link>
                   </li>
                   
@@ -381,7 +381,7 @@ export default function Navbar() {
             </ul>
          </li>
         {token&& 
-         <li onClick={toggleSidebar}>
+         <li onClick={()=>{toggleSidebar();setChangeHamburgerIcon(!changeHamburgerIcon)}}>
             <Link passHref href="/myaccount"><a  className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg  hover:bg-gray-100 ">
                <svg aria-hidden="true" className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd"></path></svg>
                <span className="flex-1 ml-3 whitespace-nowrap">My Account</span>
@@ -392,7 +392,7 @@ export default function Navbar() {
         
 
          {token&& 
-         <li onClick={toggleSidebar}>
+         <li onClick={()=>{toggleSidebar();setChangeHamburgerIcon(!changeHamburgerIcon)}}>
             <Link passHref href="/orders"><a  className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg  hover:bg-gray-100 ">
                <svg aria-hidden="true" className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75  group-hover:text-gray-900 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z" clipRule="evenodd"></path></svg>
                <span className="flex-1 ml-3 whitespace-nowrap">My orders</span>
@@ -400,7 +400,7 @@ export default function Navbar() {
          </li>
          }
          
-         <li onClick={toggleSidebar}>
+         <li onClick={()=>{toggleSidebar();setChangeHamburgerIcon(!changeHamburgerIcon)}}>
          <Link passHref href="/contact"><a  className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg  hover:bg-gray-100 ">
              
                <IoIosCall className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75  group-hover:text-gray-900 "/>
@@ -409,7 +409,7 @@ export default function Navbar() {
          </li>
          
          
-         <li onClick={toggleSidebar}>
+         <li onClick={()=>{toggleSidebar();setChangeHamburgerIcon(!changeHamburgerIcon)}}>
          <Link passHref href="/about"><a  className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg  hover:bg-gray-100 ">
         
                <FaInfoCircle className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75  group-hover:text-gray-900 "/>
@@ -420,7 +420,7 @@ export default function Navbar() {
       </ul>
    </div>
    <span
-            onClick={toggleSidebar}
+            onClick={()=>{toggleSidebar();setChangeHamburgerIcon(!changeHamburgerIcon)}}
             className="absolute top-3 right-2 cursor-pointer text-xl flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75  group-hover:text-gray-900 "
           >
             <AiFillCloseCircle />

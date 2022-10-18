@@ -4,15 +4,16 @@ import { AiOutlineLogout } from "react-icons/ai";
 import { FaUserCircle } from "react-icons/fa";
 import { VscThreeBars } from "react-icons/vsc";
 import { AiOutlineShoppingCart } from "react-icons/ai";
+import { AiOutlineClose } from "react-icons/ai";
 import styles from "../styles/Navigation.module.css"
-import { useRouter } from 'next/router';
 import Link from "next/link";
 import { CartContext } from "./../context/CartState";
 
 function Navigation() {
   const {
     toggleCart,
-    toggleSidebar,removeToken,clearCart,token
+    toggleSidebar,removeToken,clearCart,token,
+    changeHamburgerIcon,setChangeHamburgerIcon
   } = useContext(CartContext);
 
   return (
@@ -20,15 +21,24 @@ function Navigation() {
 
 
          
-<button   
+{changeHamburgerIcon?<button   
      className={styles.linkTag  }
         title="sidebar"
       >
          <VscThreeBars
-            onClick={toggleSidebar}
+            onClick={()=>{toggleSidebar();setChangeHamburgerIcon(!changeHamburgerIcon)}}
             
           />
-      </button> 
+      </button> :
+<button   
+     className={styles.linkTag  }
+        title="sidebar"
+      >
+         <AiOutlineClose
+            onClick={()=>{toggleSidebar();setChangeHamburgerIcon(!changeHamburgerIcon)}}
+            
+          />
+      </button> }
 
 {/* if you want to show active link add className={styles.linkTag +" " + (currentPath==="/" && styles.active )  } */}
 <Link href="/" >

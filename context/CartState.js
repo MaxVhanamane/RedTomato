@@ -15,6 +15,8 @@ function CartState(props) {
   const router = useRouter();
   const [progress, setProgress] = useState(0);
   const [cartChange,setCartChange]=useState(Math.random())
+  // To show and hide Hamburger Icon and close Icon on mobile devices.
+  const [changeHamburgerIcon,setChangeHamburgerIcon]=useState(true)
   const sidebar=useRef()
   const ref=useRef()
   const saveCart = (myCart) => {
@@ -134,7 +136,7 @@ function CartState(props) {
   };
   return (
     <CartContext.Provider
-      value={{ progress,setProgress,token,removeToken,cart, Total, addToCart, removeFromCart, clearCart,orderNow,ref,toggleCart,cartChange,setCartChange ,sidebar,toggleSidebar}}
+      value={{ progress,setProgress,token,removeToken,cart, Total, addToCart, removeFromCart, clearCart,orderNow,ref,toggleCart,cartChange,setCartChange ,sidebar,toggleSidebar,changeHamburgerIcon,setChangeHamburgerIcon}}
     >
       {/* Provider will give access to all the above states and functions to the components which are in props.children */}
       {props.children}
