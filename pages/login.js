@@ -79,7 +79,7 @@ else{
     <meta name="description" content="Red Tomatos login page" />
    </Head>
     <section className="h-screen gradient-form bg-gray-200 md:h-screen">
-    <div className="container py-12 px-6 h-full">
+    <div className=" py-12 px-6 h-full">
    
       <div className="flex justify-center items-center flex-wrap h-full g-6 text-gray-800">
         <div className="xl:w-6/12">
