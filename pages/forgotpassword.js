@@ -18,46 +18,6 @@ const [cNewpassword,setCNewPassword]=useState("")
      },[])
 
 
-     const handleLogin = async (e) => {
-      e.preventDefault()
-      
-        const data = {  email, password };
-  
-        const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/login`, {
-          method: 'POST', // or 'PUT'
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data),
-        })
-        const response = await res.json()
-        if(response.success){
-       localStorage.setItem("token",response.jwtToken)
-       localStorage.setItem("user",response.email)
-        toast.success('Logged in successfully!', {
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
-       
-          
-          router.push("/")
-      
-      }
-  else{
-    toast.error(response.error, {
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-  }
-}
 
 
 const handleChange = (e) => {
@@ -78,29 +38,63 @@ const handleChange = (e) => {
 
 
 const handleSendMail=async()=>{
+  // basic email verification
+  const terms = ["@"]
+  const result= terms.every(term => email.includes(term))
+
+  if(result && email.length>3){
 
 
-  const data = {  email, sendMail:true };
+    const data = {  email, sendMail:true };
+    
+    const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/forgotpassword`, {
+      method: 'POST', // or 'PUT'
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+    const response = await res.json()
+  if(response.success){
+    toast.success("We have emailed you password reset link. Check your mail.", {
+           
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  }
+
+  else{
+    toast.error("No user found! Please enter a valid mail id.", {
+           
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+
+  }
+
+  }
+
+  else{
+
+    toast.error("Enter a valid mail id", {
+           
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  }
   
-  const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/forgotpassword`, {
-    method: 'POST', // or 'PUT'
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
-  })
-  const response = await res.json()
-if(response.success){
-  toast.success("We have emailed you password reset link. Check your mail.", {
-         
-    autoClose: 5000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-  });
-}
 
 
 }
@@ -259,7 +253,7 @@ const handleResetPassword=async()=>{
                     <div className="text-center pt-1 mb-12 pb-1">
                       <button
                       onClick={handleSendMail}
-                        className="  inline-block px-6 py-2.5 text-white font-medium text-xs leading-tight uppercase rounded shadow-md   active:shadow-lg transition duration-150 ease-in-out w-full mb-3 pink_btn "
+                        className="  inline-block px-6 py-2.5 text-white font-medium text-xs leading-tight uppercase rounded shadow-md   active:shadow-lg transition duration-150 ease-in-out w-full mb-3 bg-red-600 hover:bg-red-500"
       
                         data-mdb-ripple="true"
                         data-mdb-ripple-color="light"

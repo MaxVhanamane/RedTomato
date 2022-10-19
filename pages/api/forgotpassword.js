@@ -7,6 +7,10 @@ import User from '../../models/users';
 
 export default async function handler(req, res) {
     connectDb()
+    // check if the user exists in the database
+    let verifyUser=await User.findOne({email:req.body.email})
+   if(verifyUser){
+
     // generate random token to verify user later 
     let randomToken = cryptoRandomString({ length: 20, type: 'alphanumeric' });
     //  when user clicks on Request reset link we will receive sendMail as true. 
@@ -99,5 +103,9 @@ export default async function handler(req, res) {
 
 
     }
+}
+else{
+    res.status(200).json({ success: false })
+}
 
 }
