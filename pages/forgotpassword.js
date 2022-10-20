@@ -143,7 +143,7 @@ const handleResetPassword=async()=>{
 
   }
   else{
-    toast.success("New password and confirm new password must be same.", {
+    toast.error("New password and confirm new password must be same.", {
          
       autoClose: 2000,
       hideProgressBar: false,
