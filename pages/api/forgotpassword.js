@@ -19,13 +19,13 @@ export default async function handler(req, res) {
         let user = await ForgotPasswordToken.findOne({ email: req.body.email })
         // if the user exits then we will update the token for that user else we will create that user in forgot password db.
         if (user) {
-            await ForgotPasswordToken.findOneAndUpdate({ email: req.body.email }, { token: randomToken, expiresIn: new Date().getTime() + 200 * 1000 })
+            await ForgotPasswordToken.findOneAndUpdate({ email: req.body.email }, { token: randomToken, expiresIn: new Date().getTime() + 1000 * 1000 })
         }
         else {
             let forgetToken = new ForgotPasswordToken({
                 email: req.body.email,
                 token: randomToken,
-                expiresIn: new Date().getTime() + 200 * 1000
+                expiresIn: new Date().getTime() + 1000 * 1000
             })
             await forgetToken.save()
 
@@ -44,7 +44,7 @@ export default async function handler(req, res) {
     We recommend that you keep your password secure and not share it with anyone.If you feel your password has been compromised, you can change it by going to your My Account Page.
 
     <br/><br/>
-    The above link will expire in two minutes.
+    The above link will expire in Ten minutes.
     `
     // Sending a mail using nodemailer (read docs)
         // create reusable transporter object using the default SMTP transport

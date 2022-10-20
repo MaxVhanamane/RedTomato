@@ -209,7 +209,7 @@ const handleResetPassword=async()=>{
                       <button
                       onClick={handleResetPassword}
 
-                        className="  inline-block px-6 py-2.5 text-white font-medium text-xs leading-tight uppercase rounded shadow-md   active:shadow-lg transition duration-150 ease-in-out w-full mb-3 pink_btn "
+                        className="  inline-block px-6 py-2.5 text-white font-medium text-xs leading-tight uppercase rounded shadow-md   active:shadow-lg transition duration-150 ease-in-out w-full mb-3 bg-red-600 hover:bg-red-500 "
       
                         data-mdb-ripple="true"
                         data-mdb-ripple-color="light"
