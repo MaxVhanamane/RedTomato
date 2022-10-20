@@ -251,7 +251,7 @@ export default function Forgotpassword() {
                           type="submit"
 
                         >
-                          Send Reset Email
+                          Send Password Reset Link
                         </button>
                       </div>
                       <div className="flex items-center justify-between pb-6">
