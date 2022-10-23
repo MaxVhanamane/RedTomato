@@ -455,7 +455,7 @@ export default function Checkout() {
                       <FiMinusSquare
                         className="text-xl text-gray-800"
                         onClick={() => {
-                          removeFromCart(cart[key].slug, 1, cart[key].price, key, cart[key].size, cart[key].type);
+                          removeFromCart(cart[key].slug, 1, cart[key].price, key, cart[key].size, cart[key].type,cart[key].img);
                         }}
                       />
 
@@ -464,7 +464,7 @@ export default function Checkout() {
                       <FiPlusSquare
                         className="text-xl text-gray-800"
                         onClick={() => {
-                          addToCart(cart[key].slug, 1, cart[key].price, key, cart[key].size, cart[key].type);
+                          addToCart(cart[key].slug, 1, cart[key].price, key, cart[key].size, cart[key].type,cart[key].img);
                         }}
                       />
                     </div>

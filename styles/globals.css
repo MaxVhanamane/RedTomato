@@ -21,7 +21,8 @@ html,
 body {
   width: 100%;
   position: relative;
-  overflow-x: hidden;
+  /* when I use overflow-x:hidden; on some routes the page is not starting  from top it starts in the middle or botton to fix that I have used overflow-x: clip; */
+  overflow-x: clip;
   /* to hide scrollbar in firefox */
   /* scrollbar-width: none;   */
   /* background: #E9F3ED; */

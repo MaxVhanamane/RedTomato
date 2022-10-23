@@ -91,14 +91,14 @@ export default function Home({ foodItems }) {
  </div>
   <section className="text-gray-600 body-font mb-28 ">
         <div className="container px-5 py-2 mx-auto  ">
-          <div className="flex flex-wrap m-auto  justify-center ">
+          <div className="flex flex-wrap m-auto gap-2 justify-center ">
 
  {searchResult.length===0&& <h1 className=" sm:text-xl text-lg mt-4 text-red-500">No results found.</h1>}
 
 
             {searchResult.map((item) => {
 
-              return <div key={item._id} className=" mt-3 mr-2 hover:shadow-xl hover:bg-gray-100 rounded-xl  antialiased">
+              return <div key={item._id} className=" mt-3 hover:shadow-xl hover:bg-gray-100 rounded-xl  antialiased">
               <Link passHref href={`/product/${item.slug}`}><a className="block relative p-3  rounded-xl overflow-hidden">
                 <Image className="rounded-xl"
                   loader={myLoader}
@@ -177,11 +177,11 @@ export default function Home({ foodItems }) {
 
     <section className="text-gray-600 body-font mb-28">
         <div className="container px-5 py-2 mx-auto  ">
-          <div className="flex flex-wrap m-auto  justify-center ">
+          <div className="flex flex-wrap m-auto gap-2 justify-center ">
 
             {popularFoodItems.map((item) => {
 
-              return <div key={item._id} className=" mt-3 mr-2 hover:shadow-xl hover:bg-gray-100 rounded-xl  antialiased">
+              return <div key={item._id} className=" mt-3 hover:shadow-xl hover:bg-gray-100 rounded-xl  antialiased">
                 <Link passHref href={`/product/${item.slug}`}><a className="block relative p-3  rounded-xl overflow-hidden">
                   <Image className="rounded-xl"
                     loader={myLoader}

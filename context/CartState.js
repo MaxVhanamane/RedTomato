@@ -54,12 +54,12 @@ function CartState(props) {
   }, [router.events,router.query]);
 // router.query will make this useEffect run on every route change.
   // add to cart
-  const addToCart = (slug, qty, price, name, size, type) => {
+  const addToCart = (slug, qty, price, name, size, type,img) => {
     const newCart = JSON.parse(JSON.stringify(cart));
     if (name in cart) {
       newCart[name].qty = cart[name].qty + qty;
     } else {
-      newCart[name] = { slug,qty: 1, price, size, type };
+      newCart[name] = { slug,qty: 1, price, size, type,img };
     }
     setCart(newCart);
     saveCart(newCart);
@@ -68,7 +68,7 @@ function CartState(props) {
   };
 
   // delete items from cart
-  const removeFromCart = (slug, qty, price, name, size, type) => {
+  const removeFromCart = (slug, qty, price, name, size, type,img) => {
     const newCart = JSON.parse(JSON.stringify(cart)); // You need to parse the cart otherwise state change will not re-render the navbar or any component using cart as a state. if you write only" const newCart=cart" then you will notice while removing items from cart when it reaches to 1 it will not remove further it will just throw an error.
     
     if (name in cart) {

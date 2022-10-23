@@ -23,10 +23,10 @@ export default function Veg({ foodItems }) {
               <h1 className="font-bold md:text-3xl text-2xl text-center mb-4 text-gray-700 lg:mt-6 mt-4 drop-shadow "><p></p><span className="px-6">Veg food items</span></h1>
 
               
-          <div className="flex flex-wrap m-auto  justify-center ">
+          <div className="flex flex-wrap m-auto justify-center gap-2 ">
             {foodItems.map((item) => {
 
-              return <div key={item._id} className=" mt-3 mb-8 mr-2 hover:shadow-xl hover:bg-gray-100 rounded-xl  antialiased">
+              return <div key={item._id} className=" mt-3 mb-8  hover:shadow-xl hover:bg-gray-100 rounded-xl  antialiased">
               <Link passHref href={`/product/${item.slug}`}><a className="block relative p-3  rounded-xl overflow-hidden">
                 <Image className="rounded-xl"
                   loader={myLoader}

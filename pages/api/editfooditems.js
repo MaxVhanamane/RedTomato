@@ -1,7 +1,6 @@
 import connectDb from '../../middleware/mongoose';
 import Food from '../../models/foods';
 export default async function handler(req, res) {
-    console.log(req.body)
     connectDb()
     if (req.method === "POST") {
         for (let i = 0; i < req.body.length; i++) {
