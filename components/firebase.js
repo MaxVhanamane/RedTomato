@@ -1,10 +1,10 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import {getStorage} from "firebase/storage";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+
 
 // Your web app's Firebase configuration
+// It is safe to expose your firebaseconfig in the frontend
 const firebaseConfig = {
   apiKey: "AIzaSyC6N6KiU8nA3tZ0RNb7YYCbHtqBPKserXo",
   authDomain: "red-tomato-fa33d.firebaseapp.com",

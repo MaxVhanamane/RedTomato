@@ -187,19 +187,31 @@ function uploadImageToFirebase(imageRef){
            })
 
            setUploading(false)
-    
+           toast.success('Image uploaded successfully!', {
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
 
        })
-           toast.success('Image uploaded successfully!', {
-               autoClose: 2000,
-               hideProgressBar: false,
-               closeOnClick: true,
-               pauseOnHover: true,
-               draggable: true,
-               progress: undefined,
-             });
+         
             
-        })
+        }).catch((error)=>{
+          toast.error(error.message, {
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+
+          setUploading(false)
+
+         })
         uRef.current.value=""
         setImageInfo({
             ...imageInfo,
