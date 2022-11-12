@@ -11,6 +11,7 @@ export const CartContext = createContext();
 function CartState(props) {
   const [cart, setCart] = useState({});
   const [Total, setTotal] = useState(0);
+  const [totalItems, setTotalItems] = useState(0);
   const [token, setToken] = useState(null);
   const router = useRouter();
   const [progress, setProgress] = useState(0);
@@ -22,12 +23,15 @@ function CartState(props) {
   const saveCart = (myCart) => {
     localStorage.setItem("cart", JSON.stringify(myCart)); //as we can't store object's in localStorage so let's convert it in JSON string
     let subTotal = 0;
+    let totalQty=0;
     let keys = Object.keys(myCart); // returns an array of keys.
 
     for (let i = 0; i < keys.length; i++) {
       subTotal += myCart[keys[i]].price * myCart[keys[i]].qty;
+      totalQty+=myCart[keys[i]].qty
 
       setTotal(subTotal);
+      setTotalItems(totalQty)
     }
   };
 
@@ -92,6 +96,7 @@ function CartState(props) {
     setCart({});
     saveCart({});
     setCartChange(Math.random())
+    setTotalItems(0)
   };
  
   const orderNow=(slug, qty, price, name, size, type)=>{
@@ -136,7 +141,7 @@ function CartState(props) {
   };
   return (
     <CartContext.Provider
-      value={{ progress,setProgress,token,removeToken,cart, Total, addToCart, removeFromCart, clearCart,orderNow,ref,toggleCart,cartChange,setCartChange ,sidebar,toggleSidebar,changeHamburgerIcon,setChangeHamburgerIcon}}
+      value={{ progress,setProgress,token,removeToken,cart, Total,totalItems, addToCart, removeFromCart, clearCart,orderNow,ref,toggleCart,cartChange,setCartChange ,sidebar,toggleSidebar,changeHamburgerIcon,setChangeHamburgerIcon}}
     >
       {/* Provider will give access to all the above states and functions to the components which are in props.children */}
       {props.children}

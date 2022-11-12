@@ -12,7 +12,7 @@ import { CartContext } from "./../context/CartState";
 function Navigation() {
   const {
     toggleCart,
-    toggleSidebar,removeToken,clearCart,token,
+    toggleSidebar,removeToken,clearCart,token,totalItems,
     changeHamburgerIcon,setChangeHamburgerIcon
   } = useContext(CartContext);
 
@@ -53,7 +53,7 @@ function Navigation() {
 
    
 
-
+<div className="relative">
 <button   
      className={styles.linkTag}
         title="cart"
@@ -63,6 +63,7 @@ function Navigation() {
            
           />
       </button> 
+{totalItems>0? <div><span className=" animate-[ping_1s_ease-in-out_2] absolute right-1 top-2 inline-flex w-4 h-4  rounded-full bg-red-500 opacity-50"></span><p className=" md:inline-block absolute right-1 top-2 rounded-full bg-red-600 w-4 h-4  p-0 m-0 text-white font-mono text-xs   text-center">{totalItems}</p></div>:null}</div>
       {/* If token available then show logout button else show login button */}
      {!token ? <Link href="/login" >
 <a   

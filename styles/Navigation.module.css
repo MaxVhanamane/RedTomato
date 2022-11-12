@@ -3,7 +3,7 @@
     background:rgb(243 244 246);
     width: 100%;
     display: block;
-    padding: 0.2rem 1.5rem;
+    padding: 0.1rem 1.5rem;
     z-index: 999;
     position: fixed;
     left: 50%;
@@ -22,7 +22,7 @@
     border-radius: 50%;
     display: flex;
     color: rgb(31 41 55);
-    font-size: 1.3rem;
+    font-size: 1.4rem;
     outline:none;
   }
   

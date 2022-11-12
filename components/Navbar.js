@@ -22,10 +22,12 @@ export default function Navbar() {
     setProgress,
     removeToken,
     cart,
+    totalItems,
     Total,
     clearCart,
     removeFromCart,
     addToCart,
+
     ref,
     toggleCart,
    sidebar,toggleSidebar,changeHamburgerIcon,setChangeHamburgerIcon
@@ -206,8 +208,9 @@ export default function Navbar() {
             className=" text-red-500 hover:text-red-600 p-1 focus:text-red-500 md:text-3xl  text-3xl border-solid border-2 border-gray-300 rounded-md"
             title="cart"
           />
+         
         </div>
-
+       {totalItems>0? <div><span className="hidden animate-[ping_1s_ease-in-out_2] absolute right-3 top-2 inline-flex w-4 h-4  rounded-full bg-red-500 opacity-75"></span><p className="hidden md:inline-block absolute right-3 top-2 rounded-full bg-red-600 w-4 h-4  p-0 m-0 text-white font-mono text-xs   text-center">{totalItems}</p></div>:null}
 
         {/* bg-gradient-to-r from-[red] to-[#ffffff] */}
         <div
