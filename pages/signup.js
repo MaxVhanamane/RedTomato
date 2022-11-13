@@ -82,7 +82,7 @@ export default function SignUp() {
     <title>Red Tomato - SignUp </title>
     <meta name="description" content="Red Tomatos signup page" />
    </Head>
-    <section className="h-screen gradient-form bg-gray-200 md:h-screen">
+    <section className="h-screen">
   
       <div className=" py-12 px-6 h-full">
         <div className="flex justify-center items-center flex-wrap h-full g-6 text-gray-800">
