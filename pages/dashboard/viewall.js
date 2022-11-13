@@ -114,7 +114,7 @@ export default function Viewall({ foodItems }) {
         
 
           
-      <div className="flex flex-wrap m-auto  justify-center space-x-2 ">
+      <div className="flex flex-wrap m-auto  justify-center space-x-4 ">
         {foodItems.map((item) => {
 
           return <div key={item._id} className=" mt-3 mb-8 mr-2 hover:shadow-xl hover:bg-gray-100 rounded-xl  antialiased">

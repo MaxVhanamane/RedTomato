@@ -9,7 +9,13 @@ import { RiDashboardFill } from "react-icons/ri";
 
 export default function AllOrders({allOrders}) {
     const router=useRouter()
-    const [orders,setOrders]=useState(allOrders)
+    // Sorting orders using dates
+    let sortOrders= allOrders.sort(function(a,b){
+    
+      return new Date(b.createdAt) - new Date(a.createdAt);
+    });
+
+    const [orders,setOrders]=useState(sortOrders)
   
 
 
@@ -95,6 +101,9 @@ export default function AllOrders({allOrders}) {
                 Amount
               </th>
               <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                Date
+              </th>
+              <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
                 Name
               </th>
               <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
@@ -121,6 +130,9 @@ export default function AllOrders({allOrders}) {
               </td>
               <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                 {items.amount}
+              </td>
+              <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                {new Date(items.createdAt).toLocaleDateString('en-Gb')}
               </td>
               <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                 {items.name}

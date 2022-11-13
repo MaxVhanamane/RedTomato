@@ -210,7 +210,7 @@ export default function Navbar() {
           />
          
         </div>
-       {totalItems>0? <div><span className="hidden animate-[ping_1s_ease-in-out_2] absolute right-3 top-2 inline-flex w-4 h-4  rounded-full bg-red-500 opacity-75"></span><p className="hidden md:inline-block absolute right-3 top-2 rounded-full bg-red-600 w-4 h-4  p-0 m-0 text-white font-mono text-xs   text-center">{totalItems}</p></div>:null}
+       {totalItems>0? <div><span className="hidden animate-[ping_1s_ease-in-out_2] absolute right-3 top-2 md:inline-block w-4 h-4  rounded-full bg-red-500 opacity-75"></span><p className="hidden md:inline-block absolute right-3 top-2 rounded-full bg-red-600 w-4 h-4  p-0 m-0 text-white font-mono text-xs   text-center">{totalItems}</p></div>:null}
 
         {/* bg-gradient-to-r from-[red] to-[#ffffff] */}
         <div

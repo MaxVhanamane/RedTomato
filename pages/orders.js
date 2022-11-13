@@ -7,34 +7,18 @@ import connectDb from './../middleware/mongoose';
 
 export default function Orders({myOrders}) {
     const router=useRouter()
-    const [orders,setOrders]=useState(myOrders)
-    // const [fetchError,setFetchError]=useState(false)
+    // Sorting orders using dates
+   let sortOrders= myOrders.sort(function(a,b){
+    
+      return new Date(b.createdAt) - new Date(a.createdAt);
+    });
+    const [orders,setOrders]=useState(sortOrders)
     useEffect(()=>{
-      // const fetchOrders= async ()=>{
-      //  const res=await fetch( `${process.env.NEXT_PUBLIC_HOST}/api/myorders`, {
-      //         method: 'POST', // or 'PUT'
-      //         headers: {
-      //           'Content-Type': 'application/json',
-      //         },
-      //         body: JSON.stringify({token:localStorage.getItem("token")}),
-      //       })
 
-      //       const finalRes = await res.json()
-      //       if(finalRes.success){
-   
-      //         setOrders(prev=>finalRes.orders)
-      //       }
-      //       else{
-      //         setFetchError(true)
-      //       }
-          
-      // }
       if(!localStorage.getItem("token")){
        router.push("/")
       }
-      // else {
-      //   fetchOrders()
-      // }
+    
        },[])
 
        
@@ -61,6 +45,9 @@ export default function Orders({myOrders}) {
                 Food Items
               </th>
               <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                Order Date
+              </th>
+              <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
                 Total
               </th>
               <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
@@ -84,6 +71,9 @@ export default function Orders({myOrders}) {
               </td>
               <td className="text-sm text-gray-900 font-light  px-6  py-4  whitespace-nowrap">
               {foodItemsToDisplay}
+              </td>
+              <td className="text-sm text-gray-900 font-light  px-6  py-4  whitespace-nowrap">
+              {new Date(items.createdAt).toLocaleDateString('en-GB')}
               </td>
               <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
               {items.amount}
