@@ -324,7 +324,7 @@ export default function Product({ foodItem, error }) {
 
                 </div>
                 <div >
-                  <button disabled={item.availableQty == 0} onClick={() => { orderNow(slug, 1, foodPrice, `${item.title} (${selectedRadioBtn})`, `${item.size}`, `${item.category}` `${item.img}`) }} className="flexdisabled:bg-gray-400 ml-8 text-white bg-[#FF0000] border-0 py-2 px-6 focus:outline-none hover:bg-[#ff2400] rounded-lg">
+                  <button disabled={item.availableQty == 0} onClick={() => { orderNow(slug, 1, foodPrice, `${item.title} (${selectedRadioBtn})`, `${item.size}`, `${item.category}`, `${item.img}`) }} className="flexdisabled:bg-gray-400 ml-8 text-white bg-[#FF0000] border-0 py-2 px-6 focus:outline-none hover:bg-[#ff2400] rounded-lg">
                     Order Now
                   </button></div>
 

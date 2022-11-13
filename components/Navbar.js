@@ -168,10 +168,10 @@ export default function Navbar() {
               onMouseLeave={() => {
                 setDropDown(false);
               }}
-              className="absolute right-12  top-5 bg-gradient-to-r bg-gray-100 p-2 rounded shadow-2xl "
+              className="absolute right-12  top-5  bg-gray-100 p-2 rounded shadow-2xl "
               // from-[#FC6A03] to-[#ffffff]
             >
-              <ul>
+              <ul >
              {token&&role==="admin" && <Link passHref href="/dashboard/viewall">
                   <li className="p-2 whitespace-nowrap text-gray-600 hover:text-red-500">
                     Dashboard
@@ -210,9 +210,8 @@ export default function Navbar() {
           />
          
         </div>
-       {totalItems>0? <div><span className="hidden animate-[ping_1s_ease-in-out_2] absolute right-3 top-2 inline-flex w-4 h-4  rounded-full bg-red-500 opacity-75"></span><p className="hidden md:inline-block absolute right-3 top-2 rounded-full bg-red-600 w-4 h-4  p-0 m-0 text-white font-mono text-xs   text-center">{totalItems}</p></div>:null}
+       {totalItems>0? <div><span className="hidden animate-[ping_1s_ease-in-out_2] absolute right-3 top-2 md:inline-block w-4 h-4  rounded-full bg-red-500 opacity-75"></span><p className="hidden md:inline-block absolute right-3 top-2 rounded-full bg-red-600 w-4 h-4  p-0 m-0 text-white font-mono text-xs   text-center">{totalItems}</p></div>:null}
 
-        {/* bg-gradient-to-r from-[red] to-[#ffffff] */}
         <div
           ref={ref}
           
@@ -304,62 +303,9 @@ export default function Navbar() {
           </div>
         </div>
 
-{/* Sidebar  */}
-        {/* <div
-          ref={sidebar}
-          
-          className="  h-screen overflow-y-scroll  shadow-md rounded-sm  sidebar w-full absolute top-0 left-0 bg-gray-100 p-10 transform transition-transform -translate-x-full "
-        >
-          <h2 className="font-bold text-xl text-center">Menu</h2>
-          <hr className="mt-2"></hr>
-              <div className="mt-8">
-          <h2 className="font-bold text-sm">1. Category</h2>
-                
-                <ol className="list-none font-semibold">
-                  <Link href="/veg">
-                <li onClick={toggleSidebar} className="flex items-center my-4 hover:bg-gray-200"><GiFruitBowl className="mr-2 text-green-600"/>Veg food</li></Link>
-                <Link href="/nonveg">
-                  <li onClick={toggleSidebar} className="flex items-center my-4 hover:bg-gray-200"><GiChickenOven className="mr-2 text-red-600"/>Non veg food</li>
-                 </Link>
-                </ol>
-                </div>
 
-              {token&&<div className="mt-8">
-          <h2 className="font-bold text-sm">2. Account</h2>
 
-                <ol className="list-none font-semibold">
-                <Link href="/myaccount">
-                <li onClick={toggleSidebar} className="flex items-center my-4 hover:bg-gray-200"><GiFruitBowl className="mr-2 text-green-600"/>My account</li>
-                  </Link> 
-                <Link href="/orders">
-
-                  <li onClick={toggleSidebar} className="flex items-center my-4 hover:bg-gray-200"><GiChickenOven className="mr-2 text-red-600"/>My orders</li>
-                  </Link> 
-
-                <Link href="/contact">
-
-                  <li onClick={toggleSidebar} className="flex items-center my-4 hover:bg-gray-200"><IoIosCall className="mr-2 text-blue-500"/>Contact us</li>
-                  </Link> 
-
-                  <Link href="/about">
-
-                  <li onClick={toggleSidebar} className="flex items-center my-4 hover:bg-gray-200 "><FaInfoCircle className="mr-2 text-blue-600 "/>About us</li>
-                  </Link> 
-                 
-                </ol>
-                </div>}
-          <span
-            onClick={toggleSidebar}
-            className="absolute top-3 right-2 cursor-pointer text-xl"
-          >
-            <AiFillCloseCircle />
-          </span>
-          
-         
-        
-        </div> */}
-
-{/* Sidebar  */}
+{/* Sidebar mobile view  */}
 
 <aside ref={sidebar} className=" overflow-y-scroll  shadow-md rounded-sm  sidebar w-80 absolute top-0 left-0 bg-gray-100 transform transition-transform -translate-x-full duration-300" aria-label="Sidebar">
    <div className="overflow-y-auto py-8 px-3 bg-gray-50  ">

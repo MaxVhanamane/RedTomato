@@ -99,9 +99,9 @@ function CartState(props) {
     setTotalItems(0)
   };
  
-  const orderNow=(slug, qty, price, name, size, type)=>{
+  const orderNow=(slug, qty, price, name, size, type,img)=>{
   
-    let  newCart={[`${name}`]:{slug, qty, price, size, type}}
+    let  newCart={[`${name}`]:{slug, qty, price, size, type,img}}
     setCart(newCart)
     saveCart(newCart)
     router.push("/checkout")
