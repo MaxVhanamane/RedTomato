@@ -11,7 +11,7 @@ export default function About() {
  </Head>
 
  <div className=" lg:pt-28  pt-[3.45rem] lg:mb-20">
-                <div className="max-w-screen-xl md:pt-24 px-4 md:px-8 lg:px-12 xl:px-26 py-16 mx-auto bg-gray-100 text-gray-900 lg:rounded-lg shadow-lg">
+                <div className="max-w-screen-xl md:pt-24 px-4 md:px-8 lg:px-12 xl:px-26 py-16 mx-auto lg:bg-gray-100 text-gray-900 lg:rounded-lg lg:hadow-lg">
                     <div className="flex flex-col justify-center items-center">
                         <div>
                             <h2 className="text-center text-3xl font-bold leading-tight">About Us</h2>
