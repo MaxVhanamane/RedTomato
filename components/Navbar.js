@@ -216,9 +216,9 @@ export default function Navbar() {
         <div
           ref={ref}
           
-          className=" h-96 overflow-y-scroll  shadow-md rounded-sm  sidebar w-80 absolute top-0 right-0 bg-gray-100  p-10 transform transition-transform translate-x-full duration-300 "
+          className=" h-96 overflow-y-scroll  shadow-md rounded-sm w-full sidebar md:w-fit absolute top-0 right-0 bg-gray-100  p-10 transform transition-transform translate-x-full duration-300 "
         >
-          <h2 className="font-bold  text-center text-base  text-gray-900 ">My cart</h2>
+          <h2 className="font-bold lg:text-xl  text-center text-base  text-gray-900 ">My cart</h2>
           <span
             onClick={toggleCart}
             className="absolute top-3 right-2 cursor-pointer text-xl flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75  group-hover:text-gray-900 "
@@ -231,12 +231,23 @@ export default function Navbar() {
             <p className="text-center">Add some items to checkout</p>
             </div>
           )}
-          <ol className=" list-decimal my-2 font-semibold">
+          <ol className="  my-2 font-semibold">
             {Object.keys(cart).map((key) => {
               return (
                 <li key={key}>
-                  <div className=" flex items-center">
-                    <div className="w-2/3 font-semibold text-gray-800 ">{key}</div>
+              
+                  <div className=" flex items-center mt-3 justify-center gap-1">
+                  <div className={`${styles.cartimageContainer}`}>
+                    
+                  <span className=" absolute -right-1 -top-1 rounded-full leading-4 bg-red-600 w-4 h-4 text-white font-mono text-xs align-middle  text-center z-[20]"><span>{cart[key].qty}</span></span>
+          <Image src={cart[key].img} alt="food image" className={`${styles.image}`} layout="fill" />
+                    </div>
+                    <div className="md:w-[18rem] w-[50%] pl-4 font-semibold text-gray-800">
+
+         
+               {key}
+
+        </div>
                     <div className="flex w-1/3 font-semibold items-center justify-center">
                       <FiMinusSquare
                         className="text-xl text-gray-800 "
@@ -253,7 +264,7 @@ export default function Navbar() {
                         }}
                       />
 
-                      <span className="m-2">{cart[key].qty}</span>
+                      <span className="m-2 w-2">{cart[key].qty}</span>
 
                       <FiPlusSquare
                         className="text-xl text-gray-800 "
@@ -276,9 +287,9 @@ export default function Navbar() {
             })}
           </ol>
           {Object.keys(cart).length > 0 && (
-            <div className="font-bold text-lg text-gray-700 ">Total : ₹{Total}</div>
+            <div className="font-bold text-lg text-gray-700 mt-4 ">Total : ₹{Total}</div>
           )}
-          <div className="flex text-center mt-4">
+          <div className="flex text-center items-left justify-center mt-4">
             <Link passHref href="/checkout">
               <button
               onClick={toggleCart}
@@ -431,6 +442,7 @@ export default function Navbar() {
          </li>
          
       </ul>
+      {!token?<p className=" text-xs text-gray-400 mt-12 ml-3">Login to see your orders.</p>:null}
    </div>
    <span
             onClick={()=>{toggleSidebar();setChangeHamburgerIcon(!changeHamburgerIcon)}}

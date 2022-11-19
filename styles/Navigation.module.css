@@ -53,3 +53,17 @@
     object-fit: cover; 
 }
 
+.cartimageContainer {
+  width: 3.5rem;
+  height: 3.5rem;
+  position: relative;
+  /* outline:1.5px solid rgb(156 163 175); */
+  border-radius:0.5rem;
+
+ /* overflow:hidden */
+}
+
+
+.cartimageContainer .image {
+  border-radius:0.5rem;
+}

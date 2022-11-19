@@ -11,6 +11,7 @@ export const CartContext = createContext();
 function CartState(props) {
   const [cart, setCart] = useState({});
   const [Total, setTotal] = useState(0);
+  // to show total number of items on the cart icon
   const [totalItems, setTotalItems] = useState(0);
   const [token, setToken] = useState(null);
   const router = useRouter();
@@ -82,7 +83,7 @@ function CartState(props) {
  
     if (newCart[name]["qty"] <= 0) {
       delete newCart[name];
-    
+      // setTotalItems(0)
     }
 
     setCart(newCart);
