@@ -216,7 +216,7 @@ export default function Navbar() {
         <div
           ref={ref}
           
-          className=" h-96 overflow-y-scroll  shadow-md rounded-sm w-full sidebar md:w-fit absolute top-0 right-0 bg-gray-100  p-10 transform transition-transform translate-x-full duration-300 "
+          className=" h-screen overflow-y-scroll  shadow-md rounded-sm w-full sidebar md:w-fit absolute top-0 right-0 bg-gray-100  p-10 transform transition-transform translate-x-full duration-300 pb-32"
         >
           <h2 className="font-bold lg:text-xl  text-center text-base  text-gray-900 ">My cart</h2>
           <span
