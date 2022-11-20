@@ -77,7 +77,19 @@ function CartState(props) {
     const newCart = JSON.parse(JSON.stringify(cart)); // You need to parse the cart otherwise state change will not re-render the navbar or any component using cart as a state. if you write only" const newCart=cart" then you will notice while removing items from cart when it reaches to 1 it will not remove further it will just throw an error.
     
     if (name in cart) {
+      // If there is only one item of a particular food left in the cart then we will give him a popup to confirm removal.
+      if(newCart[name].qty===1){
+        let takeConfimation=confirm("Are you sure you want to remove this item?")
+        if(takeConfimation){
       newCart[name].qty = cart[name].qty - qty;
+         
+        }
+
+      }
+      else{
+
+        newCart[name].qty = cart[name].qty - qty;
+      }
       
     }
  
