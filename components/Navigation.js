@@ -13,7 +13,7 @@ function Navigation() {
   const {
     toggleCart,
     toggleSidebar,removeToken,clearCart,token,totalItems,
-    changeHamburgerIcon,setChangeHamburgerIcon
+    changeHamburgerIcon,setChangeHamburgerIcon,toggleCartForNavIcons,toggleSidebarForNavIcons
   } = useContext(CartContext);
 
   return (
@@ -26,7 +26,11 @@ function Navigation() {
         title="sidebar"
       >
          <VscThreeBars
-            onClick={()=>{toggleSidebar();setChangeHamburgerIcon(!changeHamburgerIcon)}}
+            onClick={()=>{toggleSidebar();
+              setChangeHamburgerIcon(!changeHamburgerIcon);
+              toggleCartForNavIcons();
+              
+            }}
             
           />
       </button> :
@@ -35,7 +39,7 @@ function Navigation() {
         title="sidebar"
       >
          <AiOutlineClose
-            onClick={()=>{toggleSidebar();setChangeHamburgerIcon(!changeHamburgerIcon)}}
+            onClick={()=>{toggleSidebar();setChangeHamburgerIcon(!changeHamburgerIcon);toggleCartForNavIcons()}}
             
           />
       </button> }
@@ -46,7 +50,8 @@ function Navigation() {
      className={styles.linkTag }
         title="home"
       >
-        <AiOutlineHome />
+        <AiOutlineHome onClick={()=>{toggleSidebarForNavIcons();
+          toggleCartForNavIcons();if(!changeHamburgerIcon){setChangeHamburgerIcon(true)}}}/>
       </a> 
             </Link>
 
@@ -59,7 +64,8 @@ function Navigation() {
         title="cart"
       >
          <AiOutlineShoppingCart
-            onClick={toggleCart}
+            onClick={()=>{toggleCart();toggleSidebarForNavIcons();
+              if(!changeHamburgerIcon){setChangeHamburgerIcon(true)}}}
            
           />
       </button> 
@@ -70,7 +76,8 @@ function Navigation() {
      className={styles.linkTag }
         title="login"
       >
-        <FaUserCircle />
+        <FaUserCircle  onClick={()=>{toggleSidebarForNavIcons();
+          toggleCartForNavIcons();if(!changeHamburgerIcon){setChangeHamburgerIcon(true)}}}/>
       </a> 
             </Link>
 

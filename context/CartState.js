@@ -132,6 +132,7 @@ function CartState(props) {
     }
   };
   const toggleSidebar = () => {
+    
     if (sidebar.current.classList.contains("-translate-x-full")) {
       sidebar.current.classList.remove("-translate-x-full");
       sidebar.current.classList.add("translate-x-0");
@@ -140,9 +141,25 @@ function CartState(props) {
       sidebar.current.classList.add("-translate-x-full");
     }
   };
+
+  // To close sidebar when user clicks on home or user profile icon
+  const toggleCartForNavIcons = () => {
+    if (ref.current.classList.contains("translate-x-0")) {
+      ref.current.classList.remove("translate-x-0");
+      ref.current.classList.add("translate-x-full");
+    } 
+  };
+  const toggleSidebarForNavIcons = () => {
+    if (sidebar.current.classList.contains("translate-x-0")) {
+      sidebar.current.classList.remove("translate-x-0");
+      sidebar.current.classList.add("-translate-x-full");
+    }
+  };
+
+
   return (
     <CartContext.Provider
-      value={{ progress,setProgress,token,removeToken,cart, Total,totalItems, addToCart, removeFromCart, clearCart,orderNow,ref,toggleCart,cartChange,setCartChange ,sidebar,toggleSidebar,changeHamburgerIcon,setChangeHamburgerIcon}}
+      value={{ progress,setProgress,token,removeToken,cart, Total,totalItems, addToCart, removeFromCart, clearCart,orderNow,ref,toggleCart,cartChange,setCartChange ,sidebar,toggleSidebar,changeHamburgerIcon,setChangeHamburgerIcon,toggleSidebarForNavIcons,toggleCartForNavIcons}}
     >
       {/* Provider will give access to all the above states and functions to the components which are in props.children */}
       {props.children}
