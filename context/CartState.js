@@ -95,7 +95,7 @@ function CartState(props) {
  
     if (newCart[name]["qty"] <= 0) {
       delete newCart[name];
-      // setTotalItems(0)
+      setTotalItems(0)
     }
 
     setCart(newCart);
