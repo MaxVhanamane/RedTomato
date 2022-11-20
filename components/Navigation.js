@@ -69,7 +69,7 @@ function Navigation() {
            
           />
       </button> 
-{totalItems>0? <div><span className=" animate-[ping_1s_ease-in-out_2] absolute right-1 top-2 inline-flex w-4 h-4  rounded-full bg-red-500 opacity-50"></span><p className=" md:inline-block absolute right-1 top-2 rounded-full bg-red-600 w-4 h-4  p-0 m-0 text-white font-mono text-xs   text-center">{totalItems}</p></div>:null}</div>
+{totalItems>0? <div><span className= {`animate-[ping_1s_ease-in-out_2] absolute right-1 top-2 inline-flex w-4 h-4  rounded-full bg-red-500 opacity-50 ${totalItems>99 && "w-6 rounded-md"}`}></span><p className={`md:inline-block absolute right-1 top-2 rounded-full bg-red-600 leading-4 w-4 h-4  p-0 m-0 text-white font-mono text-xs text-center ${totalItems>99 && "w-6 rounded-md"}`}>{totalItems<100?<span className="leading-4 text-center">{totalItems}</span>:<span className="leading-4 text-center">99+</span>}</p></div>:null}</div>
       {/* If token available then show logout button else show login button */}
      {!token ? <Link href="/login" >
 <a   

@@ -210,7 +210,7 @@ export default function Navbar() {
           />
          
         </div>
-       {totalItems>0? <div><span className="hidden animate-[ping_1s_ease-in-out_2] absolute right-3 top-2 md:inline-block w-4 h-4  rounded-full bg-red-500 opacity-75"></span><p className="hidden md:inline-block absolute right-3 top-2 rounded-full bg-red-600 w-4 h-4  p-0 m-0 text-white font-mono text-xs   text-center">{totalItems}</p></div>:null}
+       {totalItems>0? <div><span className={`hidden animate-[ping_1s_ease-in-out_2] absolute right-3 top-2 md:inline-block w-4 h-4  rounded-full bg-red-500 opacity-75 ${totalItems>99 && "w-6 rounded-md"} `}></span><p className={`hidden md:inline-block absolute right-3 top-2 rounded-full bg-red-600 w-4 h-4  p-0 m-0 text-white font-mono text-xs text-center ${totalItems>99 && "w-6 rounded-md"} `}>{totalItems<100?<span className="leading-4 text-center">{totalItems}</span>:<span className="leading-4 text-center">99+</span>}</p></div>:null}
 
         {/* bg-gradient-to-r from-[red] to-[#ffffff] */}
         <div
@@ -239,7 +239,7 @@ export default function Navbar() {
                   <div className=" flex items-center mt-3 justify-center gap-1">
                   <div className={`${styles.cartimageContainer}`}>
                     
-                  <span className=" absolute -right-1 -top-1 rounded-full leading-4 bg-red-600 w-4 h-4 text-white font-mono text-xs align-middle  text-center z-[20]"><span>{cart[key].qty}</span></span>
+                  <span className={`absolute -right-1 -top-1 rounded-full leading-5 bg-red-600 w-5 h-5  ${cart[key].qty>99 && "w-7 rounded-md"} text-white font-mono text-xs align-middle  text-center z-[20]`}>{cart[key].qty<100 ?<span>{cart[key].qty}</span>:<span className="text-[0.8rem]">99+</span>}</span>
           <Image src={cart[key].img} alt="food image" className={`${styles.image}`} layout="fill" />
                     </div>
                     <div className="md:w-[18rem] w-[50%] pl-4 font-semibold text-gray-800">
@@ -264,8 +264,8 @@ export default function Navbar() {
                         }}
                       />
 
-                      <span className="m-2 w-2">{cart[key].qty}</span>
-
+                      <span className={`m-2 w-3 flex justify-center`}>{cart[key].qty}</span>
+                     
                       <FiPlusSquare
                         className="text-xl text-gray-800 "
                         onClick={() => {
