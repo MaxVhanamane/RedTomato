@@ -26,7 +26,7 @@ export default async function handler(req, res) {
                 }
             }
             else {
-                res.status(200).send({ success: false, error: "Invalid Credentials" })
+                res.status(200).send({ success: false, error: "No user found! Please Sign up." })
             }
         }
         catch (err) {
