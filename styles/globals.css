@@ -48,6 +48,13 @@ body {
   position:relative;
 }
 
+/* // to remove input arrows when input type is set to number */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 /* // To control toast width 
 .Toastify__toast-container {
   width:16rem !important;

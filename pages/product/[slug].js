@@ -20,14 +20,16 @@ export default function Product({ foodItem, error }) {
   const [selectedRadioBtn, setSelectedRadioBtn] = useState("small")
   const [foodPrice, setFoodPrice] = useState(foodItem?foodItem[0].price[0]:"")
   const { orderNow, addToCart, toggleCart, cartChange,setCartChange } = useContext(CartContext);
-  const [inputPin, setInputPin] = useState();
-  const [pin, setPin] = useState();
+  const [inputPin, setInputPin] = useState("");
+  const [pin, setPin] = useState(null);
   const [goToCart, setGoToCart] = useState(false)
+  const [checkPinBtnClicked, setCheckPinBtnClicked] = useState(false)
   
   const router = useRouter();
   const { slug } = router.query;
   const handleInputPin = (e) => {
     setInputPin(e.target.value);
+    setCheckPinBtnClicked(false)
   };
   const handlePinCheck = async () => {
     const allPins = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/checkpin`);
@@ -38,6 +40,7 @@ export default function Product({ foodItem, error }) {
     } else {
       setPin(false);
     }
+    setCheckPinBtnClicked(true)
   };
 
  
@@ -351,13 +354,16 @@ export default function Product({ foodItem, error }) {
                 </div>
               </div>
               <div className="pinCodeMessage my-4">
-                {!pin && pin != null && (
+                {inputPin.length>5 && !pin && pin != null && checkPinBtnClicked&&(
                   <span className="text-red-600">
                     Sorry! Delivery to the above pincode is currently unavailable.
                   </span>
                 )}
-                {pin && pin != null && (
+                {inputPin.length>5 && pin && pin != null && checkPinBtnClicked&&(
                   <span className="text-green-500">Delivery is available.</span>
+                )}
+                {inputPin.length<6 && pin != null&& checkPinBtnClicked&& (
+                  <span className="text-red-600">Enter a 6 digit PIN code.</span>
                 )}
               </div>
             </div>
