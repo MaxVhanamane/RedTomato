@@ -105,6 +105,9 @@ export default function Forgotpassword() {
   const handleResetPassword = async () => {
     // Check if the password and confirm password matches
     if (newPassword === cNewpassword) {
+      if(newPassword.length>7 && cNewpassword.length>7){
+
+      
 
       const data = { email: router.query.email, sendMail: false, token: router.query.token, newPassword: newPassword };
 
@@ -146,6 +149,21 @@ export default function Forgotpassword() {
       }
 
     }
+    
+    else {
+      toast.error("Password must be at least 8 characters long", {
+
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  }
+
+
     else {
       toast.error("New password and confirm new password must be same.", {
 

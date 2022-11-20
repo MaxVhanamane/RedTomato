@@ -40,6 +40,9 @@ export default function SignUp() {
   const handleSignup = async (e) => {
     e.preventDefault()
     if (password === confirmPass) {
+      if(password.length>7 && confirmPass.length>7){
+
+     
       const data = { name, email, password };
      
 
@@ -51,9 +54,22 @@ export default function SignUp() {
         body: JSON.stringify(data),
       })
       const response = await res.json()
+      if(response.success){
+        toast.success('Your account has been created successfully!', {
       
-      toast.success('Your account has been created successfully!', {
-      
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        router.push("/login")
+      }
+     
+    else{
+      toast.error(response.error, {
+     
         autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
@@ -61,8 +77,21 @@ export default function SignUp() {
         draggable: true,
         progress: undefined,
       });
-      router.push("/login")
     }
+
+    }
+    else{
+      toast.error("password must be at least 8 characters long", {
+     
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  }
     else{
       toast.error("Password and confirm password didn't match", {
      
