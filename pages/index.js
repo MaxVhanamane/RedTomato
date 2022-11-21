@@ -55,7 +55,7 @@ export default function Home({ foodItems }) {
 
 
   const myLoader = ({ src, width, quality }) => {
-    return `${src}?w=${width}&q=${quality || 100}`;
+    return `${src}?w=${width}&q=${quality || 75}`;
   };
   return (
    <>
@@ -145,7 +145,7 @@ export default function Home({ foodItems }) {
 
 <Link href="/veg">
 <div style={{width:"100vw", height:"18vh",position:"relative" ,cursor:"pointer"}} className="shadow bg-gradient-to-r from-[#020b14] to-[#021e2a] ">
-<h1 className="absolute top-0 left-0 z-10 font-bold text-xs py-0.5 px-1 text-white md:text-2xl bg-green-600 md:px-2 md:py-1"> Veg </h1>
+<h1 className="absolute top-0 left-0 z-10 font-bold text-xs py-0.5 px-1 text-white md:text-2xl bg-green-700 md:px-2 md:py-1"> Veg </h1>
             
 <Image src="/assets/veg.png"  alt="veg food image" layout="fill" objectFit="cover" priority={true}  />
             
@@ -155,7 +155,7 @@ export default function Home({ foodItems }) {
 <div style={{width:"100vw", height:"18vh",position:"relative",cursor:"pointer" }} className="shadow bg-gradient-to-r from-[#020b14] to-[#021e2a]"> 
  {/* #183e49 */}
 
-<h1 className="absolute top-0 left-0 z-10 font-bold text-xs py-0.5 px-1 text-white md:text-2xl bg-red-500 md:px-2 md:py-1"> Non Veg </h1>
+<h1 className="absolute top-0 left-0 z-10 font-bold text-xs py-0.5 px-1 text-white md:text-2xl bg-red-600 md:px-2 md:py-1"> Non Veg </h1>
 
 
   
@@ -210,7 +210,7 @@ export default function Home({ foodItems }) {
                     </h2>
                     <p className="  text-gray-500 text-xs tracking-widest title-font mb-1 w-80   ">{ item.desc.slice(0,80)}...</p>
                     <p className="  text-gray-500 text-xs tracking-widest title-font mb-2 w-80   "> category: 
-                    <span className={`${item.category==="veg" ? "text-green-600" :" text-red-500"}  text-xs tracking-widest title-font w-80   `}> { item.category}</span></p>
+                    <span className={`${item.category==="veg" ? "text-green-600" :" text-red-500"}  text-xs tracking-widest title-font font-semibold w-80   `}> { item.category}</span></p>
                     <hr className="block bg-gray-400 h-0.5"/>
                   
                     <p className=" pb-2 mt-1">₹{item.price[0]}</p>
