@@ -1,4 +1,4 @@
-import React, { useContext, useState,useEffect,useRef,memo} from "react";
+import React, { useContext, useState,useEffect,useRef} from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { AiOutlineShoppingCart } from "react-icons/ai";
@@ -421,4 +421,4 @@ export const Navbar=()=>{
   );
 }
 
-export default memo(Navbar)
+export default Navbar

@@ -106,10 +106,14 @@ function CartState(props) {
 
   // clear cart
   const clearCart = () => {
-    setCart({});
-    saveCart({});
-    setCartChange(Math.random())
-    setTotalItems(0)
+    let takeClearCartConfimation=confirm("Are you sure you want to clear the cart?")
+    if(takeClearCartConfimation){
+
+      setCart({});
+      saveCart({});
+      setCartChange(Math.random())
+      setTotalItems(0)
+    }
   };
  
   const orderNow=(slug, qty, price, name, size, type,img)=>{

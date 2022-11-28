@@ -375,7 +375,7 @@ const Product =({ foodItem, error }) =>{
   );
 }
 
-export default memo(Product,(per,next)=>{console.log(per)})
+export default Product
 
 // This gets called on every request
 export async function getServerSideProps(context) {
