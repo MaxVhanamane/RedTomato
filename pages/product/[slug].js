@@ -1,4 +1,4 @@
-import React, { useState, useContext,useEffect } from "react";
+import React, { useState, useContext,useEffect,memo } from "react";
 // To handle different states
 import { CartContext } from "./../../context/CartState";
 // To redirect user
@@ -14,7 +14,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Head from "next/head";
 import Image from "next/image"
 
-export default function Product({ foodItem, error }) {
+const Product =({ foodItem, error }) =>{
  
   //  to control the radio buttons 
   const [selectedRadioBtn, setSelectedRadioBtn] = useState("small")
@@ -374,6 +374,8 @@ export default function Product({ foodItem, error }) {
     </>
   );
 }
+
+export default memo(Product,(per,next)=>{console.log(per)})
 
 // This gets called on every request
 export async function getServerSideProps(context) {

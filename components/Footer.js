@@ -1,10 +1,10 @@
-import React from 'react'
+import React,{memo} from 'react'
 import { SiRottentomatoes } from "react-icons/si";
 import { RiTwitterFill } from "react-icons/ri";
 import { RiLinkedinFill } from "react-icons/ri";
 import { FiInstagram } from "react-icons/fi";
 import Link from "next/link";
-export default function Footer() {
+const Footer=()=> {
   return (
     <footer className="bg-gray-200 text-gray-600 body-font mt-10 sticky top-full ">
     <div className="container px-5 py-12 mx-auto flex md:items-center lg:items-start md:flex-row md:flex-nowrap flex-wrap flex-col">
@@ -95,3 +95,5 @@ export default function Footer() {
   </footer>
   )
 }
+
+export default  memo(Footer)

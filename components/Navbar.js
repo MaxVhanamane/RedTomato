@@ -1,4 +1,4 @@
-import React, { useContext, useState,useEffect,useRef} from "react";
+import React, { useContext, useState,useEffect,useRef,memo} from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { AiOutlineShoppingCart } from "react-icons/ai";
@@ -16,7 +16,7 @@ import { useRouter } from 'next/router';
 import Navigation from "./Navigation"
 import styles from "../styles/Navigation.module.css"
 
-export default function Navbar() {
+export const Navbar=()=>{
   const {
     progress,
     setProgress,
@@ -113,29 +113,34 @@ export default function Navbar() {
 
         <div className="hidden md:flex p-4" >
           <ul className="flex md:gap-8 gap-2 md:flex-row sm:flex-row flex-row mt-4 md:mt-0 ">
-            <Link passHref href="/">
+          <li><Link passHref href="/">
             {/* To show active path in red color ${router.pathname==="/about" && "text-red-500"}  focus:text-red-500 doesn't work when I 
             refresh the page.*/}
               <a className={`text-gray-500 hover:text-gray-700  ${router.pathname==="/" && "text-red-500"} focus:text-red-500`}>
-                <li>Home</li>
+                Home
               </a>
-            </Link>
+            </Link></li>
          
-            <Link passHref href="/veg">
+            <li>
+              <Link passHref href="/veg">
               <a className={`text-gray-500 hover:text-gray-700  ${router.pathname==="/veg" && "text-red-500"} focus:text-red-500`}>
-                <li>Veg</li>
+               Veg
               </a>
             </Link>
-            <Link passHref href="/nonveg">
+            </li>
+
+            <li>
+              <Link passHref href="/nonveg">
               <a className={`text-gray-500 hover:text-gray-700  ${router.pathname==="/nonveg" && "text-red-500"} focus:text-red-500`}>
-                <li>Non veg</li>
+                Non veg
               </a>
             </Link>
-            <Link passHref href="/about">
+            </li>
+            <li><Link passHref href="/about">
               <a className={`text-gray-500 hover:text-gray-700  ${router.pathname==="/about" && "text-red-500"} focus:text-red-500`}>
-                <li>About us</li>
+                About us
               </a>
-            </Link>
+            </Link></li>
           </ul>
         </div>
 
@@ -315,60 +320,7 @@ export default function Navbar() {
           </div>
         </div>
 
-{/* Sidebar  */}
-        {/* <div
-          ref={sidebar}
-          
-          className="  h-screen overflow-y-scroll  shadow-md rounded-sm  sidebar w-full absolute top-0 left-0 bg-gray-100 p-10 transform transition-transform -translate-x-full "
-        >
-          <h2 className="font-bold text-xl text-center">Menu</h2>
-          <hr className="mt-2"></hr>
-              <div className="mt-8">
-          <h2 className="font-bold text-sm">1. Category</h2>
-                
-                <ol className="list-none font-semibold">
-                  <Link href="/veg">
-                <li onClick={toggleSidebar} className="flex items-center my-4 hover:bg-gray-200"><GiFruitBowl className="mr-2 text-green-600"/>Veg food</li></Link>
-                <Link href="/nonveg">
-                  <li onClick={toggleSidebar} className="flex items-center my-4 hover:bg-gray-200"><GiChickenOven className="mr-2 text-red-600"/>Non veg food</li>
-                 </Link>
-                </ol>
-                </div>
 
-              {token&&<div className="mt-8">
-          <h2 className="font-bold text-sm">2. Account</h2>
-
-                <ol className="list-none font-semibold">
-                <Link href="/myaccount">
-                <li onClick={toggleSidebar} className="flex items-center my-4 hover:bg-gray-200"><GiFruitBowl className="mr-2 text-green-600"/>My account</li>
-                  </Link> 
-                <Link href="/orders">
-
-                  <li onClick={toggleSidebar} className="flex items-center my-4 hover:bg-gray-200"><GiChickenOven className="mr-2 text-red-600"/>My orders</li>
-                  </Link> 
-
-                <Link href="/contact">
-
-                  <li onClick={toggleSidebar} className="flex items-center my-4 hover:bg-gray-200"><IoIosCall className="mr-2 text-blue-500"/>Contact us</li>
-                  </Link> 
-
-                  <Link href="/about">
-
-                  <li onClick={toggleSidebar} className="flex items-center my-4 hover:bg-gray-200 "><FaInfoCircle className="mr-2 text-blue-600 "/>About us</li>
-                  </Link> 
-                 
-                </ol>
-                </div>}
-          <span
-            onClick={toggleSidebar}
-            className="absolute top-3 right-2 cursor-pointer text-xl"
-          >
-            <AiFillCloseCircle />
-          </span>
-          
-         
-        
-        </div> */}
 
 {/* Sidebar  */}
 
@@ -468,3 +420,5 @@ export default function Navbar() {
     </>
   );
 }
+
+export default memo(Navbar)
