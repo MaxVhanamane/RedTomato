@@ -1,4 +1,4 @@
-import React, { useState, useContext,useEffect,memo } from "react";
+import React, { useState, useContext,useEffect } from "react";
 // To handle different states
 import { CartContext } from "./../../context/CartState";
 // To redirect user
