@@ -1,4 +1,9 @@
-import Footer from "./Footer"
+// import Footer from "./Footer"
+import dynamic from "next/dynamic"
+const Footer=dynamic(()=>import("./Footer"),{
+  
+  ssr:false
+})
 import Navbar from "./Navbar"
 import {useContext,useEffect} from "react";
 import { CartContext } from './../context/CartState';
