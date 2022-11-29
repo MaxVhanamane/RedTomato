@@ -7,12 +7,12 @@ import Image from "next/image";
 import dynamic from "next/dynamic";
 import { RiSearchLine } from "react-icons/ri";
 
-// import PopularFoodItems from "../components/PopularFoodItems";
+import PopularFoodItems from "../components/PopularFoodItems";
 
-const PopularFoodItems=dynamic(()=>import("../components/PopularFoodItems"),{
-  // loading:()=><div className="flex items-center justify-center"><p className="text-center text-gray-700 font-semibold mt-4">Loading Popular food Items</p></div>,
-  ssr:false
-})
+// const PopularFoodItems=dynamic(()=>import("../components/PopularFoodItems"),{
+//   // loading:()=><div className="flex items-center justify-center"><p className="text-center text-gray-700 font-semibold mt-4">Loading Popular food Items</p></div>,
+//   ssr:false
+// })
 const SearchResults=dynamic(()=>import("../components/SearchResults"),{
   
   ssr:false
@@ -96,7 +96,8 @@ export default function Home({ foodItems }) {
  </div>
 
 {/* Search Results  */}
-<SearchResults showSearch={showSearch} searchResult={searchResult}/>
+{/* I am importing SearchResults dynamically and I will render this component only when showSearch is true so that it will help us to reduce intial bundle size it will get this component from the server once showSearch becomes true */}
+{showSearch?<SearchResults showSearch={showSearch} searchResult={searchResult}/>:null}
 
 {/* Cards  */}
 {!showSearch &&  <div className="md:hidden w-screen flex  justify-center items-center mt-[0.1rem] gap-[0.1rem] ">

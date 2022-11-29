@@ -1,5 +1,5 @@
 import React,{memo} from 'react'
-import { SiRottentomatoes } from "react-icons/si";
+import { GiTomato } from "react-icons/gi";
 import { RiTwitterFill } from "react-icons/ri";
 import { RiLinkedinFill } from "react-icons/ri";
 import { FiInstagram } from "react-icons/fi";
@@ -10,7 +10,7 @@ const Footer=()=> {
     <div className="container px-5 py-12 mx-auto flex md:items-center lg:items-start md:flex-row md:flex-nowrap flex-wrap flex-col">
       <div className="w-64 flex-shrink-0 md:mx-0 mx-auto text-center md:text-left">
         <Link href="/"><a className="flex title-font font-medium items-center md:justify-start justify-center text-gray-900">
-          <SiRottentomatoes className="text-3xl text-red-600"/>
+          <GiTomato className="text-3xl text-red-600"/>
           <span className="ml-3 text-xl text-red-500">RedTomato</span>
         </a></Link>
         <p className="mt-4 text-sm text-gray-500 ml-2"> It is fast, fresh and delicious! <br/>We cook, you enjoy at home.</p>
