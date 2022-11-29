@@ -1,4 +1,4 @@
-import React, { useEffect,useRef } from "react";
+import React, { useCallback, useEffect,useMemo,useRef } from "react";
 
 // import NoteContext from "./NoteContext"
 import { createContext, useState } from "react";
@@ -59,21 +59,23 @@ function CartState(props) {
   }, [router.events,router.query]);
 // router.query will make this useEffect run on every route change.
   // add to cart
-  const addToCart = (slug, qty, price, name, size, type,img) => {
-    const newCart = JSON.parse(JSON.stringify(cart));
-    if (name in cart) {
-      newCart[name].qty = cart[name].qty + qty;
-    } else {
-      newCart[name] = { slug,qty: 1, price, size, type,img };
-    }
-    setCart(newCart);
-    saveCart(newCart);
-    setCartChange(Math.random())
+  const addToCart =useCallback((slug, qty, price, name, size, type,img)=>{
 
-  };
+      const newCart = JSON.parse(JSON.stringify(cart));
+      if (name in cart) {
+        newCart[name].qty = cart[name].qty + qty;
+      } else {
+        newCart[name] = { slug,qty: 1, price, size, type,img };
+      }
+      setCart(newCart);
+      saveCart(newCart);
+      setCartChange(Math.random())
+  
+  },[cart])
+
 
   // delete items from cart
-  const removeFromCart = (slug, qty, price, name, size, type,img) => {
+  const removeFromCart = useCallback((slug, qty, price, name, size, type,img) => {
     const newCart = JSON.parse(JSON.stringify(cart)); // You need to parse the cart otherwise state change will not re-render the navbar or any component using cart as a state. if you write only" const newCart=cart" then you will notice while removing items from cart when it reaches to 1 it will not remove further it will just throw an error.
     
     if (name in cart) {
@@ -102,10 +104,10 @@ function CartState(props) {
     saveCart(newCart);
     setCartChange(Math.random())
 
-  };
+  },[cart]);
 
   // clear cart
-  const clearCart = () => {
+  const clearCart = useCallback(() => {
     let takeClearCartConfimation=confirm("Are you sure you want to clear the cart?")
     if(takeClearCartConfimation){
 
@@ -114,17 +116,17 @@ function CartState(props) {
       setCartChange(Math.random())
       setTotalItems(0)
     }
-  };
+  },[]);
  
-  const orderNow=(slug, qty, price, name, size, type,img)=>{
+  const orderNow=useCallback((slug, qty, price, name, size, type,img)=>{
   
     let  newCart={[`${name}`]:{slug, qty, price, size, type,img}}
     setCart(newCart)
     saveCart(newCart)
     router.push("/checkout")
-  }
+  },[router])
 
-  const removeToken=()=>{
+  const removeToken=useCallback(()=>{
     localStorage.removeItem("token")
     setToken(null)
     router.push("/")
@@ -137,8 +139,9 @@ function CartState(props) {
       draggable: true,
       progress: undefined,
     });
-  }
-  const toggleCart = () => {
+  },[router])
+
+  const toggleCart = useCallback(() => {
     if (ref.current.classList.contains("translate-x-full")) {
       ref.current.classList.remove("translate-x-full");
       ref.current.classList.add("translate-x-0");
@@ -146,8 +149,9 @@ function CartState(props) {
       ref.current.classList.remove("translate-x-0");
       ref.current.classList.add("translate-x-full");
     }
-  };
-  const toggleSidebar = () => {
+  },[]);
+
+  const toggleSidebar = useCallback(() => {
     
     if (sidebar.current.classList.contains("-translate-x-full")) {
       sidebar.current.classList.remove("-translate-x-full");
@@ -156,21 +160,23 @@ function CartState(props) {
       sidebar.current.classList.remove("translate-x-0");
       sidebar.current.classList.add("-translate-x-full");
     }
-  };
+  },[]);
+
 
   // To close sidebar when user clicks on home or user profile icon
-  const toggleCartForNavIcons = () => {
+  const toggleCartForNavIcons = useCallback(() => {
     if (ref.current.classList.contains("translate-x-0")) {
       ref.current.classList.remove("translate-x-0");
       ref.current.classList.add("translate-x-full");
     } 
-  };
-  const toggleSidebarForNavIcons = () => {
+  },[]);
+
+  const toggleSidebarForNavIcons = useCallback(() => {
     if (sidebar.current.classList.contains("translate-x-0")) {
       sidebar.current.classList.remove("translate-x-0");
       sidebar.current.classList.add("-translate-x-full");
     }
-  };
+  },[]);
 
 
   return (
