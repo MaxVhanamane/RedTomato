@@ -19,7 +19,7 @@ const Product =({ foodItem, error }) =>{
   //  to control the radio buttons 
   const [selectedRadioBtn, setSelectedRadioBtn] = useState("small")
   const [foodPrice, setFoodPrice] = useState(foodItem?foodItem[0].price[0]:"")
-  const { orderNow, addToCart, toggleCart, cartChange,setCartChange } = useContext(CartContext);
+  const { orderNow, addToCart, toggleCart, cartChange,setCartChange,setImportCartDynamically } = useContext(CartContext);
   const [inputPin, setInputPin] = useState("");
   const [pin, setPin] = useState(null);
   const [goToCart, setGoToCart] = useState(false)
@@ -287,12 +287,12 @@ const Product =({ foodItem, error }) =>{
 
                 <div >
                   {/* if availableQty is zero then we will not allow user to add item to the cart.  */}
-                  <>
+                  {/* <>
     {(() => {
    
  
     })()}
-  </>
+  </> */}
                   {!goToCart ? <button disabled={item.availableQty == 0}
                     onClick={() => {
                       addToCart(slug, 1, foodPrice, `${item.title} (${selectedRadioBtn})`, `${selectedRadioBtn}`, `${item.category}`,`${item.img}`);
@@ -307,7 +307,7 @@ const Product =({ foodItem, error }) =>{
                       });
                       setGoToCart(true)
                     }}
-                    className=" disabled:bg-gray-400 flex lg:ml-5 ml-3  text-white bg-[#FF0000] border-0 py-2 lg:px-6 px-2 focus:outline-none hover:bg-[#ff2400] rounded-lg"
+                    className=" disabled:bg-gray-400 flex lg:ml-5 ml-3  text-white bg-[#FF0000] border-0 py-2   focus:outline-none hover:bg-[#ff2400] rounded-lg w-28  items-center justify-center"
                   >
                     
                     Add to Cart
@@ -315,9 +315,11 @@ const Product =({ foodItem, error }) =>{
 
                     <button disabled={item.availableQty == 0}
                       onClick={() => {
+                        setImportCartDynamically(true)
                         toggleCart()
+
                       }}
-                      className=" disabled:bg-gray-400 flex lg:ml-5 ml-3 text-white bg-[#FF0000] border-0 py-2 lg:px-6 px-2 focus:outline-none hover:bg-[#ff2400] rounded-lg"
+                      className=" disabled:bg-gray-400 flex lg:ml-5 ml-3 text-white bg-[#FF0000] border-0 py-2   focus:outline-none hover:bg-[#ff2400] rounded-lg w-28  items-center justify-center"
                     >
                       Go to Cart
                     </button>
@@ -327,7 +329,7 @@ const Product =({ foodItem, error }) =>{
 
                 </div>
                 <div >
-                  <button disabled={item.availableQty == 0} onClick={() => { orderNow(slug, 1, foodPrice, `${item.title} (${selectedRadioBtn})`, `${item.size}`, `${item.category}`, `${item.img}`) }} className="flexdisabled:bg-gray-400 ml-8 text-white bg-[#FF0000] border-0 py-2 px-6 focus:outline-none hover:bg-[#ff2400] rounded-lg">
+                  <button disabled={item.availableQty == 0} onClick={() => { orderNow(slug, 1, foodPrice, `${item.title} (${selectedRadioBtn})`, `${item.size}`, `${item.category}`, `${item.img}`) }} className="flexdisabled:bg-gray-400 ml-8 text-white bg-[#FF0000] border-0 py-2 px-5 focus:outline-none hover:bg-[#ff2400] rounded-lg">
                     Order Now
                   </button></div>
 

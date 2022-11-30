@@ -14,6 +14,7 @@ function CartState(props) {
   // to show total number of items on the cart icon
   const [totalItems, setTotalItems] = useState(0);
   const [token, setToken] = useState(null);
+  const [importCartDynamically,setImportCartDynamically]=useState(false)
   const router = useRouter();
   const [progress, setProgress] = useState(0);
   const [cartChange,setCartChange]=useState(Math.random())
@@ -181,7 +182,7 @@ function CartState(props) {
 
   return (
     <CartContext.Provider
-      value={{ progress,setProgress,token,removeToken,cart, Total,totalItems, addToCart, removeFromCart, clearCart,orderNow,ref,toggleCart,cartChange,setCartChange ,sidebar,toggleSidebar,changeHamburgerIcon,setChangeHamburgerIcon,toggleSidebarForNavIcons,toggleCartForNavIcons}}
+      value={{ progress,setProgress,token,removeToken,cart, Total,totalItems, addToCart, removeFromCart, clearCart,orderNow,ref,toggleCart,cartChange,setCartChange ,sidebar,toggleSidebar,changeHamburgerIcon,setChangeHamburgerIcon,toggleSidebarForNavIcons,toggleCartForNavIcons,importCartDynamically,setImportCartDynamically}}
     >
       {/* Provider will give access to all the above states and functions to the components which are in props.children */}
       {props.children}

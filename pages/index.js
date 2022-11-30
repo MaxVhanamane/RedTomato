@@ -14,8 +14,8 @@ import PopularFoodItems from "../components/PopularFoodItems";
 //   ssr:false
 // })
 const SearchResults=dynamic(()=>import("../components/SearchResults"),{
-  
-  ssr:false
+  // ssr true will pre-render this component on the server If I make it false it will not pre-render on the server it will render on the client side
+  ssr:true
 })
 
 export default function Home({ foodItems }) {

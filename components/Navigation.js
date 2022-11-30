@@ -13,7 +13,7 @@ function Navigation() {
   const {
     toggleCart,
     toggleSidebar,removeToken,clearCart,token,totalItems,
-    changeHamburgerIcon,setChangeHamburgerIcon,toggleCartForNavIcons,toggleSidebarForNavIcons
+    changeHamburgerIcon,setChangeHamburgerIcon,toggleCartForNavIcons,toggleSidebarForNavIcons,setImportCartDynamically
   } = useContext(CartContext);
 
   return (
@@ -64,8 +64,13 @@ function Navigation() {
         title="cart"
       >
          <AiOutlineShoppingCart
-            onClick={()=>{toggleCart();toggleSidebarForNavIcons();
-              if(!changeHamburgerIcon){setChangeHamburgerIcon(true)}}}
+            onClick={()=>{setImportCartDynamically(true);
+              toggleCart();
+              toggleSidebarForNavIcons();
+              if(!changeHamburgerIcon)
+              {setChangeHamburgerIcon(true)}
+            }
+          }
            
           />
       </button> 

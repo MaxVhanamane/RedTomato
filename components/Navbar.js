@@ -3,34 +3,26 @@ import Link from "next/link";
 import Image from "next/image";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { AiFillCloseCircle } from "react-icons/ai";
-import { FiPlusSquare } from "react-icons/fi";
 import { IoIosCall } from "react-icons/io";
-import { FiMinusSquare } from "react-icons/fi";
 import { FaInfoCircle } from "react-icons/fa";
-import { GiShoppingBag } from "react-icons/gi";
-import { MdDelete } from "react-icons/md";
 import { FaUserAlt } from "react-icons/fa";
 import { CartContext } from "./../context/CartState";
 import LoadingBar from "react-top-loading-bar";
 import { useRouter } from 'next/router';
 import Navigation from "./Navigation"
 import styles from "../styles/Navigation.module.css"
+import dynamic from "next/dynamic"
+import Cart from "./navabar_cart/Cart"
 
 export const Navbar=()=>{
   const {
     progress,
     setProgress,
     removeToken,
-    cart,
     totalItems,
-    Total,
     clearCart,
-    removeFromCart,
-    addToCart,
-
-    ref,
     toggleCart,
-   sidebar,toggleSidebar,changeHamburgerIcon,setChangeHamburgerIcon
+   sidebar,toggleSidebar,changeHamburgerIcon,setChangeHamburgerIcon,importCartDynamically,setImportCartDynamically
   } = useContext(CartContext);
   const [dropDown, setDropDown] = useState(false);
   const [token, setToken] = useState(null);
@@ -55,6 +47,7 @@ export const Navbar=()=>{
     }
   },[token,router.query])
 
+
   const handleDropDown=()=>{
     if(dropDownRef.current.classList.contains("hidden")){
       dropDownRef.current.classList.remove("hidden")
@@ -65,16 +58,6 @@ export const Navbar=()=>{
     }
   }
 
-  // const ref = useRef();
-  // const toggleCart = () => {
-  //   if (ref.current.classList.contains("translate-x-full")) {
-  //     ref.current.classList.remove("translate-x-full");
-  //     ref.current.classList.add("translate-x-0");
-  //   } else if (!ref.current.classList.contains("translate-x-full")) {
-  //     ref.current.classList.remove("translate-x-0");
-  //     ref.current.classList.add("translate-x-full");
-  //   }
-  // };
   return (
     <>
       <LoadingBar
@@ -209,7 +192,10 @@ export const Navbar=()=>{
             </div>
           )}
           <AiOutlineShoppingCart
-            onClick={toggleCart}
+            onClick={()=>{
+              setImportCartDynamically(true)
+              toggleCart()}
+            }
             className=" text-red-500 hover:text-red-600 p-1 focus:text-red-500 md:text-3xl  text-3xl border-solid border-2 border-gray-300 rounded-md"
             title="cart"
           />
@@ -218,107 +204,9 @@ export const Navbar=()=>{
        {totalItems>0? <div><span className={`hidden animate-[ping_1s_ease-in-out_2] absolute right-3 top-2 md:inline-block w-4 h-4  rounded-full bg-red-500 opacity-75 ${totalItems>99 && "w-6 rounded-md"} `}></span><p className={`hidden md:inline-block absolute right-3 top-2 rounded-full bg-red-600 w-4 h-4  p-0 m-0 text-white font-mono text-xs text-center ${totalItems>99 && "w-6 rounded-md"} `}>{totalItems<100?<span className="leading-4 text-center">{totalItems}</span>:<span className="leading-4 text-center">99+</span>}</p></div>:null}
 
         {/* bg-gradient-to-r from-[red] to-[#ffffff] */}
-        <div
-          ref={ref}
-          
-          className=" h-screen overflow-y-scroll  shadow-md rounded-sm w-full sidebar md:w-fit absolute top-0 right-0 bg-gray-100  p-10 transform transition-transform translate-x-full duration-300 pb-32"
-        >
-          <h2 className="font-bold lg:text-xl  text-center text-base  text-gray-900 ">My cart</h2>
-          <span
-            onClick={toggleCart}
-            className="absolute top-3 right-2 cursor-pointer text-xl flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75  group-hover:text-gray-900 "
-          >
-            <AiFillCloseCircle />
-          </span>
-          {Object.keys(cart).length == 0 && (
-            <div>
-            <p className="text-center">Your cart is empty</p>
-            <p className="text-center">Add some items to checkout</p>
-            </div>
-          )}
-          <ol className="  my-2 font-semibold">
-            {Object.keys(cart).map((key) => {
-              return (
-                <li key={key}>
-              
-                  <div className=" flex items-center mt-3 justify-center gap-1">
-                  <div className={`${styles.cartimageContainer}`}>
-                    
-                  <span className={`absolute -right-1 -top-1 rounded-full leading-5 bg-red-600 w-5 h-5  ${cart[key].qty>99 && "w-7 rounded-md"} text-white font-mono text-xs align-middle  text-center z-[20]`}>{cart[key].qty<100 ?<span>{cart[key].qty}</span>:<span className="text-[0.8rem]">99+</span>}</span>
-          <Image src={cart[key].img} alt="food image" className={`${styles.image}`} layout="fill" />
-                    </div>
-                    <div className="md:w-[18rem] w-[50%] pl-4 font-semibold text-gray-800">
+       
 
-         
-               {key}
-
-        </div>
-                    <div className="flex w-1/3 font-semibold items-center justify-center">
-                      <FiMinusSquare
-                        className="text-xl text-gray-800 "
-                        onClick={() => {
-                          removeFromCart(
-                            cart[key].slug,
-                            1,
-                            cart[key].price,
-                            key,
-                            cart[key].size,
-                            cart[key].type,
-                            cart[key].img
-                          );
-                        }}
-                      />
-
-                      <span className={`m-2 w-3 flex justify-center`}>{cart[key].qty}</span>
-                     
-                      <FiPlusSquare
-                        className="text-xl text-gray-800 "
-                        onClick={() => {
-                          addToCart(
-                            cart[key].slug,
-                            1,
-                            cart[key].price,
-                            key,
-                            cart[key].size,
-                            cart[key].type,
-                            cart[key].img
-                          );
-                        }}
-                      />
-                    </div>
-                  </div>
-                </li>
-              );
-            })}
-          </ol>
-          {Object.keys(cart).length > 0 && (
-            <div className="font-bold text-lg text-gray-700 mt-4 ">Total : ₹{Total}</div>
-          )}
-          <div className="flex text-center items-left justify-center mt-4">
-            <Link passHref href="/checkout">
-              <button
-              onClick={toggleCart}
-                disabled={Object.keys(cart).length == 0}
-                className="bg-gray-200 mr-6 outline-none  disabled:bg-gray-300 hover:bg-gray-300 disabled:text-gray-500 text-gray-800 font-bold  px-1 rounded inline-flex items-center"
-              >
-                <span className="fill-current w-2  mr-2">
-                  <GiShoppingBag className=" flex justify-center items-center text-center" />{" "}
-                </span>
-                <span>Checkout</span>
-              </button>
-            </Link>
-            <button
-              onClick={clearCart}
-              disabled={Object.keys(cart).length == 0}
-              className="bg-red-600 outline-none disabled:bg-gray-400 hover:bg-red-700 text-gray-100 font-bold px-1 rounded inline-flex items-center"
-            >
-              <span className="fill-current w-2 mr-2">
-                <MdDelete />{" "}
-              </span>
-              <span>Clear Cart</span>
-            </button>
-          </div>
-        </div>
+      <Cart />
 
 
 
@@ -414,7 +302,7 @@ export const Navbar=()=>{
       <div className="md:hidden">
 
  {/* navigation bar at the bottom on the mobile devices  */}
-    <Navigation  />
+    <Navigation />
       </div>
 </div>
     </>
