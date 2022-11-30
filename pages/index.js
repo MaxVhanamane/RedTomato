@@ -9,10 +9,7 @@ import { RiSearchLine } from "react-icons/ri";
 
 import PopularFoodItems from "../components/PopularFoodItems";
 
-// const PopularFoodItems=dynamic(()=>import("../components/PopularFoodItems"),{
-//   // loading:()=><div className="flex items-center justify-center"><p className="text-center text-gray-700 font-semibold mt-4">Loading Popular food Items</p></div>,
-//   ssr:false
-// })
+
 const SearchResults=dynamic(()=>import("../components/SearchResults"),{
   // ssr true will pre-render this component on the server If I make it false it will not pre-render on the server it will render on the client side
   ssr:true

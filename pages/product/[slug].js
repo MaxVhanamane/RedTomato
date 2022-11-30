@@ -237,11 +237,7 @@ const Product =({ foodItem, error }) =>{
                 {item.desc}
               </p>
               <div className="flex mt-6  pb-5 border-b-2 border-gray-100 mb-5">
-                {/* <div className="flex justify-center w-1/2">
-                <div className="flex justify-center items-center">
-                
-                </div>
-              </div> */}
+              
                 <div className="flex justify-center ">
                   <div>Sizes:</div>
                   <div className="flex justify-center items-center">
