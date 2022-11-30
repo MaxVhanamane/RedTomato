@@ -6,7 +6,7 @@ import { AiFillCloseCircle } from "react-icons/ai";
 import Image from "next/image"
 import Link from "next/link"
 import { CartContext } from "./../../context/CartState";
-import React, { useContext,useRef,memo} from "react";
+import React, { useContext} from "react";
 import styles from "../../styles/Navigation.module.css"
 const CartData=()=>{
     const {
@@ -47,7 +47,7 @@ const CartData=()=>{
                     <div className="md:w-[18rem] w-[50%] pl-4 font-semibold text-gray-800">
 
          
-               {key}
+               {key} - <span className="text-green-800">₹{cart[key].price * cart[key].qty}</span>
 
         </div>
                     <div className="flex w-1/3 font-semibold items-center justify-center">

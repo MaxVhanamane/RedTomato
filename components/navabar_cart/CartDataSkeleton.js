@@ -1,7 +1,7 @@
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { CartContext } from "./../../context/CartState";
-import React, { useContext,memo} from "react";
+import React, { useContext} from "react";
 import styles from "../../styles/Navigation.module.css"
 import { AiFillCloseCircle } from "react-icons/ai";
 const CartDataSkeleton=()=>{
@@ -79,6 +79,6 @@ const CartDataSkeleton=()=>{
     )
 }
 
-export default memo(CartDataSkeleton)
+export default CartDataSkeleton
 
 

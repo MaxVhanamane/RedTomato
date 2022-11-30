@@ -1,4 +1,4 @@
-import React,{ useContext,memo} from "react";
+import React,{ useContext} from "react";
 import { AiOutlineHome } from "react-icons/ai";
 import { AiOutlineLogout } from "react-icons/ai";
 import { FaUserCircle } from "react-icons/fa";
@@ -110,4 +110,4 @@ function Navigation() {
   );
 }
 
-export default memo(Navigation);
+export default Navigation;
