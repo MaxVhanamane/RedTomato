@@ -10,15 +10,14 @@ if (!MONGODB_URI) {
 }
 
 
-// When we first connect to the db we will cache that connection in cached variable so that we don't have to connect the database again and again
-// for each and every request. that is bad practice.
+// When we first connect to the db we will cache that connection in a variable named cached so that we don't have to connect to the database again and again on each and every request. 
 let cached = global.mongoose
 // If we don't have cached connection then first we will set conn: null, promise: null
 if (!cached) {
   cached = global.mongoose = { conn: null, promise: null }
 }
 
-// creating an async function to connect the db
+// creating an async function to connect to the db
 async function connectDb() {
   // If we have cached connection then we don't  have to make connection once again. we will return the old connection.
   if (cached.conn) {
