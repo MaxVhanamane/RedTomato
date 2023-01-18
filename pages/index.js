@@ -71,9 +71,10 @@ export default function Home({ foodItems }) {
    <>
    <Head>
     <title>Red Tomato - Home</title>
-    <meta name="description" content={ foodItems.length>0? foodItems.map((item) =>{
+    {/* <meta name="description" content={ foodItems.length>0? foodItems.map((item) =>{
       return item.title
-    } ):"We deliver Veg and Non veg food"} />
+    } ):"We deliver Veg and Non veg food"} /> */}
+    <meta name="description" content="Get your favorite meals delivered to your door with our easy-to-use food delivery app. Choose from a wide range of veg and non-veg food items, enjoy contactless delivery. Order now and experience the convenience of food delivery at your fingertips"/>
    </Head>
  <div className=" relative pt-[4rem] sm:pt-[4.75rem] lg:pt-6 md:pt-8 text-gray-400 focus-within:text-gray-600 ">
   <div style={{width:"100vw", height:"19vh",position:"relative"}} className="home_image">
@@ -101,7 +102,7 @@ export default function Home({ foodItems }) {
 
 <Link href="/veg">
 <div style={{width:"100vw", height:"18vh",position:"relative" ,cursor:"pointer"}} className="shadow bg-gradient-to-r from-[#020b14] to-[#021e2a] ">
-<h1 className="absolute top-0 left-0 z-10 font-bold text-xs py-0.5 px-1 text-white md:text-2xl bg-green-700 md:px-2 md:py-1"> Veg </h1>
+<h2 className="absolute top-0 left-0 z-10 font-bold text-xs py-0.5 px-1 text-white md:text-2xl bg-green-700 md:px-2 md:py-1"> Veg </h2>
             
 <Image src="/assets/veg.png"  alt="veg food image" layout="fill" objectFit="cover" priority={true}  />
             
@@ -111,7 +112,7 @@ export default function Home({ foodItems }) {
 <div style={{width:"100vw", height:"18vh",position:"relative",cursor:"pointer" }} className="shadow bg-gradient-to-r from-[#020b14] to-[#021e2a]"> 
  {/* #183e49 */}
 
-<h1 className="absolute top-0 left-0 z-10 font-bold text-xs py-0.5 px-1 text-white md:text-2xl bg-red-600 md:px-2 md:py-1"> Non Veg </h1>
+<h2 className="absolute top-0 left-0 z-10 font-bold text-xs py-0.5 px-1 text-white md:text-2xl bg-red-600 md:px-2 md:py-1"> Non Veg </h2>
 
 
   

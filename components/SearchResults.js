@@ -11,13 +11,13 @@ function SearchResults({showSearch,searchResult}) {
 {showSearch ? <div>
   
   <div className="text-center">
- <h1 className="font-semibold sm:text-3xl text-2xl mt-6 text-gray-800 mb-3">Search Results</h1>
+ <h2 className="font-semibold sm:text-3xl text-2xl mt-6 text-gray-800 mb-3">Search Results</h2>
  </div>
   <section className="text-gray-600 body-font mb-28 ">
         <div className="container px-5 py-2 mx-auto  ">
           <div className="flex flex-wrap m-auto gap-2 justify-center ">
 
- {searchResult.length===0&& <h1 className=" sm:text-xl text-lg mt-4 text-red-500">No results found.</h1>}
+ {searchResult.length===0&& <h2 className=" sm:text-xl text-lg mt-4 text-red-500">No results found.</h2>}
 
 
             {searchResult.map((item) => {

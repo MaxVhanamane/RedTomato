@@ -222,7 +222,7 @@ export default function Orders() {
    </Head>
     <div className="container pt-28 md:pt-20 ">
      
-      <h1 className="text-xl text-center font-bold">Your account</h1>
+      <h3 className="text-xl text-center font-bold">Your account</h3>
       <div className='flex md:flex-row flex-col mb-10'>
       <div className="md:w-1/2 w-3/4 md:ml-28  m-auto mt-10  ">
         <h2 className="font-bold ">1. Account Details</h2>

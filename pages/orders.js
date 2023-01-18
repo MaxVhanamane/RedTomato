@@ -88,7 +88,7 @@ export default function Orders({myOrders}) {
         </table>
       </div>
     </div>
-  </div>: <h1 className="text-center text-red-500 mt-6 text-md sm:text-xl"> No orders found!</h1>}
+  </div>: <h3 className="text-center text-red-500 mt-6 text-md sm:text-xl"> No orders found!</h3>}
 </div>
     </div>
     </>
