@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /pages/dashboard/
+Disallow: /pages//about.js
+Disallow: /pages/contact.js
+Sitemap: https://redtomato.vercel.app/sitemap.xml
