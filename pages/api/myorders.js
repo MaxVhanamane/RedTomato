@@ -1,18 +1,26 @@
 import connectDb from '../../middleware/mongoose';
 import Order from '../../models/orders';
-import jwt from "jsonwebtoken"
+import { getAuthenticatedUser } from '../../middleware/auth';
+
 export default async function handler(req, res) {
-  try{
-    connectDb()
-    const userData= jwt.verify(req.body.token,process.env.JWT_SECRET) 
-    // display only those orders where the status is paid.
-    let orders= await Order.find({email:userData.email,status:"paid"})
-    res.status(200).json({success:true,orders })
-
+  if (req.method !== 'POST' && req.method !== 'GET') {
+    return res.status(405).json({ success: false, message: 'Method Not Allowed' });
   }
-   catch(error){
-    res.status(500).json({message:"Internal server Error" })
 
-   }
+  const authUser = getAuthenticatedUser(req);
+  if (!authUser) {
+    return res.status(401).json({ success: false, message: 'Unauthorized' });
   }
-  
+
+  await connectDb();
+
+  try {
+    const orders = await Order.find({ email: authUser.email, status: 'paid' })
+      .sort({ createdAt: -1 })
+      .lean();
+
+    return res.status(200).json({ success: true, orders });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: 'Internal Server Error' });
+  }
+}

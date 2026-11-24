@@ -3,6 +3,7 @@ import { useRef } from 'react';
 import DashboardSidebar from './../../../components/DashboardSidebar';
 import Food from './../../../models/foods';
 import connectDb from './../../../middleware/mongoose';
+import { getAuthenticatedUser } from '../../../middleware/auth';
 
 import { storage } from '../../../components/firebase';
 import {ref,uploadBytes,getDownloadURL} from "firebase/storage"
@@ -56,12 +57,8 @@ const [imageInfo,setImageInfo]=useState({
 const router=useRouter()
 useEffect(()=>{
   const fetchUser= async ()=>{
-   const res=await fetch( `${process.env.NEXT_PUBLIC_HOST}/api/getuserdetails`, {
-          method: 'POST', // or 'PUT'
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({tokenVal:localStorage.getItem("token")}),
+   const res=await fetch( '/api/getuserdetails', {
+          method: 'GET',
         })
 
         const finalRes = await res.json()
@@ -71,13 +68,10 @@ useEffect(()=>{
           localStorage.removeItem("role")
           router.push("/")
         }
-        
-      
   }
-  let adminToken=localStorage.getItem("token")
   let role=localStorage.getItem("role")
 
-  if(!(adminToken && role==="admin"))
+  if(role!=="admin")
   {
     localStorage.removeItem("user")
     localStorage.removeItem("token")
@@ -239,31 +233,49 @@ function uploadImageToFirebase(imageRef){
     }
 
  const handleEdit=async()=>{
-   
-    const data = [{_id:foodItem.id,title:foodItem.title,slug:foodItem.slug,desc:foodItem.desc,popularity:foodItem.popularity,category:foodItem.category,price:JSON.parse(foodItem.price),img:foodItem.img,availableQty:foodItem.availableQty}];
-     
+    let parsedPrice;
+    try {
+      parsedPrice = JSON.parse(foodItem.price);
+      if (!Array.isArray(parsedPrice)) {
+        parsedPrice = [Number(foodItem.price)];
+      }
+    } catch (e) {
+      toast.error('Price format must be an array of numbers, e.g. [44, 55, 88]');
+      return;
+    }
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/editfooditems`, {
-      method: 'POST', // or 'PUT'
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    })
-    const response = await res.json()
-    if(response.success){
-        toast.success('Item edited successfully!', {
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
+    const data = [{
+      _id: foodItem.id,
+      title: foodItem.title,
+      slug: foodItem.slug,
+      desc: foodItem.desc,
+      popularity: foodItem.popularity,
+      category: foodItem.category,
+      price: parsedPrice,
+      img: foodItem.img,
+      availableQty: Number(foodItem.availableQty) || 0,
+    }];
+
+    try {
+      const res = await fetch('/api/editfooditems', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+      const response = await res.json();
+      if(response.success){
+          toast.success('Item edited successfully!', {
+              autoClose: 2000,
           });
-
+      } else {
+        toast.error(response.error || 'Failed to update item');
+      }
+    } catch (e) {
+      toast.error('Failed to update food item');
     }
-
-    }
+  }
 
   return (
     <>
@@ -521,15 +533,22 @@ mt-8
 
 // This gets called on every request
 export async function getServerSideProps(context) {
-    // Fetch data from external API
-    connectDb()
-    let error;
-    let food = await Food.find({ slug: context.query.slug })
-  
-    if (food.length == 0) {
-      return { props: { foodItemData: "error" } }
-    }
-    // Pass data to the page via props
-    return { props: { foodItemData: JSON.parse(JSON.stringify(food)) } }
+  const user = getAuthenticatedUser(context.req);
+  if (!user || user.role !== 'admin') {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    };
   }
+
+  await connectDb();
+  const food = await Food.find({ slug: context.query.slug }).lean();
+
+  if (!food || food.length === 0) {
+    return { props: { foodItemData: "error" } };
+  }
+  return { props: { foodItemData: JSON.parse(JSON.stringify(food)) } };
+}
   

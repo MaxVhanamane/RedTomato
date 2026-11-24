@@ -22,18 +22,15 @@ export default function Orders() {
   const [cNewPassword, setCNewPassword] = useState("")
 
   useEffect(()=>{
-   let myUser= localStorage.getItem("user")
-   let token= localStorage.getItem("token")
+    let myUser = localStorage.getItem("user");
     if(!myUser){
-     router.push("/")
+      router.push("/");
+    } else {
+      setEmail(myUser);
+      setUser(myUser);
+      fetchUserDetails();
     }
-    if(myUser && token){
-      setEmail(myUser)
-      setUser(myUser)
-      setTokenVal(token)
-      fetchUserDetails(token)
-    }
-     },[])
+  },[])
 
      const handleChange = (e) => {
       if (e.target.name === "name") {
@@ -88,14 +85,12 @@ export default function Orders() {
   
     }
 
-    const fetchUserDetails=async(tokenVal)=>{
-      const data = {tokenVal };
-      const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/getuserdetails`, {
-        method: 'POST', // or 'PUT'
+    const fetchUserDetails=async()=>{
+      const res = await fetch('/api/getuserdetails', {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
       })
       const response = await res.json()
       // checking if the response has undefined properties if I directly set them without checking then console will show a warning.
@@ -133,8 +128,8 @@ export default function Orders() {
     }
 
     const handleUpdateUserDetails=async()=>{
-      const data = {tokenVal,name,address,pin,city,state,area,phone };
-      const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/updateuserdetails`, {
+      const data = {name,address,pin,city,state,area,phone };
+      const res = await fetch('/api/updateuserdetails', {
         method: 'PUT', 
         headers: {
           'Content-Type': 'application/json',
@@ -168,8 +163,8 @@ export default function Orders() {
 
     const handleUpdatePassword=async()=>{
       if(newPassword===cNewPassword ){
-        const data = {tokenVal,password,newPassword };
-        const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/updatepassword`, {
+        const data = {password,newPassword };
+        const res = await fetch('/api/updatepassword', {
           method: 'PUT', 
           headers: {
             'Content-Type': 'application/json',

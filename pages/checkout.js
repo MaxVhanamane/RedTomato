@@ -27,31 +27,32 @@ export default function Checkout() {
   const [pin, setPin] = useState("")
 
   useEffect(() => {
-
-    // If there are no items in the cart then we will not allow user to visit checkout page. we will redirect him to home page.
-    if (Object.keys(JSON.parse(localStorage.getItem("cart"))).length == 0) {
-      router.push("/")
+    // If there are no items in the cart then we redirect to home page safely.
+    try {
+      const stored = localStorage.getItem("cart");
+      const parsed = stored ? JSON.parse(stored) : {};
+      if (Object.keys(parsed).length === 0) {
+        router.push("/");
+      }
+    } catch (e) {
+      router.push("/");
     }
   
-    if(pin){
-    if (pin.length < 6 || address.length<1 || phone.length<10 || state.length<1 || city.length<1) {
-      setLoading(true)
+    if (pin) {
+      if (pin.length < 6 || address.length < 1 || phone.length < 10 || state.length < 1 || city.length < 1) {
+        setLoading(true);
+      } else if (pin.length === 6 && address.length > 0 && phone.length === 10) {
+        setLoading(false);
+      }
     }
-    else if (pin.length == 6 && address.length>0 && phone.length>0) {
-      setLoading(false)
-    }
-  }
-  
-  }, [pin,address,phone,state,city,cart])
+  }, [pin, address, phone, state, city, cart]);
 
   useEffect(()=>{
-    let myUser= localStorage.getItem("user")
-    let token= localStorage.getItem("token")
-   
-     if(myUser && token){
-       setEmail(myUser)
-       fetchUserDetails(token)
-     }
+    let myUser = localStorage.getItem("user");
+    if(myUser){
+      setEmail(myUser);
+      fetchUserDetails();
+    }
   },[])
 
 
@@ -97,14 +98,12 @@ export default function Checkout() {
   }
 
 
-  const fetchUserDetails=async(tokenVal)=>{
-    const data = {tokenVal };
-    const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/getuserdetails`, {
-      method: 'POST', // or 'PUT'
+  const fetchUserDetails=async()=>{
+    const res = await fetch('/api/getuserdetails', {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(data),
     })
     const response = await res.json()
  
@@ -135,100 +134,67 @@ export default function Checkout() {
         // initially setting loading as true because when page loads sometimes razorpay script takes time to load that's why we want to keep 
         // pay button disabled.
         setLoading(true);
-        // const result = await fetch('http://localhost:3000/api/createorder', {
-        //   total: 55 + '00',
-        // });
-
-        // amount(here i.e total) :"integer" The amount for which the order was created, in currency subunits. 
-        //For example, for an amount of ₹295, enter 29500. that is why added "00" in the end. (according to razor pay docs)
-        const data = { total: Total + "00", oid,name, email, pin, phone, address,area,state,city, cart };
-        const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/createorder`, {
-          method: 'POST', // or 'PUT'
+        const data = { name, email, pin, phone, address, area, state, city, cart };
+        const res = await fetch('/api/createorder', {
+          method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(data),
-        })
-        const response = await res.json()
-        // while destructuring an object if you want to rename the key you can use this syntax "id: order_id" . now you can use order_id to access id's value.
+        });
+        const response = await res.json();
 
-        // checking if the user has tempered with the cart or not if he has tempered with it then we will get response.success===false.
         if (response.success === true) {
-
-
           const { amount, id: order_id, currency } = response.order;
 
-
-          // const {
-          //   data: { key: razorpayKey },
-          // } = await fetch('http://localhost:3000/api/getrazorpaykey');
-
-          // get your razorpay key
-          const resKey = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/getrazorpaykey`)
-          const razorpayKey = await resKey.json()
+          // get razorpay key
+          const resKey = await fetch('/api/getrazorpaykey');
+          const keyData = await resKey.json();
+          const razorpayKey = keyData?.key || keyData;
 
           const options = {
             key: razorpayKey,
             amount: amount,
             currency: currency,
             name: 'Red Tomato',
-            description: order_id,
+            description: `Order ${order_id}`,
             order_id: order_id,
             "method": {
               "netbanking": "1",
               "card": "1",
-              "upi": "0",
+              "upi": "1",
               "wallet": "1",
             },
-            // handler will run once the payment is done successfully.
             handler: async function (response) {
-
-              // as razor pay takes money in paise for convenience we will convert it into rupees to store it in db  by using  (amount/100). 
               const data = {
-                amount: (amount / 100),
                 razorpayPaymentId: response.razorpay_payment_id,
                 razorpayOrderId: response.razorpay_order_id,
                 razorpaySignature: response.razorpay_signature,
-                orderid: order_id
-              }
+              };
 
-              const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/posttransaction`, {
-                method: 'POST', // or 'PUT'
+              const res = await fetch('/api/posttransaction', {
+                method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(data),
-              })
+              });
 
-              const finalResponse = await res.json()
-              // console.log({
-              //   amount: amount,
-              //   razorpayPaymentId: response.razorpay_payment_id,
-              //   razorpayOrderId: response.razorpay_order_id,
-              //   razorpaySignature: response.razorpay_signature,
+              const finalResponse = await res.json();
 
-              // })
-
-              // redirecting user to order page after successful payment and signature verification.
               if (finalResponse.success) {
-                // showing toast message after successful payment verification.
+                clearCart(true); // Clear cart on payment success
                 toast.success(finalResponse.message, {
-                
                   autoClose: 3000,
                   hideProgressBar: false,
                   closeOnClick: true,
                   pauseOnHover: true,
                   draggable: true,
                   theme: "colored",
-                  progress: undefined,
                 });
-                // redirecting to the order page with order id.
-                router.push(`${process.env.NEXT_PUBLIC_HOST}/order?id=${order_id}`)
-              }
-              else {
-                // showing toast message if signature verification fails.
+                router.push(`/order?id=${order_id}`);
+              } else {
                 toast.error(finalResponse.message, {
-                
                   autoClose: 3000,
                   hideProgressBar: false,
                   closeOnClick: true,
@@ -237,45 +203,29 @@ export default function Checkout() {
                   progress: undefined,
                 });
               }
-
-
             },
-            // prefill will show all the initial data when user clicks on pay. it's like a placeholder.
             prefill: {
               name: `${name}`,
               email: `${email}`,
               contact: `${phone}`,
             },
             notes: {
-              address: { address },
+              address: address,
             },
-            // theme is to control your razorpay color
             theme: {
-              color: "green",
+              color: "#e53e3e",
             },
-
           };
 
-          // when script loads we will set loading as false this will enable the pay button.
           setLoading(false);
-          // following code is to open razorpay gui.
           const paymentObject = new window.Razorpay(options);
-    
           paymentObject.open();
-
-          // adding if statement to make sure pay button is enabled even if user closes the payment window without paying.
-          // if I don't add this if statement then if user closes payment window without paying that will disable the pay button.
-          // if(paymentObject.open()){
-          //   setLoading(false)
-          // }
-        }
-        else {
-          if(response.cartTempered){
-            clearCart()
+        } else {
+          if (response.cartTempered) {
+            clearCart(true);
           }
 
           toast.error(response.error, {
-      
             autoClose: 3000,
             hideProgressBar: false,
             closeOnClick: true,
@@ -283,9 +233,7 @@ export default function Checkout() {
             draggable: true,
             progress: undefined,
           });
-          // To keep pay button enabled if the phone number is not 10 digit number. else it will disable pay button after getting response from the 
-          // server.
-          setLoading(false)
+          setLoading(false);
         }
       } catch (err) {
         // alert(err);
@@ -475,11 +423,14 @@ export default function Checkout() {
           </ol>
           {Object.keys(cart).length > 0 && <div>Grand total : ₹{Total}</div>}
           <div className=" text-center">
-            <Link href="/checkout"><button disabled={loading} onClick={loadRazorpay} className="outline-none disabled:bg-gray-400 enabled:bg-blue-500 mt-6 enabled:hover:bg-blue-600 text-gray-100 font-bold  px-4 py-1 rounded inline-flex items-center">
-
+            <button
+              type="button"
+              disabled={loading}
+              onClick={loadRazorpay}
+              className="outline-none disabled:bg-gray-400 enabled:bg-blue-600 mt-6 enabled:hover:bg-blue-700 text-gray-100 font-bold px-6 py-2 rounded inline-flex items-center shadow transition"
+            >
               {Object.keys(cart).length > 0 && <span> Pay ₹{Total} </span>}
-            </button></Link>
-
+            </button>
           </div>
 
         </div>

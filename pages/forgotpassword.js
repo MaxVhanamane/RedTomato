@@ -11,9 +11,10 @@ export default function Forgotpassword() {
 
 
   useEffect(() => {
-    const token = localStorage.getItem("token")
-    if (token) {
-      router.push("/")
+    const token = localStorage.getItem("token");
+    const user = localStorage.getItem("user");
+    if ((token && token !== "undefined") || user) {
+      router.push("/");
     }
   }, [])
 
@@ -47,7 +48,7 @@ export default function Forgotpassword() {
 
       const data = { email, sendMail: true };
 
-      const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/forgotpassword`, {
+      const res = await fetch('/api/forgotpassword', {
         method: 'POST', // or 'PUT'
         headers: {
           'Content-Type': 'application/json',
@@ -111,7 +112,7 @@ export default function Forgotpassword() {
 
       const data = { email: router.query.email, sendMail: false, token: router.query.token, newPassword: newPassword };
 
-      const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/forgotpassword`, {
+      const res = await fetch('/api/forgotpassword', {
         method: 'POST', // or 'PUT'
         headers: {
           'Content-Type': 'application/json',

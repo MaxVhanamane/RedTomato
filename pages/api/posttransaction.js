@@ -1,32 +1,90 @@
 import connectDb from '../../middleware/mongoose';
 import Order from '../../models/orders';
+import Food from '../../models/foods';
+import crypto from 'crypto';
 
-let CryptoJS = require("crypto-js");
 export default async function handler(req, res) {
-    connectDb()
-    let order
-   
-    if (req.method === "POST") {
-        // verifying signature  https://razorpay.com/docs/partners/aggregators/partner-auth/payment-gateway/#step-4-verify-payment-signature
-// from razor pay docs- order_id: Retrieve the order_id from your server. Do not use the razorpay_order_id returned by Checkout.
-  let body=req.body.orderid + "|" + req.body.razorpayPaymentId
-  // generating signature
-let  generated_signature = CryptoJS.HmacSHA256(body, process.env.RAZORPAY_SECRET).toString(CryptoJS.enc.Hex);
-// When signature mateches then we will make the payment status as paid else will send verification failed error.
-if (generated_signature == req.body.razorpaySignature) {
-    order=await Order.findOneAndUpdate({orderId:req.body.razorpayOrderId},{status:"paid",paymentInfo:JSON.stringify(req.body)})
-    res.status(200).json({ success:true,order,message:"Payment Successful."})
-}
-else{
-    res.status(200).json({ success:false,message:"Verification failed" })
+  if (req.method !== 'POST') {
+    return res.status(405).json({ success: false, error: 'Method Not Allowed' });
+  }
 
-}
- 
-    }
-    else {
-        res.status(400).send({ error: "Not allowed" })
-    }
-   
-    
+  await connectDb();
 
+  const { razorpayOrderId, razorpayPaymentId, razorpaySignature } = req.body || {};
+
+  if (!razorpayOrderId || !razorpayPaymentId || !razorpaySignature) {
+    return res.status(400).json({ success: false, message: 'Missing payment verification parameters.' });
+  }
+
+  try {
+    // 1. Retrieve the authoritative order from DB
+    const order = await Order.findOne({ orderId: razorpayOrderId });
+
+    if (!order) {
+      return res.status(404).json({ success: false, message: 'Order not found.' });
+    }
+
+    // 2. Check for idempotent replay
+    if (order.status === 'paid') {
+      return res.status(200).json({
+        success: true,
+        order,
+        message: 'Order has already been confirmed as paid.',
+      });
+    }
+
+    // 3. Cryptographically verify signature using timing-safe comparison
+    const body = `${order.orderId}|${razorpayPaymentId}`;
+    const expectedSignature = crypto
+      .createHmac('sha256', process.env.RAZORPAY_SECRET)
+      .update(body)
+      .digest('hex');
+
+    const expectedBuffer = Buffer.from(expectedSignature, 'utf8');
+    const providedBuffer = Buffer.from(razorpaySignature, 'utf8');
+
+    let isValid = false;
+    if (expectedBuffer.length === providedBuffer.length) {
+      isValid = crypto.timingSafeEqual(expectedBuffer, providedBuffer);
+    }
+
+    if (!isValid) {
+      order.status = 'failed';
+      await order.save();
+      return res.status(400).json({ success: false, message: 'Payment signature verification failed.' });
+    }
+
+    // 4. Update order status to paid
+    order.status = 'paid';
+    order.paymentInfo = JSON.stringify({
+      razorpayPaymentId,
+      razorpayOrderId,
+      verifiedAt: new Date().toISOString(),
+    });
+    await order.save();
+
+    // 5. Atomically decrement food inventory
+    if (order.products && typeof order.products === 'object') {
+      for (const itemKey of Object.keys(order.products)) {
+        const item = order.products[itemKey];
+        if (item && item.slug && item.qty) {
+          const qty = parseInt(item.qty, 10);
+          if (!isNaN(qty) && qty > 0) {
+            await Food.updateOne(
+              { slug: item.slug },
+              { $inc: { availableQty: -qty } }
+            );
+          }
+        }
+      }
+    }
+
+    return res.status(200).json({
+      success: true,
+      order,
+      message: 'Payment Successful. Your order is confirmed!',
+    });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: 'Internal Server Error during verification.' });
+  }
 }

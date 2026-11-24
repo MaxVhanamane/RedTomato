@@ -15,11 +15,12 @@ export default function SignUp() {
   const router=useRouter()
 
   useEffect(()=>{
-    const token=localStorage.getItem("token")
-    if(token){
-     router.push("/")
+    const token = localStorage.getItem("token");
+    const user = localStorage.getItem("user");
+    if((token && token !== "undefined") || user){
+      router.push("/");
     }
-     },[])
+  },[])
 
 
   const handleChange = (e) => {
@@ -46,7 +47,7 @@ export default function SignUp() {
       const data = { name, email, password };
      
 
-      const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/signup`, {
+      const res = await fetch('/api/signup', {
         method: 'POST', // or 'PUT'
         headers: {
           'Content-Type': 'application/json',

@@ -1,193 +1,66 @@
-import React, { useCallback, useEffect,useMemo,useRef } from "react";
+import React from 'react';
+import { AuthProvider, useAuth } from './AuthContext';
+import { UIProvider, useUI } from './UIContext';
+import { CartProvider, useCart, CartContext } from './CartContext';
 
-// import NoteContext from "./NoteContext"
-import { createContext, useState } from "react";
-import { useRouter } from "next/router";
-import {toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-// creating context object and exporting it.
-export const CartContext = createContext();
+export { CartContext, useCart, CartProvider } from './CartContext';
+export { AuthContext, useAuth, AuthProvider } from './AuthContext';
+export { UIContext, useUI, UIProvider } from './UIContext';
 
-function CartState(props) {
-  const [cart, setCart] = useState({});
-  const [Total, setTotal] = useState(0);
-  // to show total number of items on the cart icon
-  const [totalItems, setTotalItems] = useState(0);
-  const [token, setToken] = useState(null);
-  const [importCartDynamically,setImportCartDynamically]=useState(false)
-  const router = useRouter();
-  const [progress, setProgress] = useState(0);
-  const [cartChange,setCartChange]=useState(Math.random())
-  // To show and hide Hamburger Icon and close Icon on mobile devices.
-  const [changeHamburgerIcon,setChangeHamburgerIcon]=useState(true)
-  const sidebar=useRef()
-  const ref=useRef()
-  const saveCart = (myCart) => {
-    localStorage.setItem("cart", JSON.stringify(myCart)); //as we can't store object's in localStorage so let's convert it in JSON string
-    let subTotal = 0;
-    let totalQty=0;
-    let keys = Object.keys(myCart); // returns an array of keys.
+function ContextBridge({ children }) {
+  const auth = useAuth();
+  const ui = useUI();
+  const cart = useCart();
 
-    for (let i = 0; i < keys.length; i++) {
-      subTotal += myCart[keys[i]].price * myCart[keys[i]].qty;
-      totalQty+=myCart[keys[i]].qty
+  const combinedValue = {
+    // Auth domain
+    token: auth.token,
+    user: auth.user,
+    role: auth.role,
+    removeToken: auth.removeToken,
+    setAuthData: auth.setAuthData,
 
-      setTotal(subTotal);
-      setTotalItems(totalQty)
-    }
+    // UI domain
+    progress: ui.progress,
+    setProgress: ui.setProgress,
+    sidebar: ui.sidebar,
+    ref: ui.ref,
+    changeHamburgerIcon: ui.changeHamburgerIcon,
+    setChangeHamburgerIcon: ui.setChangeHamburgerIcon,
+    importCartDynamically: ui.importCartDynamically,
+    setImportCartDynamically: ui.setImportCartDynamically,
+    toggleCart: ui.toggleCart,
+    toggleSidebar: ui.toggleSidebar,
+    toggleSidebarForNavIcons: ui.toggleSidebarForNavIcons,
+    toggleCartForNavIcons: ui.toggleCartForNavIcons,
+
+    // Cart domain
+    cart: cart.cart,
+    Total: cart.Total,
+    totalItems: cart.totalItems,
+    cartChange: cart.cartChange,
+    setCartChange: cart.setCartChange,
+    addToCart: cart.addToCart,
+    removeFromCart: cart.removeFromCart,
+    clearCart: cart.clearCart,
+    orderNow: cart.orderNow,
   };
 
-  useEffect(() => {
-    router.events.on('routeChangeStart', ()=>{
-      setProgress(40)
-    })
-    router.events.on('routeChangeComplete', ()=>{
-      setProgress(100)
-    })
-    try {
-      if (localStorage.getItem("cart")) {
-        setCart(JSON.parse(localStorage.getItem("cart")));
-        saveCart(JSON.parse(localStorage.getItem("cart"))) // We have to call saveCart in useEffect because If we don't call it here
-        // the Total cost will show zero in cart after reloading the page to avoid that I am calling it in useEffect.
-      }
-    } catch (error) {
-      localStorage.clear();
-    }
-    const token=localStorage.getItem("token");
-    if (token){
-      setToken(token)
-    }
-  }, [router.events,router.query]);
-// router.query will make this useEffect run on every route change.
-  // add to cart
-  const addToCart =useCallback((slug, qty, price, name, size, type,img)=>{
-
-      const newCart = JSON.parse(JSON.stringify(cart));
-      if (name in cart) {
-        newCart[name].qty = cart[name].qty + qty;
-      } else {
-        newCart[name] = { slug,qty: 1, price, size, type,img };
-      }
-      setCart(newCart);
-      saveCart(newCart);
-      setCartChange(Math.random())
-  
-  },[cart])
-
-
-  // delete items from cart
-  const removeFromCart = useCallback((slug, qty, price, name, size, type,img) => {
-    const newCart = JSON.parse(JSON.stringify(cart)); // You need to parse the cart otherwise state change will not re-render the navbar or any component using cart as a state. if you write only" const newCart=cart" then you will notice while removing items from cart when it reaches to 1 it will not remove further it will just throw an error.
-    
-    if (name in cart) {
-      // If there is only one item of a particular food left in the cart then we will give him a popup to confirm removal.
-      if(newCart[name].qty===1){
-        let takeConfimation=confirm("Are you sure you want to remove this item?")
-        if(takeConfimation){
-      newCart[name].qty = cart[name].qty - qty;
-         
-        }
-
-      }
-      else{
-
-        newCart[name].qty = cart[name].qty - qty;
-      }
-      
-    }
- 
-    if (newCart[name]["qty"] <= 0) {
-      delete newCart[name];
-      setTotalItems(0)
-    }
-
-    setCart(newCart);
-    saveCart(newCart);
-    setCartChange(Math.random())
-
-  },[cart]);
-
-  // clear cart
-  const clearCart = useCallback(() => {
-    let takeClearCartConfimation=confirm("Are you sure you want to clear the cart?")
-    if(takeClearCartConfimation){
-
-      setCart({});
-      saveCart({});
-      setCartChange(Math.random())
-      setTotalItems(0)
-    }
-  },[]);
- 
-  const orderNow=useCallback((slug, qty, price, name, size, type,img)=>{
-  
-    let  newCart={[`${name}`]:{slug, qty, price, size, type,img}}
-    setCart(newCart)
-    saveCart(newCart)
-    router.push("/checkout")
-  },[router])
-
-  const removeToken=useCallback(()=>{
-    localStorage.removeItem("token")
-    setToken(null)
-    router.push("/")
-    toast.success('Logged out successfully!', {
-      position: "top-left",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-  },[router])
-
-  const toggleCart = useCallback(() => {
-    if (ref.current.classList.contains("translate-x-full")) {
-      ref.current.classList.remove("translate-x-full");
-      ref.current.classList.add("translate-x-0");
-    } else if (!ref.current.classList.contains("translate-x-full")) {
-      ref.current.classList.remove("translate-x-0");
-      ref.current.classList.add("translate-x-full");
-    }
-  },[]);
-
-  const toggleSidebar = useCallback(() => {
-    
-    if (sidebar.current.classList.contains("-translate-x-full")) {
-      sidebar.current.classList.remove("-translate-x-full");
-      sidebar.current.classList.add("translate-x-0");
-    } else if (!sidebar.current.classList.contains("-translate-x-full")) {
-      sidebar.current.classList.remove("translate-x-0");
-      sidebar.current.classList.add("-translate-x-full");
-    }
-  },[]);
-
-
-  // To close sidebar when user clicks on home or user profile icon
-  const toggleCartForNavIcons = useCallback(() => {
-    if (ref.current.classList.contains("translate-x-0")) {
-      ref.current.classList.remove("translate-x-0");
-      ref.current.classList.add("translate-x-full");
-    } 
-  },[]);
-
-  const toggleSidebarForNavIcons = useCallback(() => {
-    if (sidebar.current.classList.contains("translate-x-0")) {
-      sidebar.current.classList.remove("translate-x-0");
-      sidebar.current.classList.add("-translate-x-full");
-    }
-  },[]);
-
-
   return (
-    <CartContext.Provider
-      value={{ progress,setProgress,token,removeToken,cart, Total,totalItems, addToCart, removeFromCart, clearCart,orderNow,ref,toggleCart,cartChange,setCartChange ,sidebar,toggleSidebar,changeHamburgerIcon,setChangeHamburgerIcon,toggleSidebarForNavIcons,toggleCartForNavIcons,importCartDynamically,setImportCartDynamically}}
-    >
-      {/* Provider will give access to all the above states and functions to the components which are in props.children */}
-      {props.children}
+    <CartContext.Provider value={combinedValue}>
+      {children}
     </CartContext.Provider>
   );
 }
 
-export default CartState;
+export default function CartState({ children }) {
+  return (
+    <UIProvider>
+      <AuthProvider>
+        <CartProvider>
+          <ContextBridge>{children}</ContextBridge>
+        </CartProvider>
+      </AuthProvider>
+    </UIProvider>
+  );
+}

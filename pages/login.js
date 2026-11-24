@@ -12,10 +12,11 @@ export default function Login() {
   const [password, setPassword] = useState("")
   const router=useRouter()
   useEffect(()=>{
- const token=localStorage.getItem("token")
- if(token){
-  router.push("/")
- }
+    const token = localStorage.getItem("token");
+    const user = localStorage.getItem("user");
+    if((token && token !== "undefined") || user){
+      router.push("/");
+    }
   },[])
   const handleChange = (e) => {
   
@@ -33,7 +34,7 @@ export default function Login() {
     
       const data = {  email, password };
 
-      const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/login`, {
+      const res = await fetch('/api/login', {
         method: 'POST', // or 'PUT'
         headers: {
           'Content-Type': 'application/json',
@@ -42,22 +43,21 @@ export default function Login() {
       })
       const response = await res.json()
       if(response.success){
-     localStorage.setItem("token",response.jwtToken)
-     localStorage.setItem("user",response.email)
-     localStorage.setItem("role",response.role)
-      toast.success('Logged in successfully!', {
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-     
+        // Secure HttpOnly cookie is set by server
+        localStorage.setItem("user", response.email);
+        localStorage.setItem("role", response.role);
+        localStorage.setItem("token", "true");
+        toast.success('Logged in successfully!', {
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
         
         router.push("/")
-    
-    }
+      }
 else{
   toast.error(response.error, {
     autoClose: 2000,

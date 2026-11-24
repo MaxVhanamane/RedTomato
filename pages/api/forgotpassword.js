@@ -1,118 +1,127 @@
 import connectDb from '../../middleware/mongoose';
 import cryptoRandomString from 'crypto-random-string';
 import ForgotPasswordToken from './../../models/forgotpasswordtoken';
-const nodemailer = require("nodemailer");
-import { AES, enc } from 'crypto-js';
+import nodemailer from 'nodemailer';
+import bcrypt from 'bcryptjs';
 import User from '../../models/users';
 
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+function getMailTransporter() {
+  return nodemailer.createTransport({
+    host: process.env.EMAIL_HOST,
+    port: Number(process.env.EMAIL_PORT),
+    secure: Number(process.env.EMAIL_PORT) === 465,
+    auth: {
+      user: process.env.EMAIL_ADDRESS,
+      pass: process.env.EMAIL_PASSWORD,
+    },
+  });
+}
+
 export default async function handler(req, res) {
-    connectDb()
-    // check if the user exists in the database. If user does not exists then we don't have to reset the password.
-    let verifyUser = await User.findOne({ email: req.body.email })
+  if (req.method !== 'POST') {
+    return res.status(405).json({ success: false, error: 'Method Not Allowed' });
+  }
 
-    if (verifyUser) {
+  await connectDb();
 
-        // generate a random token to verify user later. 
-        let randomToken = cryptoRandomString({ length: 20, type: 'alphanumeric' });
-        //  when user clicks on Request reset link we will receive sendMail as true. 
-        if (req.body.sendMail) {
-            // check if the user already exits in the forgot password collection or db.
-            let user = await ForgotPasswordToken.findOne({ email: req.body.email })
-            // if the user exits then we will update the token for that user else we will create that user in forgot password db.
-            if (user) {
-                // as we know getTime() returns current time in milliseconds. If we want to expire the token in 10 minutes we will add 10 minutes(i.e 600 * 1000 in milliseconds) to the current time.
-                await ForgotPasswordToken.findOneAndUpdate({ email: req.body.email }, { token: randomToken, expiresIn: new Date().getTime() + 600 * 1000 })
-            }
-            else {
-                let forgetToken = new ForgotPasswordToken({
-                    email: req.body.email,
-                    token: randomToken,
-                    expiresIn: new Date().getTime() + 600 * 1000
-                })
-                await forgetToken.save()
+  const { email, sendMail, token, newPassword } = req.body || {};
 
-            }
+  if (!email || typeof email !== 'string' || !EMAIL_REGEX.test(email.trim())) {
+    return res.status(400).json({ success: false, message: 'Please provide a valid email address.' });
+  }
 
-            // Creating a mail template
+  const normalizedEmail = email.trim().toLowerCase();
 
-            let email = `
+  // Branch 1: Request password reset link
+  if (sendMail) {
+    try {
+      const user = await User.findOne({ email: normalizedEmail });
 
-    We have sent you this email in response to your request to reset your password on redtomato.vercel.app . 
-    To reset your password, please follow the link:
+      if (user) {
+        const randomToken = cryptoRandomString({ length: 32, type: 'alphanumeric' });
+        const expiresIn = Date.now() + 600 * 1000; // 10 minutes
 
-    <a href=${process.env.NEXT_PUBLIC_HOST}/forgotpassword?token=${randomToken}&email=${req.body.email}>Click here to reset your password</a>
+        await ForgotPasswordToken.findOneAndUpdate(
+          { email: normalizedEmail },
+          { token: randomToken, expiresIn },
+          { upsert: true, new: true }
+        );
 
-    <br/><br/>
+        const resetLink = `${process.env.NEXT_PUBLIC_HOST}/forgotpassword?token=${encodeURIComponent(randomToken)}&email=${encodeURIComponent(normalizedEmail)}`;
 
-    We recommend that you keep your password secure and not share it with anyone.If you feel your password has been compromised, you can change it by going to your My Account Page.
+        const emailContent = `
+          <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+            <h2>RedTomato - Password Reset Request</h2>
+            <p>We received a request to reset your password. Click the link below to set a new password:</p>
+            <p style="margin: 20px 0;">
+              <a href="${resetLink}" style="background-color: #e53e3e; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Reset Password</a>
+            </p>
+            <p>Or copy and paste this link in your browser:</p>
+            <p><a href="${resetLink}">${resetLink}</a></p>
+            <p><strong>This link will expire in 10 minutes.</strong></p>
+            <p>If you did not request this, please ignore this email.</p>
+          </div>
+        `;
 
-    <br/><br/>
-    The above link will expire in 10 minutes.
-    `
-            // Sending a mail using nodemailer (read docs)
-            // create reusable transporter object using the default SMTP transport
-            let transporter = nodemailer.createTransport({
-                host: "smtp.gmail.com",
-                port: 587,
-                secure: false, // true for 465, false for other ports
-                auth: {
-                    user: process.env.EMAIL_ADDRESS,
-                    pass: process.env.EMAIL_PASSWORD,
-                },
-            });
+        const transporter = getMailTransporter();
+        const fromAddress = process.env.EMAIL_FROM || process.env.EMAIL_ADDRESS;
 
-            // send mail with defined transport object
-            let info = await transporter.sendMail({
-                from: "oreo.max.1998@gmail.com", // sender address
-                to: req.body.email, // list of receivers
-                subject: "Password reset link for your account on redtomato.vercel.app", // Subject line
-                html: email, // html body
-            });
-            res.status(200).json({ success: true })
+        await transporter.sendMail({
+          from: `"RedTomato Support" <${fromAddress}>`,
+          to: normalizedEmail,
+          subject: 'Password Reset Link for RedTomato',
+          html: emailContent,
+        });
+      }
 
-        }
-
-        // If user has a token that is sent via mail then we will reset his password.
-
-        else {
-
-            let dbUser = await ForgotPasswordToken.findOne({ email: req.body.email })
-            // Check If the token sent via mail and one which we have in db match. If it does then we will reset his password.
-            if (dbUser.token === req.body.token) {
-
-                // Check If the token is expired or not.
-                let difference = dbUser.expiresIn - new Date().getTime()
-
-                if (dbUser.token === req.body.token && (difference > 0)) {
-
-                    try {
-                        await User.findOneAndUpdate({ email: req.body.email }, { password: AES.encrypt(req.body.newPassword, process.env.JWT_SECRET).toString() })
-                        res.status(200).json({ success: true, message: "Password changed Successfully" })
-
-                    }
-                    catch (error) {
-                        res.status(200).json({ success: false, message: "Internal Server Error. Please try again later." })
-
-                    }
-
-
-                }
-
-                else {
-
-                    res.status(200).json({ success: false, message: "Sorry! Your token has expired. Please request a new password rest link." })
-                }
-            }
-
-            else {
-                res.status(200).json({ success: false, message: "Invalid token" })
-            }
-
-
-        }
+      // Always return success to prevent email enumeration
+      return res.status(200).json({
+        success: true,
+        message: 'If an account exists with this email, a reset link has been dispatched.',
+      });
+    } catch (err) {
+      return res.status(500).json({
+        success: false,
+        message: 'Unable to send reset email. Please try again later.',
+      });
     }
-    else {
-        res.status(200).json({ success: false })
+  }
+
+  // Branch 2: Reset password using token
+  if (!token || typeof token !== 'string') {
+    return res.status(400).json({ success: false, message: 'Reset token is required.' });
+  }
+
+  if (!newPassword || typeof newPassword !== 'string' || newPassword.length < 8) {
+    return res.status(400).json({ success: false, message: 'New password must be at least 8 characters long.' });
+  }
+
+  try {
+    const dbToken = await ForgotPasswordToken.findOne({ email: normalizedEmail });
+
+    if (!dbToken) {
+      return res.status(400).json({ success: false, message: 'Invalid or expired reset token. Please request a new link.' });
     }
 
+    if (dbToken.token !== token) {
+      return res.status(400).json({ success: false, message: 'Invalid reset token.' });
+    }
+
+    if (dbToken.expiresIn < Date.now()) {
+      await ForgotPasswordToken.deleteOne({ email: normalizedEmail });
+      return res.status(400).json({ success: false, message: 'Reset token has expired. Please request a new link.' });
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 12);
+    await User.findOneAndUpdate({ email: normalizedEmail }, { password: hashedPassword });
+
+    // Invalidate token immediately after single use
+    await ForgotPasswordToken.deleteOne({ email: normalizedEmail });
+
+    return res.status(200).json({ success: true, message: 'Password changed successfully! You may now log in.' });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: 'Internal Server Error. Please try again later.' });
+  }
 }

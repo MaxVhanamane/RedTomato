@@ -1,6 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import { useRef } from 'react';
 import DashboardSidebar from './../../components/DashboardSidebar';
+import { getAuthenticatedUser } from '../../middleware/auth';
 
 import { storage } from '../../components/firebase';
 import {ref,uploadBytes,getDownloadURL} from "firebase/storage"
@@ -37,12 +38,8 @@ const [imageInfo,setImageInfo]=useState({
 const router=useRouter()
 useEffect(()=>{
   const fetchUser= async ()=>{
-   const res=await fetch( `${process.env.NEXT_PUBLIC_HOST}/api/getuserdetails`, {
-          method: 'POST', // or 'PUT'
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({tokenVal:localStorage.getItem("token")}),
+   const res=await fetch( '/api/getuserdetails', {
+          method: 'GET',
         })
 
         const finalRes = await res.json()
@@ -52,13 +49,10 @@ useEffect(()=>{
           localStorage.removeItem("role")
           router.push("/")
         }
-        
-      
   }
-  let adminToken=localStorage.getItem("token")
   let role=localStorage.getItem("role")
 
-  if(!(adminToken && role==="admin"))
+  if(role!=="admin")
   {
     localStorage.removeItem("user")
     localStorage.removeItem("token")
@@ -143,25 +137,30 @@ const handleChange=(e)=>{
 
  // Getting the information of the file that user has selected
     let handleFileChange=(e)=>{
-        setImageInfo({...imageInfo,
-        imageUpload:e.target.files[0]
-        })
-        
+        const file = e.target.files?.[0];
+        if (file) {
+          if (!file.type.startsWith('image/')) {
+            toast.error('Only image files are permitted (JPEG, PNG, WebP).');
+            e.target.value = '';
+            return;
+          }
+          if (file.size > 5 * 1024 * 1024) {
+            toast.error('Image size must be smaller than 5MB.');
+            e.target.value = '';
+            return;
+          }
+          setImageInfo({...imageInfo, imageUpload: file});
+        }
     }
 
 // Uploading image to firebase and getting back url of that image.
     let handleUpload=()=>{
 // If no file is selected then we will do nothing.
     if(imageInfo.imageUpload==null) return;
-    if(imageInfo.fileLocation==="veg"){
-
-        const imageRef=ref(storage,`veg/${imageInfo.imageUpload.name}`)
+    if(imageInfo.fileLocation==="veg" || imageInfo.fileLocation==="nonveg"){
+        const safeName = `${Date.now()}-${imageInfo.imageUpload.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
+        const imageRef = ref(storage, `${imageInfo.fileLocation}/${safeName}`);
         uploadImageToFirebase(imageRef)
-    }
-    else if( imageInfo.fileLocation==="nonveg"){
-        const imageRef=ref(storage,`nonveg/${imageInfo.imageUpload.name}`)
-        uploadImageToFirebase(imageRef)
-
     }
     else{
         toast.error('Please select file location to upload an image', {
@@ -227,42 +226,59 @@ function uploadImageToFirebase(imageRef){
     }
 
  const handleAdd=async()=>{
-    const data = [{title:foodItem.title,slug:foodItem.slug,desc:foodItem.desc,popularity:foodItem.popularity,category:foodItem.category,price:JSON.parse(foodItem.price),img:foodItem.img,availableQty:foodItem.availableQty}];
-     
+    let parsedPrice;
+    try {
+      parsedPrice = JSON.parse(foodItem.price);
+      if (!Array.isArray(parsedPrice)) {
+        parsedPrice = [Number(foodItem.price)];
+      }
+    } catch (e) {
+      toast.error('Price format must be an array of numbers, e.g. [44, 55, 88]');
+      return;
+    }
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/addfooditems`, {
-      method: 'POST', // or 'PUT'
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    })
-    const response = await res.json()
-    if(response.success){
-        toast.success('Item added successfully!', {
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
+    const data = [{
+      title: foodItem.title,
+      slug: foodItem.slug,
+      desc: foodItem.desc,
+      popularity: foodItem.popularity,
+      category: foodItem.category,
+      price: parsedPrice,
+      img: foodItem.img,
+      availableQty: Number(foodItem.availableQty) || 0
+    }];
+
+    try {
+      const res = await fetch('/api/addfooditems', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+      const response = await res.json();
+      if(response.success){
+          toast.success('Item added successfully!', {
+              autoClose: 2000,
           });
 
-setFoodItem({
-    ...foodItem,
-    title: "",
-    slug: "",
-    desc: "",
-    popularity:"",
-    category: "",
-    price: "",
-    img:"",
-    availableQty: ""
-})
-
+          setFoodItem({
+              title: "",
+              slug: "",
+              desc: "",
+              popularity:"",
+              category: "",
+              price: "",
+              img:"",
+              availableQty: ""
+          });
+      } else {
+        toast.error(response.error || 'Failed to add food item');
+      }
+    } catch (err) {
+      toast.error('Failed to add food item');
     }
-
-    }
+  }
 
   return (
     <>
@@ -523,5 +539,18 @@ mt-8
 
   </div></div></>
   )
+}
+
+export async function getServerSideProps(context) {
+  const user = getAuthenticatedUser(context.req);
+  if (!user || user.role !== 'admin') {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    };
+  }
+  return { props: {} };
 }
 

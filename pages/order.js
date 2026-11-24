@@ -1,68 +1,151 @@
-import React from 'react'
+import React from 'react';
+import Head from 'next/head';
+import Link from 'next/link';
+import Image from 'next/image';
+import Error from 'next/error';
 import connectDb from './../middleware/mongoose';
 import Order from './../models/orders';
-import Image from "next/image"
-export default function MyOrder({ order }) {
-  const products = order.products
+import { getAuthenticatedUser } from '../middleware/auth';
+import { getFoodImage, handleImageError } from '../utils/imageHelper';
+
+export default function MyOrder({ order, error }) {
+  if (error || !order) {
+    return <Error statusCode={error || 404} title="Order not found" />;
+  }
+
+  const products = order.products || {};
 
   return (
-    <section className="text-gray-600 body-font overflow-hidden ">
-      <h1 className='text-center font-bold text-2xl  text-gray-700 lg:pt-24 lg:mb-12 pt-20 mb-2 '>My Orders</h1> 
-      <div className="flex justify-center items-center px-5  mx-auto flex-col gap-8">
-      {Object.keys(products).map((item) => {
-        return <div key={item} className="lg:w-4/5 mx-5 mt-5 flex flex-wrap items-center justify-center ">
-          <div className="lg:w-1/2 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0">
-            <h2 className="text-sm title-font text-gray-500 tracking-widest">Red Tomato</h2>
-            <h3 className="text-gray-700 md:text-2xl text-md lg:text-xl title-font font-medium mb-2 mt-2">Order Id : # {order.orderId}</h3>
-            <p className="leading-relaxed mb-1">Your order has been placed successfully.</p>
-            <p className="leading-relaxed mb-4">Payment status : <span className='font-bold'> {order.status}</span></p>
-            <div className="flex mb-4">
-              <a className="flex-grow text-center  border-b-2 border-gray-300 py-2 text-lg ">Food Name</a>
-              <a className="flex-grow text-center border-b-2 border-gray-300 py-2 text-lg  ">Quantity</a>
-              <a className="flex-grow text-center border-b-2 border-gray-300 py-2 text-lg">Price</a>
+    <>
+      <Head>
+        <title>Order #{order.orderId} - RedTomato</title>
+        <meta name="description" content={`Order details for #${order.orderId}`} />
+      </Head>
+      <section className="text-gray-600 body-font overflow-hidden pt-20 pb-16">
+        <div className="container px-5 mx-auto max-w-4xl">
+          <div className="bg-white p-6 sm:p-8 rounded-xl shadow-md border border-gray-100">
+            {/* Order Header */}
+            <div className="border-b border-gray-200 pb-6 mb-6">
+              <span className="text-xs uppercase tracking-widest text-red-500 font-semibold">Order Summary</span>
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mt-1">
+                Order #{order.orderId}
+              </h1>
+              <p className="text-sm text-gray-500 mt-1">
+                Placed on {new Date(order.createdAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
+              </p>
+              <div className="flex flex-wrap gap-4 mt-4">
+                <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold ${order.status === 'paid' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}`}>
+                  Payment: {order.status.toUpperCase()}
+                </span>
+                <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-800">
+                  Delivery: {order.deliveryStatus || 'Unshipped'}
+                </span>
+              </div>
             </div>
 
-           
-               <div  className="flex  border-gray-200 py-2">
-                <span className="m-auto text-gray-500">{item}</span>
-                <span className="m-auto text-gray-500">{products[item].qty}</span>
-                <span className="m-auto text-gray-500">{products[item].price}</span>
+            {/* Delivery Address */}
+            <div className="bg-gray-50 p-4 rounded-lg mb-6">
+              <h2 className="text-sm font-semibold text-gray-700 mb-2">Delivery Details</h2>
+              <p className="text-sm text-gray-600 font-medium">{order.name}</p>
+              <p className="text-sm text-gray-500">{order.address}{order.area ? `, ${order.area}` : ''}, {order.city}, {order.state} - {order.pin}</p>
+              <p className="text-sm text-gray-500 mt-1">Phone: {order.phone} | Email: {order.email}</p>
+            </div>
+
+            {/* Items Table */}
+            <div className="overflow-x-auto mb-6">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th scope="col" className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Item</th>
+                    <th scope="col" className="px-4 py-3 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider">Size</th>
+                    <th scope="col" className="px-4 py-3 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider">Qty</th>
+                    <th scope="col" className="px-4 py-3 text-right text-xs font-semibold text-gray-500 uppercase tracking-wider">Price</th>
+                    <th scope="col" className="px-4 py-3 text-right text-xs font-semibold text-gray-500 uppercase tracking-wider">Subtotal</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200">
+                  {Object.keys(products).map((key) => {
+                    const item = products[key];
+                    return (
+                      <tr key={key}>
+                        <td className="px-4 py-3 text-sm font-medium text-gray-900 flex items-center space-x-3">
+                          {item.img && (
+                            <div className="relative w-12 h-12 flex-shrink-0 rounded overflow-hidden">
+                              <Image
+                                src={getFoodImage(item.img, '/assets/tomato.png')}
+                                alt={key}
+                                layout="fill"
+                                objectFit="cover"
+                                onError={(e) => handleImageError(e, '/assets/tomato.png')}
+                              />
+                            </div>
+                          )}
+                          <span>{key}</span>
+                        </td>
+                        <td className="px-4 py-3 text-sm text-gray-500 text-center capitalize">{item.size || 'Regular'}</td>
+                        <td className="px-4 py-3 text-sm text-gray-500 text-center">{item.qty}</td>
+                        <td className="px-4 py-3 text-sm text-gray-500 text-right">₹{item.price}</td>
+                        <td className="px-4 py-3 text-sm font-semibold text-gray-900 text-right">₹{item.price * item.qty}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Order Total */}
+            <div className="flex justify-between items-center border-t border-gray-200 pt-4">
+              <Link href="/orders">
+                <a className="text-sm text-red-600 hover:text-red-700 font-medium">← Back to My Orders</a>
+              </Link>
+              <div className="text-right">
+                <span className="text-sm text-gray-500 mr-2">Total Amount Paid:</span>
+                <span className="text-2xl font-bold text-red-600">₹{order.amount}</span>
               </div>
-          
-
-         
+            </div>
           </div>
-          {/* <img alt="ecommerce" className="lg:w-1/2 w-full  mt-5 lg:h-[22rem] h-80 object-cover object-center rounded" src={order.img} /> */}
-          <Image src={products[item].img} alt="Food image" width={400} height={400} className="rounded-md"/>
-          
         </div>
-
-
-})}
-
-              {/* <button className="flex mr-auto mt-4 text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">Track Order</button> */}
-              {/* <button className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
-              <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" className="w-5 h-5" viewBox="0 0 24 24">
-                <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path>
-              </svg>
-            </button> */}
-
-    
-              
-      </div >
-      <div className=" lg:w-4/5 flex lg:justify-start lg:ml-[16.2rem] justify-center mb-4 lg:mb-8">
-      <p className="title-font font-medium text-2xl text-gray-700 mt-10">Total amount paid: <span className="text-red-500">₹{order.amount}</span></p>
-      </div>
-    </section>
-  )
+      </section>
+    </>
+  );
 }
 
-// This gets called on every request
 export async function getServerSideProps(context) {
-  // Fetch data from external API
-  connectDb()
-  let order = await Order.find({orderId:context.query.id})
+  const user = getAuthenticatedUser(context.req);
+  if (!user) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    };
+  }
 
+  await connectDb();
 
-  return { props: { order: JSON.parse(JSON.stringify(order[0])) } }
+  const orderId = context.query.id;
+  if (!orderId) {
+    return { props: { error: 404 } };
+  }
+
+  const order = await Order.findOne({ orderId }).lean();
+  if (!order) {
+    return { props: { error: 404 } };
+  }
+
+  // Authorization check: Only order owner or admin can view order
+  if (user.role !== 'admin' && order.email !== user.email) {
+    return {
+      redirect: {
+        destination: '/orders',
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {
+      order: JSON.parse(JSON.stringify(order)),
+    },
+  };
 }
